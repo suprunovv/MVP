@@ -1,0 +1,12 @@
+// UIColor+Extension.swift
+// Copyright © RoadMap. All rights reserved.
+
+import UIKit
+
+/// Расширение для доступа к цветам через точку
+extension UIColor {
+    static let grayLogo = UIColor(red: 77 / 255.0, green: 77 / 255.0, blue: 77 / 255.0, alpha: 1)
+    static let grayText = UIColor(red: 71 / 255.0, green: 92 / 255.0, blue: 102 / 255.0, alpha: 1)
+    static let greenAccent = UIColor(red: 112 / 255.0, green: 185 / 255.0, blue: 190 / 255.0, alpha: 1)
+    static let greenBgAccent = UIColor(red: 241 / 255.0, green: 245 / 255.0, blue: 245 / 255.0, alpha: 1)
+}
