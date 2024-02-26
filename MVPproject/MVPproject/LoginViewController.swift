@@ -5,8 +5,8 @@ import UIKit
 
 /// Вью экрана входа
 final class LoginViewController: UIViewController {
-    
     // MARK: - Constants
+
     enum Constants {
         static let loginTitle = "Login"
         static let emailLabelText = "Emale Address"
@@ -19,6 +19,7 @@ final class LoginViewController: UIViewController {
     }
 
     // MARK: - Visual Compontnts
+
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Constants.loginTitle, for: .normal)
@@ -105,13 +106,15 @@ final class LoginViewController: UIViewController {
     }()
 
     private var emailStackView: UIStackView!
+
     private var passwordStackView: UIStackView!
 
     // MARK: Life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setGradient()
+        setupGradient()
         setTitleLabelConstraints()
         setEmailStackView()
         setPasswordStackView()
@@ -119,10 +122,10 @@ final class LoginViewController: UIViewController {
         setSecureButton()
         setLeftTextFiledImageView()
     }
-    
+
     // MARK: Private methods
 
-    private func setGradient() {
+    private func setupGradient() {
         let gradient = CAGradientLayer()
         gradient.locations = [0.0, 1.0]
         gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
