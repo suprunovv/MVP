@@ -16,6 +16,8 @@
 		DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785272B8D1393005A190A /* UIFont+Extension.swift */; };
 		DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */; };
 		DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37852B2B8D1EC7005A190A /* UIImage+Extension.swift */; };
+		DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785302B8D38DD005A190A /* LoginViewController.swift */; };
+		DA3785342B8D38DD005A190A /* PersonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785312B8D38DD005A190A /* PersonData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		DA3785272B8D1393005A190A /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		DA37852B2B8D1EC7005A190A /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		DA3785302B8D38DD005A190A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DA3785312B8D38DD005A190A /* PersonData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +66,10 @@
 		52A65F062B8CDEB7001EF2E0 /* MVPproject */ = {
 			isa = PBXGroup;
 			children = (
+				DA3785382B8D39EE005A190A /* App */,
 				DA37852E2B8D2326005A190A /* SupportingFiles */,
 				DA3785262B8D1382005A190A /* Extensions */,
 				DA37852D2B8D22FE005A190A /* Resources */,
-				DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */,
 			);
 			path = MVPproject;
 			sourceTree = "<group>";
@@ -98,6 +102,40 @@
 				52A65F152B8CDEB9001EF2E0 /* Info.plist */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		DA3785352B8D39B2005A190A /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				DA3785372B8D39CE005A190A /* Model */,
+				DA3785362B8D39C0005A190A /* View */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		DA3785362B8D39C0005A190A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA3785302B8D38DD005A190A /* LoginViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DA3785372B8D39CE005A190A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA3785312B8D38DD005A190A /* PersonData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DA3785382B8D39EE005A190A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				DA3785352B8D39B2005A190A /* Auth */,
+				DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +259,8 @@
 				DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */,
 				DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */,
 				52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */,
+				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
+				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,
 				DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

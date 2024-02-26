@@ -11,4 +11,7 @@ extension UIImage {
     static let cakeFullBarIcon = UIImage(named: "cakeFullBarIcon")
     static let profileBarIcon = UIImage(named: "profileBarIcon")
     static let profileFullBarIcon = UIImage(named: "profileFullBarIcon")
+    static let emailImage = UIImage(named: "envelop")
+    static let passwordImage = UIImage(named: "lock")
+    static let eyeSlashImage = UIImage(systemName: "eye.slash.fill")
 }
