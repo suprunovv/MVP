@@ -9,7 +9,7 @@ final class LoginViewController: UIViewController {
 
     enum Constants {
         static let loginTitle = "Login"
-        static let emailLabelText = "Emale Address"
+        static let emailLabelText = "Email Address"
         static let passwordLabelText = "Password"
         static let emailTextFiledPlaceholder = "Enter Email Address"
         static let passwordTextFiledPlaceholder = "Enter Password"
@@ -117,7 +117,8 @@ final class LoginViewController: UIViewController {
         setPasswordStackView()
         setLoginButtonConstraints()
         setSecureButton()
-        setLeftTextFiledImageView()
+        setEmailFieldLeftImageView()
+        setPasswordFieldLeftImageView()
     }
 
     // MARK: Private methods
@@ -179,26 +180,33 @@ final class LoginViewController: UIViewController {
         view.addSubview(loginButton)
         NSLayoutConstraint.activate([
             loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             loginButton.heightAnchor.constraint(equalToConstant: 48),
             loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -37)
         ])
     }
 
     private func setSecureButton() {
-        securePasswordButton.translatesAutoresizingMaskIntoConstraints = false
-        securePasswordButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-        securePasswordButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        passwordTextFiled.rightView = securePasswordButton
+        let view = makeTextFieldView(wrappedView: securePasswordButton)
+        passwordTextFiled.rightView = view
     }
 
-    private func setLeftTextFiledImageView() {
-        passwordImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        emailImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        passwordImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        emailImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        passwordTextFiled.leftView = passwordImageView
-        emailTextFiled.leftView = emailImageView
+    private func setEmailFieldLeftImageView() {
+        let view = makeTextFieldView(wrappedView: emailImageView)
+        emailTextFiled.leftView = view
+    }
+
+    private func setPasswordFieldLeftImageView() {
+        let view = makeTextFieldView(wrappedView: passwordImageView)
+        passwordTextFiled.leftView = view
+    }
+
+    private func makeTextFieldView(wrappedView: UIView) -> UIView {
+        let view = UIView()
+        view.addSubview(wrappedView)
+        view.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        wrappedView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        wrappedView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        return view
     }
 }
