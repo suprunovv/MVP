@@ -62,14 +62,10 @@
 		52A65F062B8CDEB7001EF2E0 /* MVPproject */ = {
 			isa = PBXGroup;
 			children = (
+				DA37852E2B8D2326005A190A /* SupportingFiles */,
 				DA3785262B8D1382005A190A /* Extensions */,
-				52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */,
-				52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */,
+				DA37852D2B8D22FE005A190A /* Resources */,
 				DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */,
-				52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */,
-				52A65F102B8CDEB9001EF2E0 /* Assets.xcassets */,
-				52A65F122B8CDEB9001EF2E0 /* LaunchScreen.storyboard */,
-				52A65F152B8CDEB9001EF2E0 /* Info.plist */,
 			);
 			path = MVPproject;
 			sourceTree = "<group>";
@@ -82,6 +78,26 @@
 				DA37852B2B8D1EC7005A190A /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DA37852D2B8D22FE005A190A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				52A65F102B8CDEB9001EF2E0 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DA37852E2B8D2326005A190A /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */,
+				52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */,
+				52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */,
+				52A65F122B8CDEB9001EF2E0 /* LaunchScreen.storyboard */,
+				52A65F152B8CDEB9001EF2E0 /* Info.plist */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,7 +377,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MVPproject/Info.plist;
+				INFOPLIST_FILE = MVPproject/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -389,7 +405,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MVPproject/Info.plist;
+				INFOPLIST_FILE = MVPproject/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
