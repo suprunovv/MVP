@@ -9,13 +9,10 @@ final class LoginViewController: UIViewController {
 
     enum Constants {
         static let loginTitle = "Login"
-        static let emailLabelText = "Emale Address"
+        static let emailLabelText = "Email Address"
         static let passwordLabelText = "Password"
         static let emailTextFiledPlaceholder = "Enter Email Address"
         static let passwordTextFiledPlaceholder = "Enter Password"
-        static let emailImage = UIImage(named: "envelop")
-        static let passwordImage = UIImage(named: "lock")
-        static let eyeSlashImage = UIImage(systemName: "eye.slash.fill")
     }
 
     // MARK: - Visual Compontnts
@@ -26,34 +23,34 @@ final class LoginViewController: UIViewController {
         button.backgroundColor = .loginButtonColor
         button.tintColor = .white
         button.layer.cornerRadius = 12
-        button.titleLabel?.font = .verdana16
+        button.titleLabel?.font = .verdana(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .verdanaBold28
+        label.font = .verdanaBold(ofSize: 28)
         label.text = Constants.loginTitle
-        label.textColor = .labelColor
+        label.textColor = .grayText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private let emailLabel: UILabel = {
         let label = UILabel()
-        label.font = .verdanaBold18
+        label.font = .verdanaBold(ofSize: 18)
         label.text = Constants.emailLabelText
-        label.textColor = .labelColor
+        label.textColor = .grayText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private let passwordLabel: UILabel = {
         let label = UILabel()
-        label.font = .verdanaBold18
+        label.font = .verdanaBold(ofSize: 18)
         label.text = Constants.passwordLabelText
-        label.textColor = .labelColor
+        label.textColor = .grayText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -84,7 +81,7 @@ final class LoginViewController: UIViewController {
     private let securePasswordButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(Constants.eyeSlashImage, for: .normal)
+        button.setImage(.eyeSlashImage, for: .normal)
         button.tintColor = .systemGray
         return button
     }()
@@ -92,7 +89,7 @@ final class LoginViewController: UIViewController {
     private let emailImageView: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(Constants.emailImage, for: .normal)
+        button.setImage(.emailImage, for: .normal)
         button.tintColor = .systemGray
         return button
     }()
@@ -100,7 +97,7 @@ final class LoginViewController: UIViewController {
     private let passwordImageView: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(Constants.passwordImage, for: .normal)
+        button.setImage(.passwordImage, for: .normal)
         button.tintColor = .systemGray
         return button
     }()
@@ -120,7 +117,8 @@ final class LoginViewController: UIViewController {
         setPasswordStackView()
         setLoginButtonConstraints()
         setSecureButton()
-        setLeftTextFiledImageView()
+        setEmailFieldLeftImageView()
+        setPasswordFieldLeftImageView()
     }
 
     // MARK: Private methods
@@ -182,37 +180,33 @@ final class LoginViewController: UIViewController {
         view.addSubview(loginButton)
         NSLayoutConstraint.activate([
             loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             loginButton.heightAnchor.constraint(equalToConstant: 48),
             loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -37)
         ])
     }
 
     private func setSecureButton() {
-        securePasswordButton.translatesAutoresizingMaskIntoConstraints = false
-        securePasswordButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-        securePasswordButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        passwordTextFiled.rightView = securePasswordButton
+        let view = makeTextFieldView(wrappedView: securePasswordButton)
+        passwordTextFiled.rightView = view
     }
 
-    private func setLeftTextFiledImageView() {
-        passwordImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        emailImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        passwordImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        emailImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        passwordTextFiled.leftView = passwordImageView
-        emailTextFiled.leftView = emailImageView
+    private func setEmailFieldLeftImageView() {
+        let view = makeTextFieldView(wrappedView: emailImageView)
+        emailTextFiled.leftView = view
     }
-}
 
-extension UIColor {
-    static let labelColor = UIColor(red: 71 / 255, green: 92 / 255, blue: 102 / 255, alpha: 1)
-    static let loginButtonColor = UIColor(red: 4 / 255, green: 38 / 255, blue: 40 / 255, alpha: 1)
-}
+    private func setPasswordFieldLeftImageView() {
+        let view = makeTextFieldView(wrappedView: passwordImageView)
+        passwordTextFiled.leftView = view
+    }
 
-extension UIFont {
-    static let verdanaBold28 = UIFont(name: "Verdana-Bold", size: 28)
-    static let verdanaBold18 = UIFont(name: "Verdana-Bold", size: 18)
-    static let verdana16 = UIFont(name: "Verdana", size: 16)
+    private func makeTextFieldView(wrappedView: UIView) -> UIView {
+        let view = UIView()
+        view.addSubview(wrappedView)
+        view.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        wrappedView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        wrappedView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        return view
+    }
 }
