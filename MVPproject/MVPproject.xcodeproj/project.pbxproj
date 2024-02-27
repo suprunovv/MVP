@@ -12,6 +12,8 @@
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
 		52A65F112B8CDEB9001EF2E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F102B8CDEB9001EF2E0 /* Assets.xcassets */; };
 		52A65F142B8CDEB9001EF2E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F122B8CDEB9001EF2E0 /* LaunchScreen.storyboard */; };
+		52A65F252B8E1390001EF2E0 /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F242B8E1390001EF2E0 /* LoginViewPresenter.swift */; };
+		52A65F292B8E28DA001EF2E0 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F282B8E28DA001EF2E0 /* Builder.swift */; };
 		DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */; };
 		DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785272B8D1393005A190A /* UIFont+Extension.swift */; };
 		DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */; };
@@ -35,6 +37,8 @@
 		52A65F102B8CDEB9001EF2E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52A65F132B8CDEB9001EF2E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52A65F152B8CDEB9001EF2E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52A65F242B8E1390001EF2E0 /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
+		52A65F282B8E28DA001EF2E0 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipelyAppTabBarController.swift; sourceTree = "<group>"; };
 		DA3785272B8D1393005A190A /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -89,6 +93,22 @@
 			path = MVPproject;
 			sourceTree = "<group>";
 		};
+		52A65F232B8DFFB6001EF2E0 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				52A65F242B8E1390001EF2E0 /* LoginViewPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		52A65F2A2B8E28E3001EF2E0 /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				52A65F282B8E28DA001EF2E0 /* Builder.swift */,
+			);
+			path = Builder;
+			sourceTree = "<group>";
+		};
 		DA3785262B8D1382005A190A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +143,8 @@
 		DA3785352B8D39B2005A190A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				52A65F2A2B8E28E3001EF2E0 /* Builder */,
+				52A65F232B8DFFB6001EF2E0 /* Presenter */,
 				DA3785372B8D39CE005A190A /* Model */,
 				DA3785362B8D39C0005A190A /* View */,
 			);
@@ -302,6 +324,7 @@
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,
 				52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */,
 				DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */,
+				52A65F292B8E28DA001EF2E0 /* Builder.swift in Sources */,
 				DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */,
 				DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */,
 				DA3785732B8E3838005A190A /* ProfileSettingCell.swift in Sources */,
@@ -309,6 +332,7 @@
 				DA3785682B8E31E7005A190A /* ProfileInfoCell.swift in Sources */,
 				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
 				DA3785642B8E2EEF005A190A /* ProfileViewController.swift in Sources */,
+				52A65F252B8E1390001EF2E0 /* LoginViewPresenter.swift in Sources */,
 				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,
 				DA37856D2B8E32E9005A190A /* ProfileInfo.swift in Sources */,
 				DA3785712B8E342B005A190A /* ProfileTableConfiguration.swift in Sources */,

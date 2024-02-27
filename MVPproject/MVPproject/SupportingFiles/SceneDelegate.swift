@@ -4,6 +4,8 @@
 import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    let builder = Builder()
+
     var window: UIWindow?
 
     func scene(
@@ -17,7 +19,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func setupWindow(withScene scene: UIScene) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = LoginViewController()
+        let loginViewController = builder.makeProfileModule()
+        window?.rootViewController = loginViewController
         window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()
     }
