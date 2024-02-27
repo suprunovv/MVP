@@ -1,10 +1,9 @@
 // LoginViewPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
 import UIKit
 
-protocol PresenterProtocol: AnyObject {
+protocol LoginPresenterProtocol: AnyObject {
     /// Метод получает пароль и валидирует его
     func validatePassword(password: String)
     /// Метод скрывает/показывает пароль и меняет картику кнопки с глазком
@@ -13,61 +12,68 @@ protocol PresenterProtocol: AnyObject {
     func emailValidate(email: String)
 }
 
-protocol ViewProtocol: AnyObject {
+protocol LoginViewProtocol: AnyObject {
     /// Меотод выполняет выполняет действие если пароль не валидный
     func invalidePassword(_ bool: Bool, color: UIColor)
     /// Метод выплняет действие по нажатию на кнопку secureButton
-    func tapSecureButton(isSecure: Bool, image: UIImage)
+    func updatePasswordSecuredUI(_ isSecured: Bool, image: UIImage?)
     /// Метод возвращает булевое значение (Правильный ли email)
     func isValideEmail(_ bool: Bool, color: UIColor)
     /// Метод вызывает переход на следующий экран
     func goToSecondView()
+
+    // TODO: add documentation
+    func setEmailValidationError(_ error: String?)
+    func setPasswordValidationError(_ error: String?)
+    func clearPasswordValidationError()
+    func clearEmailValidationError()
 }
 
 /// Презентер для экрана логин
-final class LoginViewPresenter {
-    weak var view: ViewProtocol?
+final class LoginPresenter {
+//    weak var authCoordinator: AuthCoordinator?
+    private let loginFormValidator = LoginFormValidator()
 
-    private var isSecureButton = true
-    private var isValide = (password: false, login: false)
+    private weak var view: LoginViewProtocol?
+    init(view: LoginViewProtocol) {
+        self.view = view
+    }
+
+    private var isPasswordSecured = true
+    private var isValid = (password: false, login: false)
 }
 
-/// LoginViewPresenter + Extension
-extension LoginViewPresenter: PresenterProtocol {
+// MARK: - LoginPresenter + LoginPresenterProtocol
+extension LoginPresenter: LoginPresenterProtocol {
     func validatePassword(password: String) {
-        guard password.count > 8 else {
-            view?.invalidePassword(false, color: .errorColor)
-            isValide.password = false
-            return
+        let validationError = loginFormValidator.validatePassword(password)
+        if let validationError {
+            view?.setPasswordValidationError(validationError)
+            isValid.password = true
+        } else {
+            view?.clearPasswordValidationError()
+            isValid.password = false
         }
-        view?.invalidePassword(true, color: .systemGray)
-        isValide.password = true
-        if isValide == (true, true) {
+
+        if isValid == (true, true) {
             view?.goToSecondView()
         }
     }
 
     func emailValidate(email: String) {
-        guard email.count >= 6 else {
-            view?.isValideEmail(false, color: .errorColor)
-            isValide.login = false
-            return
+        let validationError = loginFormValidator.validateEmail(email)
+        if let validationError {
+            view?.setEmailValidationError(validationError)
+            isValid.login = true
+        } else {
+            view?.clearEmailValidationError()
+            isValid.login = false
         }
-        guard email.contains("@"), email.contains(".") else {
-            isValide.login = false
-            view?.isValideEmail(false, color: .errorColor)
-            return
-        }
-        view?.isValideEmail(true, color: .systemGray)
-        isValide.login = true
     }
 
+
     func toggleSecureButton() {
-        isSecureButton.toggle()
-        if isSecureButton {
-            view?.tapSecureButton(isSecure: isSecureButton, image: .eyeSlashImage ?? UIImage())
-        } else {
-            view?.tapSecureButton(isSecure: isSecureButton, image: .eyeFill ?? UIImage())
-        }
+        isPasswordSecured.toggle()
+        view?.updatePasswordSecuredUI(isPasswordSecured, image: isPasswordSecured ? .eyeSlashImage : .eyeFill)
     }
 }

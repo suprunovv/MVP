@@ -22,7 +22,7 @@ final class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Constants.loginTitle, for: .normal)
-        button.backgroundColor = .loginButtonColor
+        button.backgroundColor = .greenDarkButton
         button.tintColor = .white
         button.layer.cornerRadius = 12
         button.titleLabel?.font = .verdana(ofSize: 16)
@@ -52,7 +52,7 @@ final class LoginViewController: UIViewController {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 12)
         label.text = Constants.incorrectEmailText
-        label.textColor = .errorColor
+        label.textColor = .redError
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -62,7 +62,7 @@ final class LoginViewController: UIViewController {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 12)
         label.text = Constants.incorrectPasswordText
-        label.textColor = .errorColor
+        label.textColor = .redError
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -189,12 +189,6 @@ final class LoginViewController: UIViewController {
     }
 
     private func setEmailStackView() {
-        emailTextFiled.clearButtonRect(forBounds: CGRect(
-            x: emailTextFiled.frame.size.width,
-            y: 0,
-            width: 30,
-            height: 30
-        ))
         emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextFiled])
         emailStackView.axis = .vertical
         emailStackView.distribution = .fill
@@ -278,10 +272,10 @@ final class LoginViewController: UIViewController {
 
     private func addTargetButtons() {
         loginButton.addTarget(self, action: #selector(tappLoginButton), for: .touchUpInside)
-        securePasswordButton.addTarget(self, action: #selector(tappSecureButton), for: .touchUpInside)
+        securePasswordButton.addTarget(self, action: #selector(secureButtonTapped), for: .touchUpInside)
     }
 
-    @objc private func tappSecureButton() {
+    @objc private func secureButtonTapped() {
         presenter?.toggleSecureButton()
     }
 
@@ -291,8 +285,39 @@ final class LoginViewController: UIViewController {
     }
 }
 
-/// LoginViewController + Extension
-extension LoginViewController: ViewProtocol {
+// MARK: - LoginViewController + LoginViewProtocol
+extension LoginViewController: LoginViewProtocol {
+    func updatePasswordSecuredUI(_ isSecured: Bool, image: UIImage?) {
+        securePasswordButton.setImage(image, for: .normal)
+        passwordTextFiled.isSecureTextEntry = isSecured
+    }
+
+    func setEmailValidationError(_ error: String?) {
+        emailTextFiled.layer.borderColor = UIColor.redError.cgColor
+        incorrectEmailLabel.isHidden = false
+        incorrectEmailLabel.text = error
+        emailLabel.textColor = .redError
+    }
+
+    func clearEmailValidationError() {
+        emailTextFiled.layer.borderColor = UIColor.systemGray.cgColor
+        incorrectEmailLabel.isHidden = true
+        emailLabel.textColor = .systemGray
+    }
+
+    func setPasswordValidationError(_ error: String?) {
+        passwordTextFiled.layer.borderColor = UIColor.redError.cgColor
+        incorrectPasswordLabel.isHidden = false
+        incorrectPasswordLabel.text = error
+        passwordTextFiled.textColor = .redError
+    }
+
+    func clearPasswordValidationError() {
+        passwordTextFiled.layer.borderColor = UIColor.systemGray.cgColor
+        incorrectPasswordLabel.isHidden = true
+        passwordTextFiled.textColor = .systemGray
+    }
+
     func invalidePassword(_ bool: Bool, color: UIColor) {
         passwordTextFiled.layer.borderColor = color.cgColor
         incorrectPasswordLabel.isHidden = bool
@@ -303,11 +328,6 @@ extension LoginViewController: ViewProtocol {
         emailTextFiled.layer.borderColor = color.cgColor
         incorrectEmailLabel.isHidden = bool
         emailLabel.textColor = color
-    }
-
-    func tapSecureButton(isSecure: Bool, image: UIImage) {
-        securePasswordButton.setImage(image, for: .normal)
-        passwordTextFiled.isSecureTextEntry = isSecure
     }
 
     func goToSecondView() {
