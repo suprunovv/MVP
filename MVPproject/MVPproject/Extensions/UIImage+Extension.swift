@@ -14,4 +14,5 @@ extension UIImage {
     static let emailImage = UIImage(named: "envelop")
     static let passwordImage = UIImage(named: "lock")
     static let eyeSlashImage = UIImage(systemName: "eye.slash.fill")
+    static let eyeFill = UIImage(systemName: "eye.fill")
 }
