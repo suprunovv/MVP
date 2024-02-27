@@ -4,6 +4,7 @@
 import UIKit
 
 protocol LoginPresenterProtocol: AnyObject {
+    var authCoordinator: AuthCoordinator? { get set }
     /// Метод получает пароль и валидирует его
     func validatePassword(password: String)
     /// Метод скрывает/показывает пароль и меняет картику кнопки с глазком
@@ -31,7 +32,7 @@ protocol LoginViewProtocol: AnyObject {
 
 /// Презентер для экрана логин
 final class LoginPresenter {
-//    weak var authCoordinator: AuthCoordinator?
+    weak var authCoordinator: AuthCoordinator?
     private let loginFormValidator = LoginFormValidator()
 
     private weak var view: LoginViewProtocol?
@@ -44,19 +45,20 @@ final class LoginPresenter {
 }
 
 // MARK: - LoginPresenter + LoginPresenterProtocol
+
 extension LoginPresenter: LoginPresenterProtocol {
     func validatePassword(password: String) {
         let validationError = loginFormValidator.validatePassword(password)
         if let validationError {
             view?.setPasswordValidationError(validationError)
-            isValid.password = true
+            isValid.password = false
         } else {
             view?.clearPasswordValidationError()
-            isValid.password = false
+            isValid.password = true
         }
 
         if isValid == (true, true) {
-            view?.goToSecondView()
+            authCoordinator?.didLogin()
         }
     }
 
@@ -64,13 +66,12 @@ extension LoginPresenter: LoginPresenterProtocol {
         let validationError = loginFormValidator.validateEmail(email)
         if let validationError {
             view?.setEmailValidationError(validationError)
-            isValid.login = true
+            isValid.login = false
         } else {
             view?.clearEmailValidationError()
-            isValid.login = false
+            isValid.login = true
         }
     }
-
 
     func toggleSecureButton() {
         isPasswordSecured.toggle()

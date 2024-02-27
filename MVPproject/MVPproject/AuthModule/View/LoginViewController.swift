@@ -136,7 +136,7 @@ final class LoginViewController: UIViewController {
 
     private var passwordStackView: UIStackView!
 
-    var presenter: PresenterProtocol?
+    var presenter: LoginPresenterProtocol?
 
     // MARK: Life cycle
 
@@ -286,6 +286,7 @@ final class LoginViewController: UIViewController {
 }
 
 // MARK: - LoginViewController + LoginViewProtocol
+
 extension LoginViewController: LoginViewProtocol {
     func updatePasswordSecuredUI(_ isSecured: Bool, image: UIImage?) {
         securePasswordButton.setImage(image, for: .normal)
