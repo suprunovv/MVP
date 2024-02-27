@@ -18,6 +18,20 @@
 		DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37852B2B8D1EC7005A190A /* UIImage+Extension.swift */; };
 		DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785302B8D38DD005A190A /* LoginViewController.swift */; };
 		DA3785342B8D38DD005A190A /* PersonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785312B8D38DD005A190A /* PersonData.swift */; };
+		DA37853D2B8E0A51005A190A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37853C2B8E0A51005A190A /* Coordinator.swift */; };
+		DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37853E2B8E0C60005A190A /* BaseCoordinator.swift */; };
+		DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785402B8E0D83005A190A /* AppCoordinator.swift */; };
+		DA3785442B8E1116005A190A /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785432B8E1116005A190A /* App.swift */; };
+		DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785452B8E1285005A190A /* AuthCoordinator.swift */; };
+		DA3785482B8E186E005A190A /* AppTabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785472B8E186E005A190A /* AppTabBarCoordinator.swift */; };
+		DA37854B2B8E1955005A190A /* AuthModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37854A2B8E1955005A190A /* AuthModuleBuilder.swift */; };
+		DA37854F2B8E1AE7005A190A /* RecipesModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37854E2B8E1AE7005A190A /* RecipesModuleBuilder.swift */; };
+		DA3785512B8E1C2E005A190A /* RecipesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785502B8E1C2E005A190A /* RecipesCoordinator.swift */; };
+		DA3785592B8E20DF005A190A /* FavoritesModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785582B8E20DF005A190A /* FavoritesModuleBuilder.swift */; };
+		DA37855C2B8E211F005A190A /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37855B2B8E211F005A190A /* Builder.swift */; };
+		DA37855E2B8E226F005A190A /* ProfileModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37855D2B8E226F005A190A /* ProfileModuleBuilder.swift */; };
+		DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37855F2B8E2345005A190A /* FavoritesCoordinator.swift */; };
+		DA3785622B8E2392005A190A /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785612B8E2392005A190A /* ProfileCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +48,20 @@
 		DA37852B2B8D1EC7005A190A /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		DA3785302B8D38DD005A190A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA3785312B8D38DD005A190A /* PersonData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonData.swift; sourceTree = "<group>"; };
+		DA37853C2B8E0A51005A190A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		DA37853E2B8E0C60005A190A /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		DA3785402B8E0D83005A190A /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		DA3785432B8E1116005A190A /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		DA3785452B8E1285005A190A /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		DA3785472B8E186E005A190A /* AppTabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarCoordinator.swift; sourceTree = "<group>"; };
+		DA37854A2B8E1955005A190A /* AuthModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModuleBuilder.swift; sourceTree = "<group>"; };
+		DA37854E2B8E1AE7005A190A /* RecipesModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesModuleBuilder.swift; sourceTree = "<group>"; };
+		DA3785502B8E1C2E005A190A /* RecipesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCoordinator.swift; sourceTree = "<group>"; };
+		DA3785582B8E20DF005A190A /* FavoritesModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModuleBuilder.swift; sourceTree = "<group>"; };
+		DA37855B2B8E211F005A190A /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		DA37855D2B8E226F005A190A /* ProfileModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModuleBuilder.swift; sourceTree = "<group>"; };
+		DA37855F2B8E2345005A190A /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
+		DA3785612B8E2392005A190A /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,10 +94,18 @@
 		52A65F062B8CDEB7001EF2E0 /* MVPproject */ = {
 			isa = PBXGroup;
 			children = (
-				DA3785382B8D39EE005A190A /* App */,
-				DA37852E2B8D2326005A190A /* SupportingFiles */,
-				DA3785262B8D1382005A190A /* Extensions */,
+				DA3785542B8E201E005A190A /* Application */,
+				DA3785382B8D39EE005A190A /* AppModule */,
+				DA3785522B8E1FF5005A190A /* AppTabBarModule */,
+				DA3785352B8D39B2005A190A /* AuthModule */,
+				DA37854C2B8E1AB4005A190A /* RecipesModule */,
+				DA3785562B8E208A005A190A /* FavoritesModule */,
+				DA3785552B8E205C005A190A /* ProfileModule */,
+				DA37855A2B8E2113005A190A /* Builders */,
+				DA37853B2B8E09F0005A190A /* Coordinators */,
 				DA37852D2B8D22FE005A190A /* Resources */,
+				DA3785262B8D1382005A190A /* Extensions */,
+				DA37852E2B8D2326005A190A /* SupportingFiles */,
 			);
 			path = MVPproject;
 			sourceTree = "<group>";
@@ -95,8 +131,6 @@
 		DA37852E2B8D2326005A190A /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */,
-				52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */,
 				52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */,
 				52A65F122B8CDEB9001EF2E0 /* LaunchScreen.storyboard */,
 				52A65F152B8CDEB9001EF2E0 /* Info.plist */,
@@ -104,13 +138,13 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		DA3785352B8D39B2005A190A /* Auth */ = {
+		DA3785352B8D39B2005A190A /* AuthModule */ = {
 			isa = PBXGroup;
 			children = (
 				DA3785372B8D39CE005A190A /* Model */,
 				DA3785362B8D39C0005A190A /* View */,
 			);
-			path = Auth;
+			path = AuthModule;
 			sourceTree = "<group>";
 		};
 		DA3785362B8D39C0005A190A /* View */ = {
@@ -129,13 +163,93 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		DA3785382B8D39EE005A190A /* App */ = {
+		DA3785382B8D39EE005A190A /* AppModule */ = {
 			isa = PBXGroup;
 			children = (
-				DA3785352B8D39B2005A190A /* Auth */,
+				DA3785422B8E1104005A190A /* Model */,
+			);
+			path = AppModule;
+			sourceTree = "<group>";
+		};
+		DA37853B2B8E09F0005A190A /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				DA37853C2B8E0A51005A190A /* Coordinator.swift */,
+				DA37853E2B8E0C60005A190A /* BaseCoordinator.swift */,
+				DA3785402B8E0D83005A190A /* AppCoordinator.swift */,
+				DA3785452B8E1285005A190A /* AuthCoordinator.swift */,
+				DA3785472B8E186E005A190A /* AppTabBarCoordinator.swift */,
+				DA3785502B8E1C2E005A190A /* RecipesCoordinator.swift */,
+				DA37855F2B8E2345005A190A /* FavoritesCoordinator.swift */,
+				DA3785612B8E2392005A190A /* ProfileCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		DA3785422B8E1104005A190A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA3785432B8E1116005A190A /* App.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DA37854C2B8E1AB4005A190A /* RecipesModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RecipesModule;
+			sourceTree = "<group>";
+		};
+		DA3785522B8E1FF5005A190A /* AppTabBarModule */ = {
+			isa = PBXGroup;
+			children = (
+				DA3785532B8E1FFE005A190A /* View */,
+			);
+			path = AppTabBarModule;
+			sourceTree = "<group>";
+		};
+		DA3785532B8E1FFE005A190A /* View */ = {
+			isa = PBXGroup;
+			children = (
 				DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */,
 			);
-			path = App;
+			path = View;
+			sourceTree = "<group>";
+		};
+		DA3785542B8E201E005A190A /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */,
+				52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		DA3785552B8E205C005A190A /* ProfileModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ProfileModule;
+			sourceTree = "<group>";
+		};
+		DA3785562B8E208A005A190A /* FavoritesModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FavoritesModule;
+			sourceTree = "<group>";
+		};
+		DA37855A2B8E2113005A190A /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				DA37855B2B8E211F005A190A /* Builder.swift */,
+				DA37854A2B8E1955005A190A /* AuthModuleBuilder.swift */,
+				DA37854E2B8E1AE7005A190A /* RecipesModuleBuilder.swift */,
+				DA3785582B8E20DF005A190A /* FavoritesModuleBuilder.swift */,
+				DA37855D2B8E226F005A190A /* ProfileModuleBuilder.swift */,
+			);
+			path = Builders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,12 +368,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA3785622B8E2392005A190A /* ProfileCoordinator.swift in Sources */,
+				DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */,
+				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
+				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
+				DA37855C2B8E211F005A190A /* Builder.swift in Sources */,
+				DA37855E2B8E226F005A190A /* ProfileModuleBuilder.swift in Sources */,
 				52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */,
+				DA37853D2B8E0A51005A190A /* Coordinator.swift in Sources */,
 				DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */,
 				DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */,
 				DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */,
+				DA3785592B8E20DF005A190A /* FavoritesModuleBuilder.swift in Sources */,
+				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
 				52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */,
+				DA37854B2B8E1955005A190A /* AuthModuleBuilder.swift in Sources */,
 				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
+				DA3785482B8E186E005A190A /* AppTabBarCoordinator.swift in Sources */,
+				DA3785442B8E1116005A190A /* App.swift in Sources */,
+				DA3785512B8E1C2E005A190A /* RecipesCoordinator.swift in Sources */,
+				DA37854F2B8E1AE7005A190A /* RecipesModuleBuilder.swift in Sources */,
 				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,
 				DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */,
 			);

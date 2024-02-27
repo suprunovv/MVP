@@ -8,9 +8,6 @@ final class RecipelyAppTabBarController: UITabBarController {
     // MARK: - Constants
 
     enum Constants {
-        static let recipesTitle = "Recipes"
-        static let favoritesTitle = "Favorites"
-        static let profileTitle = "Profile"
         static let borderToScreenSpacing = 8.0
     }
 
@@ -34,12 +31,6 @@ final class RecipelyAppTabBarController: UITabBarController {
     // MARK: - Private Methods
 
     private func setupTabBar() {
-        setViewControllers([
-            createRecipesNavigationController(),
-            createFavoritesNavigationController(),
-            createProfileNavigationController()
-        ], animated: false)
-
         setupAppearance()
         setupBorderTop()
     }
@@ -70,36 +61,5 @@ final class RecipelyAppTabBarController: UITabBarController {
                 constant: -Constants.borderToScreenSpacing
             )
         ].forEach { $0.isActive = true }
-    }
-
-    private func createRecipesNavigationController() -> UINavigationController {
-        let recipesNavigationController = UINavigationController(rootViewController: UIViewController())
-        recipesNavigationController.tabBarItem = UITabBarItem(
-            title: Constants.recipesTitle,
-            image: .cakeBarIcon,
-            selectedImage: .cakeFullBarIcon
-        )
-        return recipesNavigationController
-    }
-
-    private func createFavoritesNavigationController() -> UINavigationController {
-        let favoritesNavigationController =
-            UINavigationController(rootViewController: UIViewController())
-        favoritesNavigationController.tabBarItem = UITabBarItem(
-            title: Constants.favoritesTitle,
-            image: .bookmarkBarIcon,
-            selectedImage: .bookmarkFullBarIcon
-        )
-        return favoritesNavigationController
-    }
-
-    private func createProfileNavigationController() -> UINavigationController {
-        let profileNavigationController = UINavigationController(rootViewController: UIViewController())
-        profileNavigationController.tabBarItem = UITabBarItem(
-            title: Constants.profileTitle,
-            image: .profileBarIcon,
-            selectedImage: .profileFullBarIcon
-        )
-        return profileNavigationController
     }
 }
