@@ -28,7 +28,7 @@ final class AppTabBarCoordinator: BaseCoordinator {
         add(coordinator: profileCoordinator)
 
         tabBarViewController?.setViewControllers(
-            [recipesModuleView, favoritesModuleView, profileModuleView],
+            [recipesCoordinator.rootController, favoritesCoordinator.rootController, profileCoordinator.rootController],
             animated: false
         )
 

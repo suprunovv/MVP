@@ -4,9 +4,9 @@
 import UIKit
 
 final class FavoritesCoordinator: BaseCoordinator {
-    private var navigationController: UINavigationController
+    private(set) var rootController: UINavigationController
 
     init(rootController: UIViewController) {
-        navigationController = UINavigationController(rootViewController: rootController)
+        self.rootController = UINavigationController(rootViewController: rootController)
     }
 }
