@@ -16,4 +16,5 @@ extension UIImage {
     static let eyeSlashImage = UIImage(systemName: "eye.slash.fill")
     static let profileAvatar = UIImage(named: "profileAvatar")
     static let pencil = UIImage(named: "pencil")
+    static let chevron = UIImage(named: "chevron")
 }

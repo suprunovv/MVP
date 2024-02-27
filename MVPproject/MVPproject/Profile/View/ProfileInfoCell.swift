@@ -6,10 +6,11 @@ import UIKit
 /// Ячейка информации о профиле
 final class ProfileInfoCell: UITableViewCell {
     // MARK: - Constants
+
     private enum Constants {
         static let avatarImageSize = 160.0
         static let avatarImageCornerRadius = avatarImageSize / 2
-        static let avatarImageBorderWidth = 2.0
+        static let avatarImageBorderWidth = 3.0
         static let profileToCellTopSpacing = 36.0
         static let profileToCellBottomSpacing = 29.0
         static let fullNameToAvatarSpacing = 26.0
@@ -20,6 +21,7 @@ final class ProfileInfoCell: UITableViewCell {
     static let reuseID = String(describing: ProfileInfoCell.self)
 
     // MARK: - Visual Components
+
     private let profileImageView: UIImageView = {
         let view = UIImageView()
         view.clipsToBounds = true
@@ -64,6 +66,7 @@ final class ProfileInfoCell: UITableViewCell {
     }()
 
     // MARK: - Initializers
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
@@ -75,13 +78,17 @@ final class ProfileInfoCell: UITableViewCell {
     }
 
     // MARK: - Public Methods
+
     func configureCell(_ profileInfo: ProfileInfo) {
         profileImageView.image = UIImage(named: profileInfo.avatarImageName)
         fullNameLabel.text = profileInfo.fullName
     }
 
     // MARK: - Private Methods
+
     private func setupCell() {
+        selectionStyle = .none
+        separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         contentView.addSubview(profileStackView)
         setupProfileStackViewConstraints()
     }
