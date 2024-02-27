@@ -13,6 +13,8 @@ final class LoginViewController: UIViewController {
         static let passwordLabelText = "Password"
         static let emailTextFiledPlaceholder = "Enter Email Address"
         static let passwordTextFiledPlaceholder = "Enter Password"
+        static let incorrectEmailText = "Incorrect format"
+        static let incorrectPasswordText = "You entered the wrong password"
     }
 
     // MARK: - Visual Compontnts
@@ -20,7 +22,7 @@ final class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Constants.loginTitle, for: .normal)
-        button.backgroundColor = .loginButtonColor
+        button.backgroundColor = .greenDarkButton
         button.tintColor = .white
         button.layer.cornerRadius = 12
         button.titleLabel?.font = .verdana(ofSize: 16)
@@ -46,6 +48,26 @@ final class LoginViewController: UIViewController {
         return label
     }()
 
+    private let incorrectEmailLabel: UILabel = {
+        let label = UILabel()
+        label.font = .verdanaBold(ofSize: 12)
+        label.text = Constants.incorrectEmailText
+        label.textColor = .redError
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let incorrectPasswordLabel: UILabel = {
+        let label = UILabel()
+        label.font = .verdanaBold(ofSize: 12)
+        label.text = Constants.incorrectPasswordText
+        label.textColor = .redError
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     private let passwordLabel: UILabel = {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 18)
@@ -58,7 +80,11 @@ final class LoginViewController: UIViewController {
     private let emailTextFiled: UITextField = {
         let textFiled = UITextField()
         textFiled.placeholder = Constants.emailTextFiledPlaceholder
-        textFiled.borderStyle = .roundedRect
+        textFiled.borderStyle = .none
+        textFiled.layer.borderColor = UIColor.systemGray.cgColor
+        textFiled.layer.borderWidth = 1
+        textFiled.clearButtonMode = .whileEditing
+        textFiled.backgroundColor = .white
         textFiled.clipsToBounds = true
         textFiled.layer.cornerRadius = 12
         textFiled.leftViewMode = .always
@@ -69,7 +95,11 @@ final class LoginViewController: UIViewController {
     private let passwordTextFiled: UITextField = {
         let textFiled = UITextField()
         textFiled.placeholder = Constants.passwordTextFiledPlaceholder
-        textFiled.borderStyle = .roundedRect
+        textFiled.isSecureTextEntry = true
+        textFiled.borderStyle = .none
+        textFiled.layer.borderColor = UIColor.systemGray.cgColor
+        textFiled.layer.borderWidth = 1
+        textFiled.backgroundColor = .white
         textFiled.clipsToBounds = true
         textFiled.layer.cornerRadius = 12
         textFiled.leftViewMode = .always
@@ -106,10 +136,18 @@ final class LoginViewController: UIViewController {
 
     private var passwordStackView: UIStackView!
 
+    var presenter: LoginPresenterProtocol?
+
     // MARK: Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setView()
+    }
+
+    // MARK: Private methods
+
+    private func setView() {
         view.backgroundColor = .white
         setupGradient()
         setTitleLabelConstraints()
@@ -119,9 +157,15 @@ final class LoginViewController: UIViewController {
         setSecureButton()
         setEmailFieldLeftImageView()
         setPasswordFieldLeftImageView()
+        addTargetButtons()
+        addTextFiledDelegate()
+        setIncorrectEmailLabelConstraint()
+        setIncorrectPasswordLabelConstraint()
     }
 
-    // MARK: Private methods
+    private func addTextFiledDelegate() {
+        emailTextFiled.delegate = self
+    }
 
     private func setupGradient() {
         let gradient = CAGradientLayer()
@@ -186,6 +230,22 @@ final class LoginViewController: UIViewController {
         ])
     }
 
+    private func setIncorrectEmailLabelConstraint() {
+        view.addSubview(incorrectEmailLabel)
+        NSLayoutConstraint.activate([
+            incorrectEmailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            incorrectEmailLabel.topAnchor.constraint(equalTo: emailStackView.bottomAnchor)
+        ])
+    }
+
+    private func setIncorrectPasswordLabelConstraint() {
+        view.addSubview(incorrectPasswordLabel)
+        NSLayoutConstraint.activate([
+            incorrectPasswordLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            incorrectPasswordLabel.topAnchor.constraint(equalTo: passwordStackView.bottomAnchor)
+        ])
+    }
+
     private func setSecureButton() {
         let view = makeTextFieldView(wrappedView: securePasswordButton)
         passwordTextFiled.rightView = view
@@ -208,5 +268,79 @@ final class LoginViewController: UIViewController {
         wrappedView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         wrappedView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         return view
+    }
+
+    private func addTargetButtons() {
+        loginButton.addTarget(self, action: #selector(tappLoginButton), for: .touchUpInside)
+        securePasswordButton.addTarget(self, action: #selector(secureButtonTapped), for: .touchUpInside)
+    }
+
+    @objc private func secureButtonTapped() {
+        presenter?.toggleSecureButton()
+    }
+
+    @objc private func tappLoginButton() {
+        let password = passwordTextFiled.text ?? ""
+        presenter?.validatePassword(password: password)
+    }
+}
+
+// MARK: - LoginViewController + LoginViewProtocol
+
+extension LoginViewController: LoginViewProtocol {
+    func updatePasswordSecuredUI(_ isSecured: Bool, image: UIImage?) {
+        securePasswordButton.setImage(image, for: .normal)
+        passwordTextFiled.isSecureTextEntry = isSecured
+    }
+
+    func setEmailValidationError(_ error: String?) {
+        emailTextFiled.layer.borderColor = UIColor.redError.cgColor
+        incorrectEmailLabel.isHidden = false
+        incorrectEmailLabel.text = error
+        emailLabel.textColor = .redError
+    }
+
+    func clearEmailValidationError() {
+        emailTextFiled.layer.borderColor = UIColor.systemGray.cgColor
+        incorrectEmailLabel.isHidden = true
+        emailLabel.textColor = .systemGray
+    }
+
+    func setPasswordValidationError(_ error: String?) {
+        passwordTextFiled.layer.borderColor = UIColor.redError.cgColor
+        incorrectPasswordLabel.isHidden = false
+        incorrectPasswordLabel.text = error
+        passwordTextFiled.textColor = .redError
+    }
+
+    func clearPasswordValidationError() {
+        passwordTextFiled.layer.borderColor = UIColor.systemGray.cgColor
+        incorrectPasswordLabel.isHidden = true
+        passwordTextFiled.textColor = .systemGray
+    }
+
+    func invalidePassword(_ bool: Bool, color: UIColor) {
+        passwordTextFiled.layer.borderColor = color.cgColor
+        incorrectPasswordLabel.isHidden = bool
+        passwordLabel.textColor = color
+    }
+
+    func isValideEmail(_ bool: Bool, color: UIColor) {
+        emailTextFiled.layer.borderColor = color.cgColor
+        incorrectEmailLabel.isHidden = bool
+        emailLabel.textColor = color
+    }
+
+    func goToSecondView() {
+        print("Перехожу")
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        if textField == emailTextFiled {
+            let text = emailTextFiled.text ?? ""
+            presenter?.emailValidate(email: text)
+        }
     }
 }

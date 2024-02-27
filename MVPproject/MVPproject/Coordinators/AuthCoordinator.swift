@@ -5,12 +5,13 @@ import UIKit
 
 final class AuthCoordinator: BaseCoordinator {
     var finishFlowHandler: (() -> ())?
-    private var navigationController = UINavigationController()
+    private var navigationController: UINavigationController!
 
     override func start() {
         let authModuleView = AuthModuleBuilder.makeModule()
-//        authModuleView.presenter?.authCoordinator = self
-        setAsRoot(authModuleView)
+        navigationController = UINavigationController(rootViewController: authModuleView)
+        authModuleView.presenter?.authCoordinator = self
+        setAsRoot(navigationController)
     }
 
     func didLogin() {

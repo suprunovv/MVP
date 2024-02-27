@@ -3,10 +3,11 @@
 
 import UIKit
 
-final class AuthModuleBuilder: Builder {
-    static func makeModule() -> UIViewController {
+final class AuthModuleBuilder {
+    static func makeModule() -> LoginViewController {
         let viewController = LoginViewController()
-//        let presenter = LoginPresenter(view: viewController)
+        let presenter = LoginPresenter(view: viewController)
+        viewController.presenter = presenter
         return viewController
     }
 }
