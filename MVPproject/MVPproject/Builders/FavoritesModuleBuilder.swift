@@ -3,7 +3,8 @@
 
 import UIKit
 
-final class FavoritesModuleBuilder: Builder {
+/// Сборщик модуля избранных
+final class FavoritesModuleBuilder {
     private enum Constants {
         static let title = "Favorites"
     }

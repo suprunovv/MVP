@@ -50,7 +50,7 @@ final class RecipelyAppTabBarController: UITabBarController {
 
     private func setupBorderTop() {
         tabBar.addSubview(topBorder)
-        [
+        NSLayoutConstraint.activate([
             topBorder.topAnchor.constraint(equalTo: tabBar.topAnchor),
             topBorder.leadingAnchor.constraint(
                 equalTo: tabBar.leadingAnchor,
@@ -60,6 +60,6 @@ final class RecipelyAppTabBarController: UITabBarController {
                 equalTo: tabBar.trailingAnchor,
                 constant: -Constants.borderToScreenSpacing
             )
-        ].forEach { $0.isActive = true }
+        ])
     }
 }

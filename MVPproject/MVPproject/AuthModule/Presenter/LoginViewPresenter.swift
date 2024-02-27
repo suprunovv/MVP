@@ -3,45 +3,44 @@
 
 import UIKit
 
+/// Протокол презентера логина
 protocol LoginPresenterProtocol: AnyObject {
+    /// Координатор потока авторизации
     var authCoordinator: AuthCoordinator? { get set }
     /// Метод получает пароль и валидирует его
     func validatePassword(password: String)
+    /// Метод валидации email
+    func validateEmail(email: String)
     /// Метод скрывает/показывает пароль и меняет картику кнопки с глазком
     func toggleSecureButton()
-    /// Метод валидации email
-    func emailValidate(email: String)
 }
 
+/// Протокол представления логина
 protocol LoginViewProtocol: AnyObject {
-    /// Меотод выполняет выполняет действие если пароль не валидный
-    func invalidePassword(_ bool: Bool, color: UIColor)
-    /// Метод выплняет действие по нажатию на кнопку secureButton
+    /// Метод обновляющий UI скрывающий/открывающий пароль
     func updatePasswordSecuredUI(_ isSecured: Bool, image: UIImage?)
-    /// Метод возвращает булевое значение (Правильный ли email)
-    func isValideEmail(_ bool: Bool, color: UIColor)
-    /// Метод вызывает переход на следующий экран
-    func goToSecondView()
-
-    // TODO: add documentation
+    /// Установка ошибки валидации email
     func setEmailValidationError(_ error: String?)
+    /// Установка ошибки валидации password
     func setPasswordValidationError(_ error: String?)
+    /// Сброс ошибки валидации email
     func clearPasswordValidationError()
+    /// Сброс ошибки валидации password
     func clearEmailValidationError()
 }
 
 /// Презентер для экрана логин
 final class LoginPresenter {
     weak var authCoordinator: AuthCoordinator?
-    private let loginFormValidator = LoginFormValidator()
-
     private weak var view: LoginViewProtocol?
-    init(view: LoginViewProtocol) {
-        self.view = view
-    }
 
     private var isPasswordSecured = true
     private var isValid = (password: false, login: false)
+    private let loginFormValidator = LoginFormValidator()
+
+    init(view: LoginViewProtocol) {
+        self.view = view
+    }
 }
 
 // MARK: - LoginPresenter + LoginPresenterProtocol
@@ -62,7 +61,7 @@ extension LoginPresenter: LoginPresenterProtocol {
         }
     }
 
-    func emailValidate(email: String) {
+    func validateEmail(email: String) {
         let validationError = loginFormValidator.validateEmail(email)
         if let validationError {
             view?.setEmailValidationError(validationError)

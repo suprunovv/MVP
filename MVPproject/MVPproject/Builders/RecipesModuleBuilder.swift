@@ -3,7 +3,8 @@
 
 import UIKit
 
-final class RecipesModuleBuilder: Builder {
+/// Сборщик модуля рецептов
+final class RecipesModuleBuilder {
     private enum Constants {
         static let title = "Recipes"
     }

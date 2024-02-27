@@ -318,29 +318,13 @@ extension LoginViewController: LoginViewProtocol {
         incorrectPasswordLabel.isHidden = true
         passwordTextFiled.textColor = .systemGray
     }
-
-    func invalidePassword(_ bool: Bool, color: UIColor) {
-        passwordTextFiled.layer.borderColor = color.cgColor
-        incorrectPasswordLabel.isHidden = bool
-        passwordLabel.textColor = color
-    }
-
-    func isValideEmail(_ bool: Bool, color: UIColor) {
-        emailTextFiled.layer.borderColor = color.cgColor
-        incorrectEmailLabel.isHidden = bool
-        emailLabel.textColor = color
-    }
-
-    func goToSecondView() {
-        print("Перехожу")
-    }
 }
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         if textField == emailTextFiled {
             let text = emailTextFiled.text ?? ""
-            presenter?.emailValidate(email: text)
+            presenter?.validateEmail(email: text)
         }
     }
 }

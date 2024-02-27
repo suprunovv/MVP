@@ -3,7 +3,8 @@
 
 import UIKit
 
-final class ProfileModuleBuilder: Builder {
+/// Сборщик модуля профиля
+final class ProfileModuleBuilder {
     private enum Constants {
         static let title = "Profile"
     }

@@ -1,7 +1,7 @@
 // Coordinator.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Протокол описывающий объекты, который выступают в роли Координатора
+/// Протокол описывающий объекты, которые выступают в роли Координатора
 protocol Coordinator: AnyObject {
     /// Дочерние координаторы
     var childCoordinators: [Coordinator] { get set }
