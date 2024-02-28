@@ -32,7 +32,7 @@ final class AppTabBarCoordinator: BaseCoordinator {
             animated: false
         )
 
-        if let tabBarViewController {
+        if let tabBarViewController = tabBarViewController {
             setAsRoot(tabBarViewController)
         }
     }
