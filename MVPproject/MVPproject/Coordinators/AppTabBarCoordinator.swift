@@ -12,18 +12,21 @@ final class AppTabBarCoordinator: BaseCoordinator {
         /// Set Recipes
         let recipesModuleView = RecipesModuleBuilder.makeModule()
         let recipesCoordinator = RecipesCoordinator(rootController: recipesModuleView)
+        // TODO: uncomment when presenter is implemented for that flow
 //        recipesModuleView.presenter?.recipesCoordinator = recipesCoordinator
         add(coordinator: recipesCoordinator)
 
         /// Set Favorites
         let favoritesModuleView = FavoritesModuleBuilder.makeModule()
         let favoritesCoordinator = FavoritesCoordinator(rootController: favoritesModuleView)
+        // TODO: uncomment when presenter is implemented for that flow
 //        favoritesModuleView.presenter?.favoritesCoordinator = favoritesCoordinator
         add(coordinator: favoritesCoordinator)
 
         /// Set Profile
         let profileModuleView = ProfileModuleBuilder.makeModule()
         let profileCoordinator = ProfileCoordinator(rootController: profileModuleView)
+        // TODO: uncomment when presenter is implemented for that flow
 //        profileModuleView.presenter?.profileCoordinator = profileCoordinator
         add(coordinator: profileCoordinator)
 

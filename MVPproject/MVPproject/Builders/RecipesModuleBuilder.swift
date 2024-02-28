@@ -4,13 +4,13 @@
 import UIKit
 
 /// Сборщик модуля рецептов
-final class RecipesModuleBuilder {
+final class RecipesModuleBuilder: Builder {
     private enum Constants {
         static let title = "Recipes"
     }
 
     static func makeModule() -> UIViewController {
-        // TODO: replace with real VC
+        // TODO: replace with real VC and setup presenter
         let viewController = UIViewController()
 //        let recipesPresenter = RecipesPresenter(view: viewController)
 //        viewController.presenter = recipesPresenter
