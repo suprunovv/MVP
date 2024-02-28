@@ -34,7 +34,7 @@
 		DA3785682B8E31E7005A190A /* ProfileInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */; };
 		DA37856D2B8E32E9005A190A /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37856C2B8E32E9005A190A /* ProfileInfo.swift */; };
 		DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */; };
-		DA3785712B8E342B005A190A /* ProfileTableConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785702B8E342B005A190A /* ProfileTableConfiguration.swift */; };
+		DA3785712B8E342B005A190A /* ProfileConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785702B8E342B005A190A /* ProfileConfiguration.swift */; };
 		DA3785732B8E3838005A190A /* ProfileSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785722B8E3838005A190A /* ProfileSettingCell.swift */; };
 		DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785742B8E6482005A190A /* LoginFormValidator.swift */; };
 		DA37857C2B8E7040005A190A /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785792B8E7040005A190A /* LoginViewPresenter.swift */; };
@@ -70,7 +70,7 @@
 		DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoCell.swift; sourceTree = "<group>"; };
 		DA37856C2B8E32E9005A190A /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingOption.swift; sourceTree = "<group>"; };
-		DA3785702B8E342B005A190A /* ProfileTableConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableConfiguration.swift; sourceTree = "<group>"; };
+		DA3785702B8E342B005A190A /* ProfileConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileConfiguration.swift; sourceTree = "<group>"; };
 		DA3785722B8E3838005A190A /* ProfileSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCell.swift; sourceTree = "<group>"; };
 		DA3785742B8E6482005A190A /* LoginFormValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormValidator.swift; sourceTree = "<group>"; };
 		DA3785792B8E7040005A190A /* LoginViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
@@ -289,7 +289,7 @@
 			children = (
 				DA37856C2B8E32E9005A190A /* ProfileInfo.swift */,
 				DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */,
-				DA3785702B8E342B005A190A /* ProfileTableConfiguration.swift */,
+				DA3785702B8E342B005A190A /* ProfileConfiguration.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -423,7 +423,6 @@
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
 				C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */,
-				DA37855E2B8E226F005A190A /* ProfileModuleBuilder.swift in Sources */,
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,
 				52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */,
 				DA37853D2B8E0A51005A190A /* Coordinator.swift in Sources */,
@@ -444,7 +443,7 @@
 				DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */,
 				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,
 				DA37856D2B8E32E9005A190A /* ProfileInfo.swift in Sources */,
-				DA3785712B8E342B005A190A /* ProfileTableConfiguration.swift in Sources */,
+				DA3785712B8E342B005A190A /* ProfileConfiguration.swift in Sources */,
 				DA3785662B8E30A9005A190A /* UIView+Extension.swift in Sources */,
 				DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */,
 			);

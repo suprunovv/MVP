@@ -1,42 +1,47 @@
 // ProfilePresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
-//
-//  ProfilePresenter.swift
-//  MVPproject
-//
-//  Created by Қадыр Маратұлы on 28.02.2024.
-//
 import UIKit
 
+/// Протокол презентера профиля
 protocol ProfilePresenterProtocol: AnyObject {
-    var profileCoordinator: ProfileCoordinator? { get set }
-
-    // func editFullname(fullName: String)
+    /// Обновление данных профиля
+    func refreshProfileData()
+    /// Обработка запроса на изменение имени
+    func editNameButtonTapped()
+    /// Обработка изменения имени
+    func handleNameChanged(_ fullName: String)
 }
 
-protocol ProfileViewProtocol: AnyObject {
-    func showBottomSheet()
-}
-
+/// Презентер экрана профиля
 final class ProfilePresenter {
-    weak var profileCoordinator: ProfileCoordinator? // Это простой делагат
-    // Обязательно weak , а то у нас будет сильная зависемость
-
+    private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
 
-    init(view: ProfileViewProtocol) {
+    private var profileConfiguration = ProfileConfiguration()
+
+    init(view: ProfileViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view
+        profileCoordinator = coordinator
     }
 }
 
-// Реализуем или предаем как понял команду для вью
-extension ProfilePresenter: ProfilePresenterProtocol {
-//    func editFullname(fullName: String) {
-//
-//    }
+// MARK: - ProfilePresenter + ProfilePresenterProtocol
 
-    func clickedBonusButton() {
-        view?.showBottomSheet()
+extension ProfilePresenter: ProfilePresenterProtocol {
+    func handleNameChanged(_ fullName: String) {
+        profileConfiguration.updateFullName(fullName)
+        view?.updateProfile(profileCells: profileConfiguration.profileTableCells)
+    }
+
+    func editNameButtonTapped() {
+        view?.showNameEdit(
+            title: "Change your name and surname",
+            currentName: profileConfiguration.profileInfo.fullName
+        )
+    }
+
+    func refreshProfileData() {
+        view?.updateProfile(profileCells: profileConfiguration.profileTableCells)
     }
 }

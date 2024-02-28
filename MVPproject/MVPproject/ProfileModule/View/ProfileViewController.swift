@@ -3,15 +3,30 @@
 
 import UIKit
 
+/// протокол представления профиля
+protocol ProfileViewProtocol: AnyObject {
+    /// Обновление страницы пофиля
+    func updateProfile(profileCells: ProfileConfiguration.ProfileCells)
+    /// Вывод UI для изменения имени
+    func showNameEdit(title: String, currentName: String)
+}
+
 /// Профиль
 final class ProfileViewController: UIViewController {
+    typealias ProfileCells = ProfileConfiguration.ProfileCells
+
+    // MARK: - Constants
+
     private enum Constants {
         static let title = "Profile"
+        static let cancelEditNameButtonText = "Cancel"
+        static let submitEditNameButtonText = "Ok"
+        static let editNameTextFieldPlaceholder = "Name Surname"
     }
 
-    var presenter: ProfilePresenter?
+    // MARK: - Visual Components
 
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: ProfileInfoCell.reuseID)
@@ -20,12 +35,39 @@ final class ProfileViewController: UIViewController {
         return tableView
     }()
 
-    var profileTableConfiguration = ProfileTableConfiguration()
+    private lazy var editNameAlert: UIAlertController = {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        let submitHandler: (UIAlertAction) -> Void = { [weak self, weak alert] _ in
+            if let updatedName = alert?.textFields?[0].text {
+                self?.presenter?.handleNameChanged(updatedName)
+            }
+        }
+        alert.addTextField { $0.placeholder = Constants.editNameTextFieldPlaceholder }
+        let cancelAction = UIAlertAction(title: Constants.cancelEditNameButtonText, style: .cancel)
+        let submitAction = UIAlertAction(
+            title: Constants.submitEditNameButtonText,
+            style: .default,
+            handler: submitHandler
+        )
+        alert.addAction(submitAction)
+        alert.addAction(cancelAction)
+        alert.preferredAction = submitAction
+        return alert
+    }()
+
+    // MARK: - Public Properties
+
+    var presenter: ProfilePresenter?
+
+    // MARK: - Private Properties
+
+    private var profileCells: ProfileCells = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItem()
         setupView()
+        presenter?.refreshProfileData()
     }
 
     private func setupNavigationItem() {
@@ -49,19 +91,17 @@ final class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-
-    @objc private func startButtonTapped() {
-        presenter?.clickedBonusButton()
-    }
 }
+
+// MARK: - ProfileViewController + UITableViewDataSource
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        profileTableConfiguration.profileTableCells.count
+        profileCells.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = profileTableConfiguration.profileTableCells[indexPath.row]
+        let cell = profileCells[indexPath.row]
         switch cell {
         case let .profile(profileInfo):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileInfoCell.reuseID) as? ProfileInfoCell
@@ -77,5 +117,29 @@ extension ProfileViewController: UITableViewDataSource {
             cell.configureCell(profileSetting)
             return cell
         }
+    }
+}
+
+// MARK: - ProfileViewController + ProfileViewProtocol
+
+extension ProfileViewController: ProfileViewProtocol {
+    func showNameEdit(title: String, currentName: String) {
+        guard let nameTextField = editNameAlert.textFields?[0] else { return }
+        editNameAlert.title = title
+        nameTextField.text = currentName
+        present(editNameAlert, animated: true)
+    }
+
+    func updateProfile(profileCells: ProfileCells) {
+        self.profileCells = profileCells
+        tableView.reloadData()
+    }
+}
+
+// MARK: - ProfileViewController + ProfileInfoCellDelegate
+
+extension ProfileViewController: ProfileInfoCellDelegate {
+    func editNameButtonTapped() {
+        presenter?.editNameButtonTapped()
     }
 }

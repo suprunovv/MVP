@@ -24,14 +24,16 @@ final class AppTabBarCoordinator: BaseCoordinator {
         add(coordinator: favoritesCoordinator)
 
         /// Set Profile
-        let profileModuleView = ModuleBuilder.makeProfileModule()
-        let profileCoordinator = ProfileCoordinator(rootController: profileModuleView)
-        // TODO: uncomment when presenter is implemented for that flow
-//        profileModuleView.presenter?.profileCoordinator = profileCoordinator
+        let profileCoordinator = ProfileCoordinator()
+        profileCoordinator.start()
         add(coordinator: profileCoordinator)
 
         recipelyAppTabBarController?.setViewControllers(
-            [recipesCoordinator.rootController, favoritesCoordinator.rootController, profileCoordinator.rootController],
+            [
+                profileCoordinator.navigationController,
+                recipesCoordinator.rootController,
+                favoritesCoordinator.rootController,
+            ].compactMap { $0 },
             animated: false
         )
 

@@ -3,14 +3,13 @@
 
 import UIKit
 
+/// протокол обработки событий в ячейке ProfileInfo
 protocol ProfileInfoCellDelegate: AnyObject {
-    func editFullname()
+    func editNameButtonTapped()
 }
 
 /// Ячейка информации о профиле
 final class ProfileInfoCell: UITableViewCell {
-    var delegate: ProfileInfoCellDelegate?
-
     // MARK: - Constants
 
     private enum Constants {
@@ -55,7 +54,7 @@ final class ProfileInfoCell: UITableViewCell {
         button.setImage(.pencil, for: .normal)
         button.tintColor = .grayText
         button.disableAutoresizingMask()
-        button.addTarget(self, action: #selector(clickedEditButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -71,6 +70,10 @@ final class ProfileInfoCell: UITableViewCell {
         profileStack.disableAutoresizingMask()
         return profileStack
     }()
+
+    // MARK: - Public Properties
+
+    weak var delegate: ProfileInfoCellDelegate?
 
     // MARK: - Initializers
 
@@ -119,40 +122,7 @@ final class ProfileInfoCell: UITableViewCell {
         ])
     }
 
-    @objc private func clickedEditButton() {
-        delegate?.editFullname()
-    }
-}
-
-// Inside ProfileViewController class
-extension ProfileViewController: ProfileInfoCellDelegate {
-    func editFullname() {
-        let alertController = UIAlertController(title: "Change Full Name", message: nil, preferredStyle: .alert)
-
-        alertController.addTextField { textField in
-            textField.placeholder = "Enter Full Name"
-        }
-
-        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
-            if let newName = alertController.textFields?.first?.text {
-                if case var .profile(profileInfo) = self.profileTableConfiguration.profileTableCells[0] {
-                    profileInfo.fullName = newName
-                    self.profileTableConfiguration.profileTableCells[0] = .profile(profileInfo)
-
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            }
-        }
-
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-        alertController.addAction(cancel)
-        alertController.addAction(okAction)
-
-        alertController.preferredAction = okAction
-
-        present(alertController, animated: true, completion: nil)
+    @objc private func editButtonTapped() {
+        delegate?.editNameButtonTapped()
     }
 }

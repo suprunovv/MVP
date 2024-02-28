@@ -44,11 +44,10 @@ final class ModuleBuilder {
         return viewController
     }
 
-    static func makeProfileModule() -> UIViewController {
-        // TODO: replace with real VC and setup presenter
-        let viewController = UIViewController()
-//        let profilePresenter = ProfilePresenter(view: viewController)
-//        viewController.presenter = profilePresenter
+    static func makeProfileModule(coordinator: ProfileCoordinator) -> UIViewController {
+        let viewController = ProfileViewController()
+        let profilePresenter = ProfilePresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = profilePresenter
         viewController.tabBarItem = UITabBarItem(
             title: Constants.profileTitle,
             image: .profileBarIcon,

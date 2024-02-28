@@ -5,9 +5,11 @@ import UIKit
 
 /// Координатор профиля
 final class ProfileCoordinator: BaseCoordinator {
-    private(set) var rootController: UINavigationController
+    private(set) var navigationController: UINavigationController?
 
-    init(rootController: UIViewController) {
-        self.rootController = UINavigationController(rootViewController: rootController)
+    override func start() {
+        guard let profileModuleView = ModuleBuilder.makeProfileModule(coordinator: self) as? ProfileViewController
+        else { return }
+        navigationController = UINavigationController(rootViewController: profileModuleView)
     }
 }
