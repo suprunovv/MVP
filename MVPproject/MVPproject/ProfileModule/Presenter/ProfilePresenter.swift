@@ -35,13 +35,13 @@ final class ProfilePresenter {
 extension ProfilePresenter: ProfilePresenterProtocol {
     func settingSelected(_ profileSettingType: ProfileConfiguration.ProfileSettingType) {
         switch profileSettingType {
-            case .bonuses:
-                showBonuses()
-            default:
-                break
+        case .bonuses:
+            showBonuses()
+        default:
+            break
         }
     }
-    
+
     func showBonuses() {
         profileCoordinator?.showBonuses()
     }

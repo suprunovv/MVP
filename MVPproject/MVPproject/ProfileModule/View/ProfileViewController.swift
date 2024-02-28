@@ -106,14 +106,14 @@ extension ProfileViewController: UITableViewDataSource {
         switch cell {
         case let .profile(profileInfo):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileInfoCell.reuseID) as? ProfileInfoCell
-            else { return UITableViewCell() }
+            else { return .init() }
             cell.delegate = self
             cell.configureCell(profileInfo)
             return cell
         case let .setting(profileSetting):
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: ProfileSettingCell.reuseID) as? ProfileSettingCell
-            else { return UITableViewCell() }
+            else { return .init() }
             cell.configureCell(profileSetting)
             return cell
         }
