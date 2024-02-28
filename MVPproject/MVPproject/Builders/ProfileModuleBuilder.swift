@@ -4,13 +4,13 @@
 import UIKit
 
 /// Сборщик модуля профиля
-final class ProfileModuleBuilder {
+final class ProfileModuleBuilder: Builder {
     private enum Constants {
         static let title = "Profile"
     }
 
     static func makeModule() -> UIViewController {
-        // TODO: replace with real VC
+        // TODO: replace with real VC and setup presenter
         let viewController = UIViewController()
 //        let profilePresenter = ProfilePresenter(view: viewController)
 //        viewController.presenter = profilePresenter

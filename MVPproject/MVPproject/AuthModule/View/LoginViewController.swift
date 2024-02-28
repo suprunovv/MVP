@@ -3,6 +3,36 @@
 
 import UIKit
 
+/// Протокол представления логина
+protocol LoginViewProtocol: AnyObject {
+    /// Метод обновляющий UI скрывающий/открывающий пароль
+    func updatePasswordSecuredUI(_ isSecured: Bool, image: UIImage?)
+    /// Метод вызывает переход на следующий экран
+    func goToSecondView()
+    /// Метод запускает индикатор загрузки
+    func startActivityIndicator()
+    /// Метод останавливает индикатор загрузки
+    func stopActivityIndicator()
+    /// Метод убирает текст у кнопки Login
+    func hideTextLoginButton()
+    /// Метод возвращает текст кнопке Login
+    func returnTextLoginButton()
+    /// Метод показывает вьшку с предупреждением что вход не выполнен
+    func presentErrorLoginView()
+    /// Метод скрывает вьюшку с предупреждением что вход не выполнен
+    func hideErrorLoginView()
+    /// Установка ошибки валидации email
+    func setEmailValidationError(_ error: String?)
+    /// Установка ошибки валидации password
+    func setPasswordValidationError(_ error: String?)
+    /// Сброс ошибки валидации email
+    func clearPasswordValidationError()
+    /// Сброс ошибки валидации password
+    func clearEmailValidationError()
+    // Метод скрывает клавиатуру по нажатию на любую область экрана
+    func hideKeyboardOnTap()
+}
+
 /// Вью экрана входа
 final class LoginViewController: UIViewController {
     // MARK: - Constants
@@ -159,9 +189,41 @@ final class LoginViewController: UIViewController {
         return label
     }()
 
-    private var emailStackView: UIStackView!
+    private lazy var emailStackView: UIStackView = {
+        let emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextFiled])
+        emailStackView.axis = .vertical
+        emailStackView.distribution = .fill
+        emailStackView.spacing = 6
+        emailStackView.alpha = 0
+        view.addSubview(emailStackView)
+        emailStackView.translatesAutoresizingMaskIntoConstraints = false
+        let trailingEmailStack = emailStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        trailingEmailStack.isActive = true
+        emailStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.89).isActive = true
+        emailStackView.heightAnchor.constraint(equalToConstant: 88).isActive = true
+        emailStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 137).isActive = true
+        emailTextFiled.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-    private var passwordStackView: UIStackView!
+        return emailStackView
+    }()
+
+    private lazy var passwordStackView: UIStackView = {
+        let passwordStackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextFiled])
+        passwordStackView.axis = .vertical
+        passwordStackView.distribution = .fill
+        passwordStackView.spacing = 6
+        passwordStackView.alpha = 0
+        view.addSubview(passwordStackView)
+        passwordStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            passwordStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            passwordStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            passwordStackView.heightAnchor.constraint(equalToConstant: 88),
+            passwordStackView.topAnchor.constraint(equalTo: emailStackView.bottomAnchor, constant: 23),
+            passwordTextFiled.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        return passwordStackView
+    }()
 
     var presenter: LoginPresenterProtocol?
 
@@ -183,8 +245,7 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .white
         setupGradient()
         setTitleLabelConstraints()
-        setEmailStackView()
-        setPasswordStackView()
+        setTextFieldsStackViewsAnimation()
         setLoginButtonConstraints()
         setSecureButton()
         setEmailFieldLeftImageView()
@@ -265,42 +326,10 @@ final class LoginViewController: UIViewController {
         ])
     }
 
-    private func setEmailStackView() {
-        emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextFiled])
-        emailStackView.axis = .vertical
-        emailStackView.distribution = .fill
-        emailStackView.spacing = 6
-        emailStackView.alpha = 0
-        view.addSubview(emailStackView)
-        emailStackView.translatesAutoresizingMaskIntoConstraints = false
-        let trailingEmailStack = emailStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        trailingEmailStack.isActive = true
-        emailStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.89).isActive = true
-        emailStackView.heightAnchor.constraint(equalToConstant: 88).isActive = true
-        emailStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 137).isActive = true
-        emailTextFiled.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
+    private func setTextFieldsStackViewsAnimation() {
         UIView.animate(withDuration: 2) { [weak self] in
             self?.emailStackView.alpha = 1
         }
-    }
-
-    private func setPasswordStackView() {
-        passwordStackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextFiled])
-        passwordStackView.axis = .vertical
-        passwordStackView.distribution = .fill
-        passwordStackView.spacing = 6
-        passwordStackView.alpha = 0
-        view.addSubview(passwordStackView)
-        passwordStackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            passwordStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            passwordStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            passwordStackView.heightAnchor.constraint(equalToConstant: 88),
-            passwordStackView.topAnchor.constraint(equalTo: emailStackView.bottomAnchor, constant: 23),
-            passwordTextFiled.heightAnchor.constraint(equalToConstant: 50)
-        ])
-
         UIView.animate(withDuration: 2) { [weak self] in
             self?.passwordStackView.alpha = 1
         }

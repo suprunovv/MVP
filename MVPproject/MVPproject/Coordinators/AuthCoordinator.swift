@@ -3,15 +3,18 @@
 
 import UIKit
 
+/// Координатор авторизации
 final class AuthCoordinator: BaseCoordinator {
     var finishFlowHandler: (() -> ())?
-    private var navigationController: UINavigationController!
+    private var navigationController: UINavigationController?
 
     override func start() {
-        let authModuleView = AuthModuleBuilder.makeModule()
+        guard let authModuleView = AuthModuleBuilder.makeModule() as? LoginViewController else { return }
         navigationController = UINavigationController(rootViewController: authModuleView)
         authModuleView.presenter?.authCoordinator = self
-        setAsRoot(navigationController)
+        if let navigationController = navigationController {
+            setAsRoot(navigationController)
+        }
     }
 
     func didLogin() {
