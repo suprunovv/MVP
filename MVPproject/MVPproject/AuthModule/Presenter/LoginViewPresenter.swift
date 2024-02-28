@@ -17,36 +17,6 @@ protocol LoginPresenterProtocol: AnyObject {
     func hideViewKeyboard()
 }
 
-/// Протокол представления логина
-protocol LoginViewProtocol: AnyObject {
-    /// Метод обновляющий UI скрывающий/открывающий пароль
-    func updatePasswordSecuredUI(_ isSecured: Bool, image: UIImage?)
-    /// Метод вызывает переход на следующий экран
-    func goToSecondView()
-    /// Метод запускает индикатор загрузки
-    func startActivityIndicator()
-    /// Метод останавливает индикатор загрузки
-    func stopActivityIndicator()
-    /// Метод убирает текст у кнопки Login
-    func hideTextLoginButton()
-    /// Метод возвращает текст кнопке Login
-    func returnTextLoginButton()
-    /// Метод показывает вьшку с предупреждением что вход не выполнен
-    func presentErrorLoginView()
-    /// Метод скрывает вьюшку с предупреждением что вход не выполнен
-    func hideErrorLoginView()
-    /// Установка ошибки валидации email
-    func setEmailValidationError(_ error: String?)
-    /// Установка ошибки валидации password
-    func setPasswordValidationError(_ error: String?)
-    /// Сброс ошибки валидации email
-    func clearPasswordValidationError()
-    /// Сброс ошибки валидации password
-    func clearEmailValidationError()
-    // Метод скрывает клавиатуру по нажатию на любую область экрана
-    func hideKeyboardOnTap()
-}
-
 /// Презентер для экрана логин
 final class LoginPresenter {
     weak var authCoordinator: AuthCoordinator?

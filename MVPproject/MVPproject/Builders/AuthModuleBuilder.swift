@@ -4,8 +4,8 @@
 import UIKit
 
 /// Сборщик модуля авторизации
-final class AuthModuleBuilder {
-    static func makeModule() -> LoginViewController {
+final class AuthModuleBuilder: Builder {
+    static func makeModule() -> UIViewController {
         let viewController = LoginViewController()
         let presenter = LoginPresenter(view: viewController)
         viewController.presenter = presenter
