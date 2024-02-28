@@ -16,7 +16,7 @@ struct ProfileTableConfiguration {
     private static let termsSetting = ProfileSettingOption(title: "Terms & Privacy Policy", iconImageName: "paper")
     private static let logoutSetting = ProfileSettingOption(title: "Log out", iconImageName: "logout")
 
-    let profileTableCells: [ProfileCellType] = [
+    var profileTableCells: [ProfileCellType] = [
         .profile(ProfileTableConfiguration.profileInfoMock),
         .setting(bonusesSetting),
         .setting(termsSetting),

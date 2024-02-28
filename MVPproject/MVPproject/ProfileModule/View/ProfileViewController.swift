@@ -5,15 +5,13 @@ import UIKit
 
 /// Профиль
 final class ProfileViewController: UIViewController {
-    // MARK: - Constants
-
     private enum Constants {
         static let title = "Profile"
     }
 
-    // MARK: - Visual Components
+    var presenter: ProfilePresenter?
 
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: ProfileInfoCell.reuseID)
@@ -22,19 +20,13 @@ final class ProfileViewController: UIViewController {
         return tableView
     }()
 
-    // MARK: - Private Properties
-
-    private let profileTableConfiguration = ProfileTableConfiguration()
-
-    // MARK: - Life Cycle
+    var profileTableConfiguration = ProfileTableConfiguration()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItem()
         setupView()
     }
-
-    // MARK: - Private Methods
 
     private func setupNavigationItem() {
         title = Constants.title
@@ -57,9 +49,11 @@ final class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-}
 
-// MARK: - ProfileViewController + UITableViewDataSource
+    @objc private func startButtonTapped() {
+        presenter?.clickedBonusButton()
+    }
+}
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -70,15 +64,16 @@ extension ProfileViewController: UITableViewDataSource {
         let cell = profileTableConfiguration.profileTableCells[indexPath.row]
         switch cell {
         case let .profile(profileInfo):
-            guard let cell = tableView
-                .dequeueReusableCell(withIdentifier: ProfileInfoCell.reuseID) as? ProfileInfoCell
-            else { return .init() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileInfoCell.reuseID) as? ProfileInfoCell
+            else { return UITableViewCell() }
+            cell.delegate = self
             cell.configureCell(profileInfo)
             return cell
         case let .setting(profileSetting):
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: ProfileSettingCell.reuseID) as? ProfileSettingCell
-            else { return .init() }
+            else { return UITableViewCell() }
+            cell.delegate = self
             cell.configureCell(profileSetting)
             return cell
         }
