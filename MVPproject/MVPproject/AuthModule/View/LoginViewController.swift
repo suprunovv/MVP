@@ -457,7 +457,7 @@ extension LoginViewController: LoginViewProtocol {
     }
 
     func goToSecondView() {
-        print("Перехожу")
+        passwordTextFiled.textColor = .systemGray
     }
 }
 
@@ -465,7 +465,7 @@ extension LoginViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         if textField == emailTextFiled {
             let text = emailTextFiled.text ?? ""
-            presenter?.emailValidate(email: text)
+            presenter?.validateEmail(email: text)
         }
     }
 

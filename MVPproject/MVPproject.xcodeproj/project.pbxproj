@@ -28,7 +28,6 @@
 		DA37854F2B8E1AE7005A190A /* RecipesModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37854E2B8E1AE7005A190A /* RecipesModuleBuilder.swift */; };
 		DA3785512B8E1C2E005A190A /* RecipesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785502B8E1C2E005A190A /* RecipesCoordinator.swift */; };
 		DA3785592B8E20DF005A190A /* FavoritesModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785582B8E20DF005A190A /* FavoritesModuleBuilder.swift */; };
-		DA37855C2B8E211F005A190A /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37855B2B8E211F005A190A /* Builder.swift */; };
 		DA37855E2B8E226F005A190A /* ProfileModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37855D2B8E226F005A190A /* ProfileModuleBuilder.swift */; };
 		DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37855F2B8E2345005A190A /* FavoritesCoordinator.swift */; };
 		DA3785622B8E2392005A190A /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785612B8E2392005A190A /* ProfileCoordinator.swift */; };
@@ -67,7 +66,6 @@
 		DA37854E2B8E1AE7005A190A /* RecipesModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesModuleBuilder.swift; sourceTree = "<group>"; };
 		DA3785502B8E1C2E005A190A /* RecipesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCoordinator.swift; sourceTree = "<group>"; };
 		DA3785582B8E20DF005A190A /* FavoritesModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModuleBuilder.swift; sourceTree = "<group>"; };
-		DA37855B2B8E211F005A190A /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		DA37855D2B8E226F005A190A /* ProfileModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModuleBuilder.swift; sourceTree = "<group>"; };
 		DA37855F2B8E2345005A190A /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
 		DA3785612B8E2392005A190A /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 		DA37855A2B8E2113005A190A /* Builders */ = {
 			isa = PBXGroup;
 			children = (
-				DA37855B2B8E211F005A190A /* Builder.swift */,
 				DA37854A2B8E1955005A190A /* AuthModuleBuilder.swift */,
 				DA37854E2B8E1AE7005A190A /* RecipesModuleBuilder.swift */,
 				DA3785582B8E20DF005A190A /* FavoritesModuleBuilder.swift */,
@@ -423,7 +420,6 @@
 				DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
-				DA37855C2B8E211F005A190A /* Builder.swift in Sources */,
 				DA37855E2B8E226F005A190A /* ProfileModuleBuilder.swift in Sources */,
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,
 				52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */,

@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Расширения для доступа к картинкам через точку
+/// Расширения для быстрого доступа к картинкам
 extension UIImage {
     static let bookmarkBarIcon = UIImage(named: "bookmarkBarIcon")
     static let bookmarkFullBarIcon = UIImage(named: "bookmarkFullBarIcon")

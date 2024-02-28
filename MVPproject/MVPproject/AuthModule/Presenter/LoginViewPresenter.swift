@@ -3,20 +3,23 @@
 
 import UIKit
 
+/// Протокол презентера логина
 protocol LoginPresenterProtocol: AnyObject {
+    /// Координатор потока авторизации
     var authCoordinator: AuthCoordinator? { get set }
     /// Метод получает пароль и валидирует его
     func validatePassword(password: String)
+    /// Метод валидации email
+    func validateEmail(email: String)
     /// Метод скрывает/показывает пароль и меняет картику кнопки с глазком
     func toggleSecureButton()
-    /// Метод валидации email
-    func emailValidate(email: String)
     /// Метод обрабатывает нажатие на вью и вызывает у нее метод скрывающий клавиатуру
     func hideViewKeyboard()
 }
 
+/// Протокол представления логина
 protocol LoginViewProtocol: AnyObject {
-    /// Метод выплняет действие по нажатию на кнопку secureButton
+    /// Метод обновляющий UI скрывающий/открывающий пароль
     func updatePasswordSecuredUI(_ isSecured: Bool, image: UIImage?)
     /// Метод вызывает переход на следующий экран
     func goToSecondView()
@@ -32,10 +35,13 @@ protocol LoginViewProtocol: AnyObject {
     func presentErrorLoginView()
     /// Метод скрывает вьюшку с предупреждением что вход не выполнен
     func hideErrorLoginView()
-    // TODO: add documentation
+    /// Установка ошибки валидации email
     func setEmailValidationError(_ error: String?)
+    /// Установка ошибки валидации password
     func setPasswordValidationError(_ error: String?)
+    /// Сброс ошибки валидации email
     func clearPasswordValidationError()
+    /// Сброс ошибки валидации password
     func clearEmailValidationError()
     // Метод скрывает клавиатуру по нажатию на любую область экрана
     func hideKeyboardOnTap()
@@ -44,15 +50,12 @@ protocol LoginViewProtocol: AnyObject {
 /// Презентер для экрана логин
 final class LoginPresenter {
     weak var authCoordinator: AuthCoordinator?
-    private let loginFormValidator = LoginFormValidator()
-    private var timer = Timer()
     private weak var view: LoginViewProtocol?
-    init(view: LoginViewProtocol) {
-        self.view = view
-    }
 
     private var isPasswordSecured = true
     private var isValid = (password: false, login: false)
+    private let loginFormValidator = LoginFormValidator()
+    private var timer = Timer()
 
     private func startTimer(timeInterval: TimeInterval, handler: @escaping (Timer) -> Void) {
         timer = Timer.scheduledTimer(
@@ -60,6 +63,10 @@ final class LoginPresenter {
             repeats: false,
             block: handler
         )
+    }
+
+    init(view: LoginViewProtocol) {
+        self.view = view
     }
 }
 
@@ -97,7 +104,7 @@ extension LoginPresenter: LoginPresenterProtocol {
         }
     }
 
-    func emailValidate(email: String) {
+    func validateEmail(email: String) {
         let validationError = loginFormValidator.validateEmail(email)
         if let validationError = validationError {
             view?.setEmailValidationError(validationError)
