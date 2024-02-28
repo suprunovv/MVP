@@ -1,8 +1,8 @@
 // ProfileConfiguration.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Кнфигурация таблицы на экране профиля
-struct ProfileConfiguration {
+/// Кнфигурация профиля
+final class ProfileConfiguration {
     typealias ProfileCells = [ProfileCellType]
     /// варианты ячеек на экране профиля
     enum ProfileCellType {
@@ -12,10 +12,38 @@ struct ProfileConfiguration {
         case setting(ProfileSettingOption)
     }
 
-    private static let profileInfoMock = ProfileInfo(avatarImageName: "profileAvatar", fullName: "Surname Name")
-    private static let bonusesSetting = ProfileSettingOption(title: "Bonuses", iconImageName: "star")
-    private static let termsSetting = ProfileSettingOption(title: "Terms & Privacy Policy", iconImageName: "paper")
-    private static let logoutSetting = ProfileSettingOption(title: "Log out", iconImageName: "logout")
+    /// Тип доступных настроек
+    enum ProfileSettingType {
+        /// Количество бонусов
+        case bonuses
+        /// Условия использования
+        case terms
+        /// Выход из системы
+        case logout
+    }
+
+    static let shared = ProfileConfiguration()
+
+    private static let profileInfoMock = ProfileInfo(
+        avatarImageName: "profileAvatar",
+        fullName: "Surname Name",
+        bonusesCount: 105
+    )
+    private static let bonusesSetting = ProfileSettingOption(
+        type: .bonuses,
+        title: "Bonuses",
+        iconImageName: "star"
+    )
+    private static let termsSetting = ProfileSettingOption(
+        type: .terms,
+        title: "Terms & Privacy Policy",
+        iconImageName: "paper"
+    )
+    private static let logoutSetting = ProfileSettingOption(
+        type: .logout,
+        title: "Log out",
+        iconImageName: "logout"
+    )
 
     private(set) var profileInfo: ProfileInfo = profileInfoMock
 
@@ -28,7 +56,11 @@ struct ProfileConfiguration {
         ]
     }
 
-    mutating func updateFullName(_ fullName: String) {
+    func updateFullName(_ fullName: String) {
         profileInfo.fullName = fullName
+    }
+
+    func updateBonusesCount(_ bonusesCount: Int) {
+        profileInfo.bonusesCount = bonusesCount
     }
 }

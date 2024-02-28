@@ -20,4 +20,5 @@ extension UIImage {
     static let eyeFill = UIImage(systemName: "eye.fill")
     static let bonuses = UIImage(named: "bonuses")
     static let yellowStar = UIImage(named: "yellowStar")
+    static let cross = UIImage(named: "cross")
 }

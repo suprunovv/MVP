@@ -3,14 +3,8 @@
 
 import UIKit
 
-protocol ProfileSettingCellDelegate: AnyObject {
-    func showBottomSheet()
-}
-
-/// ячейка настройки в профиле
+/// Ячейка настройки в профиле
 final class ProfileSettingCell: UITableViewCell {
-    var delegate: ProfileSettingCellDelegate?
-
     // MARK: - Constants
 
     static let reuseID = String(describing: ProfileSettingCell.self)
@@ -48,24 +42,5 @@ final class ProfileSettingCell: UITableViewCell {
     private func setupCell() {
         accessoryType = .disclosureIndicator
         accessoryView = arrowImageView
-    }
-}
-
-extension ProfileViewController: ProfileSettingCellDelegate {
-    func showBottomSheet() {
-//       // let bottomSheetViewController = BottomSheetViewController()
-//
-//        guard let bottomSheet = bottomSheetViewController.sheetPresentationController else { return }
-//        bottomSheet.detents = [.medium()]
-//        bottomSheet.prefersGrabberVisible = true
-//        bottomSheet.preferredCornerRadius = 30
-//
-//        present(bottomSheetViewController, animated: true)
-    }
-}
-
-extension ProfileSettingCell {
-    @objc private func settingTapped() {
-        delegate?.showBottomSheet()
     }
 }

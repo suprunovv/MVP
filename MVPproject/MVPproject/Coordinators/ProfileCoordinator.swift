@@ -12,4 +12,17 @@ final class ProfileCoordinator: BaseCoordinator {
         else { return }
         navigationController = UINavigationController(rootViewController: profileModuleView)
     }
+
+    func showBonuses() {
+        guard let bonusesModuleView = ModuleBuilder.makeBonusesModule(
+            coordinator: self
+        ) as? BonusesViewController else { return }
+        if let sheet = bonusesModuleView.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.preferredCornerRadius = 30
+            sheet.prefersGrabberVisible = true
+            sheet.prefersEdgeAttachedInCompactHeight = true
+        }
+        navigationController?.present(bonusesModuleView, animated: true)
+    }
 }

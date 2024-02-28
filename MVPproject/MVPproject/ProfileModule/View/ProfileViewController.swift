@@ -29,6 +29,7 @@ final class ProfileViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: ProfileInfoCell.reuseID)
         tableView.register(ProfileSettingCell.self, forCellReuseIdentifier: ProfileSettingCell.reuseID)
         tableView.disableAutoresizingMask()
@@ -113,9 +114,22 @@ extension ProfileViewController: UITableViewDataSource {
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: ProfileSettingCell.reuseID) as? ProfileSettingCell
             else { return UITableViewCell() }
-            cell.delegate = self
             cell.configureCell(profileSetting)
             return cell
+        }
+    }
+}
+
+// MARK: - ProfileViewController + UITableViewDelegate
+
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = profileCells[indexPath.row]
+        switch cell {
+        case let .setting(profileSetting):
+            presenter?.settingSelected(profileSetting.type)
+        default:
+            break
         }
     }
 }

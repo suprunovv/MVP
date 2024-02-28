@@ -11,6 +11,10 @@ protocol ProfilePresenterProtocol: AnyObject {
     func editNameButtonTapped()
     /// Обработка изменения имени
     func handleNameChanged(_ fullName: String)
+    /// Показать бонусы
+    func showBonuses()
+    /// Обработка выбора настройки
+    func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
 }
 
 /// Презентер экрана профиля
@@ -18,7 +22,7 @@ final class ProfilePresenter {
     private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
 
-    private var profileConfiguration = ProfileConfiguration()
+    private var profileConfiguration = ProfileConfiguration.shared
 
     init(view: ProfileViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view
@@ -29,6 +33,19 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+    func settingSelected(_ profileSettingType: ProfileConfiguration.ProfileSettingType) {
+        switch profileSettingType {
+            case .bonuses:
+                showBonuses()
+            default:
+                break
+        }
+    }
+    
+    func showBonuses() {
+        profileCoordinator?.showBonuses()
+    }
+
     func handleNameChanged(_ fullName: String) {
         profileConfiguration.updateFullName(fullName)
         view?.updateProfile(profileCells: profileConfiguration.profileTableCells)

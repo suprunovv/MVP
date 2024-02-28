@@ -55,4 +55,11 @@ final class ModuleBuilder {
         )
         return viewController
     }
+
+    static func makeBonusesModule(coordinator: ProfileCoordinator) -> UIViewController {
+        let viewController = BonusesViewController()
+        let bonusesPresenter = BonusesPresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = bonusesPresenter
+        return viewController
+    }
 }

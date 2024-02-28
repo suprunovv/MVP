@@ -40,6 +40,7 @@
 		DA37857C2B8E7040005A190A /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785792B8E7040005A190A /* LoginViewPresenter.swift */; };
 		DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785842B8FE636005A190A /* BonusesViewController.swift */; };
 		DA3785872B8FE877005A190A /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785862B8FE877005A190A /* NSLayoutConstraint+Extension.swift */; };
+		DA3785892B8FF17C005A190A /* BonusesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785882B8FF17C005A190A /* BonusesPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		DA3785792B8E7040005A190A /* LoginViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
 		DA3785842B8FE636005A190A /* BonusesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusesViewController.swift; sourceTree = "<group>"; };
 		DA3785862B8FE877005A190A /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
+		DA3785882B8FF17C005A190A /* BonusesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusesPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				C92F5B662B8F2D330099E2A6 /* ProfilePresenter.swift */,
+				DA3785882B8FF17C005A190A /* BonusesPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA3785892B8FF17C005A190A /* BonusesPresenter.swift in Sources */,
 				DA3785622B8E2392005A190A /* ProfileCoordinator.swift in Sources */,
 				DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,

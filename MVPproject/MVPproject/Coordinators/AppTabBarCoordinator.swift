@@ -30,9 +30,9 @@ final class AppTabBarCoordinator: BaseCoordinator {
 
         recipelyAppTabBarController?.setViewControllers(
             [
-                profileCoordinator.navigationController,
                 recipesCoordinator.rootController,
                 favoritesCoordinator.rootController,
+                profileCoordinator.navigationController
             ].compactMap { $0 },
             animated: false
         )
