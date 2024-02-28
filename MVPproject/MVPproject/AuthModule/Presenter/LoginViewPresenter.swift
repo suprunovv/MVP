@@ -5,8 +5,6 @@ import UIKit
 
 /// Протокол презентера логина
 protocol LoginPresenterProtocol: AnyObject {
-    /// Координатор потока авторизации
-    var authCoordinator: AuthCoordinator? { get set }
     /// Метод получает пароль и валидирует его
     func validatePassword(password: String)
     /// Метод валидации email
@@ -19,7 +17,7 @@ protocol LoginPresenterProtocol: AnyObject {
 
 /// Презентер для экрана логин
 final class LoginPresenter {
-    weak var authCoordinator: AuthCoordinator?
+    private weak var authCoordinator: AuthCoordinator?
     private weak var view: LoginViewProtocol?
 
     private var isPasswordSecured = true
@@ -27,8 +25,9 @@ final class LoginPresenter {
     private let loginFormValidator = LoginFormValidator()
     private var timer = Timer()
 
-    init(view: LoginViewProtocol) {
+    init(view: LoginViewProtocol, coordinator: AuthCoordinator) {
         self.view = view
+        authCoordinator = coordinator
     }
 
     private func startTimer(timeInterval: TimeInterval, handler: @escaping (Timer) -> Void) {

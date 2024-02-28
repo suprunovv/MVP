@@ -11,9 +11,9 @@ final class ModuleBuilder {
         static let profileTitle = "Profile"
     }
 
-    static func makeLoginModule() -> UIViewController {
+    static func makeLoginModule(coordinator: AuthCoordinator) -> UIViewController {
         let viewController = LoginViewController()
-        let presenter = LoginPresenter(view: viewController)
+        let presenter = LoginPresenter(view: viewController, coordinator: coordinator)
         viewController.presenter = presenter
         return viewController
     }
