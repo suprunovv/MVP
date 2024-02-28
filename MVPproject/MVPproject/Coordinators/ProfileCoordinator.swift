@@ -3,6 +3,7 @@
 
 import UIKit
 
+/// Координатор профиля
 final class ProfileCoordinator: BaseCoordinator {
     private(set) var rootController: UINavigationController
 

@@ -5,9 +5,13 @@ import UIKit
 
 /// Профиль
 final class ProfileViewController: UIViewController {
+    // MARK: - Constants
+
     private enum Constants {
         static let title = "Profile"
     }
+
+    // MARK: - Visual Components
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -18,13 +22,19 @@ final class ProfileViewController: UIViewController {
         return tableView
     }()
 
+    // MARK: - Private Properties
+
     private let profileTableConfiguration = ProfileTableConfiguration()
+
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItem()
         setupView()
     }
+
+    // MARK: - Private Methods
 
     private func setupNavigationItem() {
         title = Constants.title
@@ -48,6 +58,8 @@ final class ProfileViewController: UIViewController {
         ])
     }
 }
+
+// MARK: - ProfileViewController + UITableViewDataSource
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

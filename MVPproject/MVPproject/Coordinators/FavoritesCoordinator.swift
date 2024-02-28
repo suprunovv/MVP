@@ -3,6 +3,7 @@
 
 import UIKit
 
+/// Координатор избранных
 final class FavoritesCoordinator: BaseCoordinator {
     private(set) var rootController: UINavigationController
 

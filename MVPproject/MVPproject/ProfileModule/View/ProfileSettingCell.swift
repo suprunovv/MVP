@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// ячейка настройки в профиле
+/// Ячейка настройки в профиле
 final class ProfileSettingCell: UITableViewCell {
     // MARK: - Constants
 
