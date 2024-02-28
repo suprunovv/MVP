@@ -1,4 +1,4 @@
-// App.swift
+// AuthService.swift
 // Copyright © RoadMap. All rights reserved.
 
 /// Модель приложения
