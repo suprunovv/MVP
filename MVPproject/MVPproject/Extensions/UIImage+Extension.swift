@@ -18,4 +18,6 @@ extension UIImage {
     static let pencil = UIImage(named: "pencil")
     static let chevron = UIImage(named: "chevron")
     static let eyeFill = UIImage(systemName: "eye.fill")
+    static let bonuses = UIImage(named: "bonuses")
+    static let yellowStar = UIImage(named: "yellowStar")
 }

@@ -38,6 +38,8 @@
 		DA3785732B8E3838005A190A /* ProfileSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785722B8E3838005A190A /* ProfileSettingCell.swift */; };
 		DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785742B8E6482005A190A /* LoginFormValidator.swift */; };
 		DA37857C2B8E7040005A190A /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785792B8E7040005A190A /* LoginViewPresenter.swift */; };
+		DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785842B8FE636005A190A /* BonusesViewController.swift */; };
+		DA3785872B8FE877005A190A /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785862B8FE877005A190A /* NSLayoutConstraint+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,8 @@
 		DA3785722B8E3838005A190A /* ProfileSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCell.swift; sourceTree = "<group>"; };
 		DA3785742B8E6482005A190A /* LoginFormValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormValidator.swift; sourceTree = "<group>"; };
 		DA3785792B8E7040005A190A /* LoginViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
+		DA3785842B8FE636005A190A /* BonusesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusesViewController.swift; sourceTree = "<group>"; };
+		DA3785862B8FE877005A190A /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +141,7 @@
 				DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */,
 				DA37852B2B8D1EC7005A190A /* UIImage+Extension.swift */,
 				DA3785652B8E30A9005A190A /* UIView+Extension.swift */,
+				DA3785862B8FE877005A190A /* NSLayoutConstraint+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				DA3785632B8E2EEF005A190A /* ProfileViewController.swift */,
 				DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */,
 				DA3785722B8E3838005A190A /* ProfileSettingCell.swift */,
+				DA3785842B8FE636005A190A /* BonusesViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -431,6 +437,7 @@
 				DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */,
 				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
 				52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */,
+				DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */,
 				DA37854B2B8E1955005A190A /* ModuleBuilder.swift in Sources */,
 				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
 				DA3785482B8E186E005A190A /* AppTabBarCoordinator.swift in Sources */,
@@ -438,6 +445,7 @@
 				DA37857C2B8E7040005A190A /* LoginViewPresenter.swift in Sources */,
 				DA3785512B8E1C2E005A190A /* RecipesCoordinator.swift in Sources */,
 				DA3785732B8E3838005A190A /* ProfileSettingCell.swift in Sources */,
+				DA3785872B8FE877005A190A /* NSLayoutConstraint+Extension.swift in Sources */,
 				DA3785682B8E31E7005A190A /* ProfileInfoCell.swift in Sources */,
 				DA3785642B8E2EEF005A190A /* ProfileViewController.swift in Sources */,
 				DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */,
