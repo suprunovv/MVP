@@ -27,16 +27,16 @@ final class LoginPresenter {
     private let loginFormValidator = LoginFormValidator()
     private var timer = Timer()
 
+    init(view: LoginViewProtocol) {
+        self.view = view
+    }
+
     private func startTimer(timeInterval: TimeInterval, handler: @escaping (Timer) -> Void) {
         timer = Timer.scheduledTimer(
             withTimeInterval: timeInterval,
             repeats: false,
             block: handler
         )
-    }
-
-    init(view: LoginViewProtocol) {
-        self.view = view
     }
 }
 
@@ -58,7 +58,6 @@ extension LoginPresenter: LoginPresenterProtocol {
         }
 
         if isValid == (true, true) {
-            // authCoordinator?.didLogin()
             view?.startActivityIndicator()
             view?.hideTextLoginButton()
             startTimer(timeInterval: 3) { [weak self] timer in
@@ -69,6 +68,7 @@ extension LoginPresenter: LoginPresenterProtocol {
                 self?.startTimer(timeInterval: 2) { [weak self] timer in
                     self?.view?.hideErrorLoginView()
                     timer.invalidate()
+                    self?.authCoordinator?.didLogin()
                 }
             }
         }
