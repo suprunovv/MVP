@@ -13,6 +13,8 @@ protocol ProfileViewProtocol: AnyObject {
 
 /// Профиль
 final class ProfileViewController: UIViewController {
+    // MARK: - Types
+
     typealias ProfileCells = ProfileConfiguration.ProfileCells
 
     // MARK: - Constants

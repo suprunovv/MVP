@@ -1,7 +1,7 @@
 // ProfileConfiguration.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Кнфигурация профиля
+/// Конфигурация профиля
 final class ProfileConfiguration {
     typealias ProfileCells = [ProfileCellType]
     /// варианты ячеек на экране профиля
