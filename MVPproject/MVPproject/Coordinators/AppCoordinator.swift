@@ -6,7 +6,7 @@ import UIKit
 /// Главный координатор приложения опредляющий флоу Auth или Main
 final class AppCoordinator: BaseCoordinator {
     override func start() {
-        switch App.shared.state {
+        switch AuthService.shared.state {
         case .unauthorized:
             toAuth()
         case .loggedIn:

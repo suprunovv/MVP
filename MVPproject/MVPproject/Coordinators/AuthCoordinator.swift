@@ -9,9 +9,9 @@ final class AuthCoordinator: BaseCoordinator {
     private var navigationController: UINavigationController?
 
     override func start() {
-        guard let authModuleView = AuthModuleBuilder.makeModule() as? LoginViewController else { return }
+        guard let authModuleView = ModuleBuilder.makeLoginModule(coordinator: self) as? LoginViewController
+        else { return }
         navigationController = UINavigationController(rootViewController: authModuleView)
-        authModuleView.presenter?.authCoordinator = self
         if let navigationController = navigationController {
             setAsRoot(navigationController)
         }

@@ -13,7 +13,7 @@ final class RecipelyAppTabBarController: UITabBarController {
 
     // MARK: - Visual Components
 
-    private let topBorder: UIView = {
+    private let topBorderView: UIView = {
         let view = UIView()
         view.backgroundColor = .greenBgAccent
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -49,14 +49,14 @@ final class RecipelyAppTabBarController: UITabBarController {
     }
 
     private func setupBorderTop() {
-        tabBar.addSubview(topBorder)
+        tabBar.addSubview(topBorderView)
         NSLayoutConstraint.activate([
-            topBorder.topAnchor.constraint(equalTo: tabBar.topAnchor),
-            topBorder.leadingAnchor.constraint(
+            topBorderView.topAnchor.constraint(equalTo: tabBar.topAnchor),
+            topBorderView.leadingAnchor.constraint(
                 equalTo: tabBar.leadingAnchor,
                 constant: Constants.borderToScreenSpacing
             ),
-            topBorder.trailingAnchor.constraint(
+            topBorderView.trailingAnchor.constraint(
                 equalTo: tabBar.trailingAnchor,
                 constant: -Constants.borderToScreenSpacing
             )

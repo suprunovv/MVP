@@ -17,7 +17,7 @@ final class ProfileSettingCell: UITableViewCell {
 
     // MARK: - Visual Components
 
-    private let arrowView = UIImageView(image: .chevron)
+    private let arrowImageView = UIImageView(image: .chevron)
 
     // MARK: - Initializers
 
@@ -47,7 +47,7 @@ final class ProfileSettingCell: UITableViewCell {
 
     private func setupCell() {
         accessoryType = .disclosureIndicator
-        accessoryView = arrowView
+        accessoryView = arrowImageView
     }
 }
 

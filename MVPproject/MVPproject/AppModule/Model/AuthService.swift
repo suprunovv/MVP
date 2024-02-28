@@ -1,8 +1,8 @@
-// App.swift
+// AuthService.swift
 // Copyright © RoadMap. All rights reserved.
 
 /// Модель приложения
-final class App {
+final class AuthService {
     /// Состояние приложения
     enum State {
         /// Не авторизован
@@ -12,7 +12,7 @@ final class App {
     }
 
     /// Общий истанс на все приложение
-    static let shared = App()
+    static let shared = AuthService()
 
     private(set) var state: State = .unauthorized
 
