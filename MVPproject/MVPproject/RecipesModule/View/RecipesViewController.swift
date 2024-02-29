@@ -130,7 +130,7 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
                 width: view.bounds.width - 140,
                 height: view.bounds.width - 140
             )
-        case .smal:
+        case .small:
             return CGSize(
                 width: view.bounds.width / 3 - 18,
                 height: view.bounds.width / 3 - 18

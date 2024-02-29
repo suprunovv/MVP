@@ -14,7 +14,7 @@ struct RecipesCategory {
 /// Перечисление размеров ячейки
 enum ReciperCellSize {
     /// Маленькая
-    case smal
+    case small
     /// Средняя
     case middle
     /// Большая
@@ -28,9 +28,9 @@ struct RecipesCategories {
             RecipesCategory(name: "Salad", imageName: "salad", cellSize: .middle),
             RecipesCategory(name: "Soup", imageName: "soup", cellSize: .middle),
             RecipesCategory(name: "Chicken", imageName: "chicken", cellSize: .big),
-            RecipesCategory(name: "Meat", imageName: "meat", cellSize: .smal),
-            RecipesCategory(name: "Fish", imageName: "fish", cellSize: .smal),
-            RecipesCategory(name: "Side dish", imageName: "sideDish", cellSize: .smal),
+            RecipesCategory(name: "Meat", imageName: "meat", cellSize: .small),
+            RecipesCategory(name: "Fish", imageName: "fish", cellSize: .small),
+            RecipesCategory(name: "Side dish", imageName: "sideDish", cellSize: .small),
             RecipesCategory(name: "Drinks", imageName: "drinks", cellSize: .big),
             RecipesCategory(name: "Pancake", imageName: "pancakes", cellSize: .middle),
             RecipesCategory(name: "Desserts", imageName: "desserts", cellSize: .middle)
