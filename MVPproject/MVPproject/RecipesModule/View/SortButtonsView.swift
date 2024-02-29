@@ -2,15 +2,12 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
-
+/// Протокол для делегата SortButtonsView
 protocol SortButtonViewDelegate: AnyObject {}
 
 /// Вью с 2мя кнопками сортировки
 final class SortButtonsView: UIView {
     // MARK: - Visual components
-
-    private var caloriesButtonState = 0
-    private var timeButtonState = 0
 
     private let caloriesButton: UIButton = {
         let button = UIButton(type: .system)
@@ -44,11 +41,17 @@ final class SortButtonsView: UIView {
 
         return stack
     }()
-
+    
     // MARK: - Private properties
+    
+    private var caloriesButtonState = 0
+    private var timeButtonState = 0
+
+    // MARK: - Public properties
 
     weak var delegate: SortButtonViewDelegate?
 
+    // MARK: - Initializators
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -58,6 +61,7 @@ final class SortButtonsView: UIView {
         super.init(coder: coder)
     }
 
+    // MARK: - Private methods
     private func setupView() {
         disableAutoresizingMask()
         addSubview(buttonsStackView)
