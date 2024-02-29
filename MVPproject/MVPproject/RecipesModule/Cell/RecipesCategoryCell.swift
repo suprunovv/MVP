@@ -35,7 +35,6 @@ final class RecipesCategoryCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
         setViews()
     }
 
@@ -53,20 +52,21 @@ final class RecipesCategoryCell: UICollectionViewCell {
     // MARK: - Private methods
 
     private func setViews() {
-        layer.cornerRadius = 18
-        clipsToBounds = true
+        contentView.layer.cornerRadius = contentView.bounds.width / 10
         setTitleImageViewConstaints()
         setBottomViewConstaints()
         setBottomLabelConstaints()
-        // TODO: - Тень надо доделать
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 5)
         layer.shadowOpacity = 0.8
         layer.shadowRadius = 3
+        contentView.layer.shadowOpacity = 0.5
+        contentView.clipsToBounds = true
+        layer.masksToBounds = false
     }
 
     private func setTitleImageViewConstaints() {
-        addSubview(titleImageView)
+        contentView.addSubview(titleImageView)
         titleImageView.disableAutoresizingMask()
         NSLayoutConstraint.activate([
             titleImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -77,7 +77,7 @@ final class RecipesCategoryCell: UICollectionViewCell {
     }
 
     private func setBottomViewConstaints() {
-        addSubview(bottomView)
+        contentView.addSubview(bottomView)
         NSLayoutConstraint.activate([
             bottomView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25),
             bottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -87,7 +87,7 @@ final class RecipesCategoryCell: UICollectionViewCell {
     }
 
     private func setBottomLabelConstaints() {
-        addSubview(bottomLabel)
+        contentView.addSubview(bottomLabel)
         NSLayoutConstraint.activate([
             bottomLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25),
             bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
