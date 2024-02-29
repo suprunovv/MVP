@@ -8,7 +8,7 @@ struct RecipesCategory {
     /// Название пикчи типа рецепта
     let imageName: String
     /// Тип ячейки
-    let cellType: ReciperCellSize
+    let cellSize: ReciperCellSize
 }
 
 /// Перечисление размеров ячейки
@@ -25,15 +25,15 @@ enum ReciperCellSize {
 struct RecipesCategories {
     static func getRecipesTypes() -> [RecipesCategory] {
         [
-            RecipesCategory(name: "Salad", imageName: "salad", cellType: .middle),
-            RecipesCategory(name: "Soup", imageName: "soup", cellType: .middle),
-            RecipesCategory(name: "Chicken", imageName: "chicken", cellType: .big),
-            RecipesCategory(name: "Meat", imageName: "meat", cellType: .smal),
-            RecipesCategory(name: "Fish", imageName: "fish", cellType: .smal),
-            RecipesCategory(name: "Side dish", imageName: "sideDish", cellType: .smal),
-            RecipesCategory(name: "Drinks", imageName: "drinks", cellType: .big),
-            RecipesCategory(name: "Pancake", imageName: "pancakes", cellType: .middle),
-            RecipesCategory(name: "Desserts", imageName: "desserts", cellType: .middle)
+            RecipesCategory(name: "Salad", imageName: "salad", cellSize: .middle),
+            RecipesCategory(name: "Soup", imageName: "soup", cellSize: .middle),
+            RecipesCategory(name: "Chicken", imageName: "chicken", cellSize: .big),
+            RecipesCategory(name: "Meat", imageName: "meat", cellSize: .smal),
+            RecipesCategory(name: "Fish", imageName: "fish", cellSize: .smal),
+            RecipesCategory(name: "Side dish", imageName: "sideDish", cellSize: .smal),
+            RecipesCategory(name: "Drinks", imageName: "drinks", cellSize: .big),
+            RecipesCategory(name: "Pancake", imageName: "pancakes", cellSize: .middle),
+            RecipesCategory(name: "Desserts", imageName: "desserts", cellSize: .middle)
         ]
     }
 }

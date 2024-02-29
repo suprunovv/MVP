@@ -119,7 +119,7 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        switch recipesCategories[indexPath.item].cellType {
+        switch recipesCategories[indexPath.item].cellSize {
         case .middle:
             return CGSize(
                 width: view.bounds.width / 2 - 22,
