@@ -44,9 +44,9 @@ final class RecipesCategoryCell: UICollectionViewCell {
 
     // MARK: - Public methods
 
-    func setupCell(category: RecipesCategory) {
-        bottomLabel.text = category.name
-        titleImageView.image = UIImage(named: category.imageName)
+    func setupCell(category: RecipesCategoryCellConfig) {
+        bottomLabel.text = category.recipeCategory.name
+        titleImageView.image = UIImage(named: category.recipeCategory.imageName)
     }
 
     // MARK: - Private methods

@@ -2,13 +2,18 @@
 // Copyright © RoadMap. All rights reserved.
 
 /// Протокол презентера экрана категории
-protocol CategoryPresenterProtocol: AnyObject {}
+protocol CategoryPresenterProtocol: AnyObject {
+    var recipes: [Recipe] { get }
+}
+
 /// Презентер экрана категории
 final class CategoryPresenter {
     // MARK: - private propertise
 
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
+
+    private(set) var recipes = RecipesDataSource.recipes
 
     // MARK: - initializators
 

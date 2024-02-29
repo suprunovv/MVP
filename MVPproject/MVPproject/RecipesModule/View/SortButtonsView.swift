@@ -8,9 +8,8 @@ protocol SortButtonViewDelegate: AnyObject {}
 
 /// Вью с 2мя кнопками сортировки
 final class SortButtonsView: UIView {
-    
-    // MARK: - Constants 
-    
+    // MARK: - Constants
+
     /// Перечисление состояний кнопок
     enum SortState {
         case unsorted
