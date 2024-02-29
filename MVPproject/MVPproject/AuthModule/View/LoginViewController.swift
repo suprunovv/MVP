@@ -174,7 +174,7 @@ final class LoginViewController: UIViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 12
-        view.backgroundColor = .errorLoginView
+        view.backgroundColor = .redError
         view.isHidden = true
         return view
     }()
