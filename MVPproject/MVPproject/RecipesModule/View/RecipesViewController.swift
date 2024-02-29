@@ -4,7 +4,7 @@
 import UIKit
 
 protocol RecipesViewProtocol: AnyObject {
-    func updateRecipes(categories: [RecipesCategory])
+    func updateRecipes(categories: [RecipesCategoryCellConfig])
 }
 
 /// Вью экрана с типами рецептов
@@ -27,7 +27,7 @@ final class RecipesViewController: UIViewController {
 
     // MARK: - Moke Data
 
-    private var recipesCategories: [RecipesCategory] = []
+    private var recipesCategories: [RecipesCategoryCellConfig] = []
 
     // MARK: - Life cycle
 
@@ -150,7 +150,7 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - RecipesViewController + RecipesViewProtocol
 
 extension RecipesViewController: RecipesViewProtocol {
-    func updateRecipes(categories: [RecipesCategory]) {
+    func updateRecipes(categories: [RecipesCategoryCellConfig]) {
         recipesCategories = categories
     }
 }

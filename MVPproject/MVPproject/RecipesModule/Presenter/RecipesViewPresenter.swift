@@ -6,7 +6,7 @@ import Foundation
 /// Протокол для презентера экрана рецептов
 protocol RecipesPresenterProtocol: AnyObject {
     /// Метод показывает выбранную категорию рецепта
-    func showRecipesByCategory(category: RecipesCategory)
+    func showRecipesByCategory(category: RecipesCategoryCellConfig)
     /// Метод посылает на вью данные о категориях
     func getRecipesCategory()
 }
@@ -27,10 +27,11 @@ final class RecipesViewPresenter {
 
 extension RecipesViewPresenter: RecipesPresenterProtocol {
     func getRecipesCategory() {
-        view?.updateRecipes(categories: RecipesCategories.getRecipesTypes())
+        let categories = RecipesCategoriesCollectionConfig.getRecipesCategoryCellConfigs()
+        view?.updateRecipes(categories: categories)
     }
 
-    func showRecipesByCategory(category: RecipesCategory) {
+    func showRecipesByCategory(category: RecipesCategoryCellConfig) {
         // TODO: - Сюда придет модель c ячейки на которую мы нажали, ее будем передавать на следующий экран (Завтра обсудим)
         recipesCoordinator?.showCategory()
     }
