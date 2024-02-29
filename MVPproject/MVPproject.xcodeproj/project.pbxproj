@@ -12,6 +12,7 @@
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
 		52A65F112B8CDEB9001EF2E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F102B8CDEB9001EF2E0 /* Assets.xcassets */; };
 		52A65F142B8CDEB9001EF2E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F122B8CDEB9001EF2E0 /* LaunchScreen.storyboard */; };
+		C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92F5B662B8F2D330099E2A6 /* ProfilePresenter.swift */; };
 		52A65F2E2B8FDE2D001EF2E0 /* RecipesViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F2D2B8FDE2D001EF2E0 /* RecipesViewPresenter.swift */; };
 		52A65F302B8FDEF5001EF2E0 /* RecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F2F2B8FDEF5001EF2E0 /* RecipesViewController.swift */; };
 		52A65F322B8FE74F001EF2E0 /* RecipesCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F312B8FE74F001EF2E0 /* RecipesCategoryCell.swift */; };
@@ -37,10 +38,13 @@
 		DA3785682B8E31E7005A190A /* ProfileInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */; };
 		DA37856D2B8E32E9005A190A /* ProfileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37856C2B8E32E9005A190A /* ProfileInfo.swift */; };
 		DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */; };
-		DA3785712B8E342B005A190A /* ProfileTableConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785702B8E342B005A190A /* ProfileTableConfiguration.swift */; };
+		DA3785712B8E342B005A190A /* ProfileConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785702B8E342B005A190A /* ProfileConfiguration.swift */; };
 		DA3785732B8E3838005A190A /* ProfileSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785722B8E3838005A190A /* ProfileSettingCell.swift */; };
 		DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785742B8E6482005A190A /* LoginFormValidator.swift */; };
 		DA37857C2B8E7040005A190A /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785792B8E7040005A190A /* LoginViewPresenter.swift */; };
+		DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785842B8FE636005A190A /* BonusesViewController.swift */; };
+		DA3785872B8FE877005A190A /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785862B8FE877005A190A /* NSLayoutConstraint+Extension.swift */; };
+		DA3785892B8FF17C005A190A /* BonusesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785882B8FF17C005A190A /* BonusesPresenter.swift */; };
 		DA37858B2B907E03005A190A /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA37858A2B907E03005A190A /* Typealias.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +56,7 @@
 		52A65F102B8CDEB9001EF2E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52A65F132B8CDEB9001EF2E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52A65F152B8CDEB9001EF2E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C92F5B662B8F2D330099E2A6 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		52A65F2D2B8FDE2D001EF2E0 /* RecipesViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewPresenter.swift; sourceTree = "<group>"; };
 		52A65F2F2B8FDEF5001EF2E0 /* RecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewController.swift; sourceTree = "<group>"; };
 		52A65F312B8FE74F001EF2E0 /* RecipesCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCategoryCell.swift; sourceTree = "<group>"; };
@@ -77,10 +82,13 @@
 		DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoCell.swift; sourceTree = "<group>"; };
 		DA37856C2B8E32E9005A190A /* ProfileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfo.swift; sourceTree = "<group>"; };
 		DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingOption.swift; sourceTree = "<group>"; };
-		DA3785702B8E342B005A190A /* ProfileTableConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableConfiguration.swift; sourceTree = "<group>"; };
+		DA3785702B8E342B005A190A /* ProfileConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileConfiguration.swift; sourceTree = "<group>"; };
 		DA3785722B8E3838005A190A /* ProfileSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCell.swift; sourceTree = "<group>"; };
 		DA3785742B8E6482005A190A /* LoginFormValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFormValidator.swift; sourceTree = "<group>"; };
 		DA3785792B8E7040005A190A /* LoginViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
+		DA3785842B8FE636005A190A /* BonusesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusesViewController.swift; sourceTree = "<group>"; };
+		DA3785862B8FE877005A190A /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
+		DA3785882B8FF17C005A190A /* BonusesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusesPresenter.swift; sourceTree = "<group>"; };
 		DA37858A2B907E03005A190A /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,6 +138,15 @@
 			path = MVPproject;
 			sourceTree = "<group>";
 		};
+		C92F5B682B8F2D400099E2A6 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C92F5B662B8F2D330099E2A6 /* ProfilePresenter.swift */,
+				DA3785882B8FF17C005A190A /* BonusesPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		52A65F332B9018D2001EF2E0 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +186,7 @@
 				DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */,
 				DA37852B2B8D1EC7005A190A /* UIImage+Extension.swift */,
 				DA3785652B8E30A9005A190A /* UIView+Extension.swift */,
+				DA3785862B8FE877005A190A /* NSLayoutConstraint+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -289,6 +307,7 @@
 		DA3785552B8E205C005A190A /* ProfileModule */ = {
 			isa = PBXGroup;
 			children = (
+				C92F5B682B8F2D400099E2A6 /* Presenter */,
 				DA37856B2B8E32CF005A190A /* Model */,
 				DA37856A2B8E32BD005A190A /* View */,
 			);
@@ -316,6 +335,7 @@
 				DA3785632B8E2EEF005A190A /* ProfileViewController.swift */,
 				DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */,
 				DA3785722B8E3838005A190A /* ProfileSettingCell.swift */,
+				DA3785842B8FE636005A190A /* BonusesViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -325,7 +345,7 @@
 			children = (
 				DA37856C2B8E32E9005A190A /* ProfileInfo.swift */,
 				DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */,
-				DA3785702B8E342B005A190A /* ProfileTableConfiguration.swift */,
+				DA3785702B8E342B005A190A /* ProfileConfiguration.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -454,10 +474,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA3785892B8FF17C005A190A /* BonusesPresenter.swift in Sources */,
 				DA3785622B8E2392005A190A /* ProfileCoordinator.swift in Sources */,
 				DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
+				C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */,
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,
 				52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */,
 				DA37858B2B907E03005A190A /* Typealias.swift in Sources */,
@@ -468,6 +490,7 @@
 				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
 				52A65F2E2B8FDE2D001EF2E0 /* RecipesViewPresenter.swift in Sources */,
 				52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */,
+				DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */,
 				DA37854B2B8E1955005A190A /* ModuleBuilder.swift in Sources */,
 				52A65F322B8FE74F001EF2E0 /* RecipesCategoryCell.swift in Sources */,
 				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
@@ -477,12 +500,13 @@
 				52A65F382B901975001EF2E0 /* RecipesCategory.swift in Sources */,
 				DA3785512B8E1C2E005A190A /* RecipesCoordinator.swift in Sources */,
 				DA3785732B8E3838005A190A /* ProfileSettingCell.swift in Sources */,
+				DA3785872B8FE877005A190A /* NSLayoutConstraint+Extension.swift in Sources */,
 				DA3785682B8E31E7005A190A /* ProfileInfoCell.swift in Sources */,
 				DA3785642B8E2EEF005A190A /* ProfileViewController.swift in Sources */,
 				DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */,
 				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,
 				DA37856D2B8E32E9005A190A /* ProfileInfo.swift in Sources */,
-				DA3785712B8E342B005A190A /* ProfileTableConfiguration.swift in Sources */,
+				DA3785712B8E342B005A190A /* ProfileConfiguration.swift in Sources */,
 				DA3785662B8E30A9005A190A /* UIView+Extension.swift in Sources */,
 				DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */,
 				52A65F302B8FDEF5001EF2E0 /* RecipesViewController.swift in Sources */,

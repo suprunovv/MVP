@@ -5,9 +5,24 @@ import UIKit
 
 /// Координатор профиля
 final class ProfileCoordinator: BaseCoordinator {
-    private(set) var rootController: UINavigationController
+    private(set) var navigationController: UINavigationController?
 
-    init(rootController: UIViewController) {
-        self.rootController = UINavigationController(rootViewController: rootController)
+    override func start() {
+        guard let profileModuleView = ModuleBuilder.makeProfileModule(coordinator: self) as? ProfileViewController
+        else { return }
+        navigationController = UINavigationController(rootViewController: profileModuleView)
+    }
+
+    func showBonuses() {
+        guard let bonusesModuleView = ModuleBuilder.makeBonusesModule(
+            coordinator: self
+        ) as? BonusesViewController else { return }
+        if let sheet = bonusesModuleView.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.preferredCornerRadius = 30
+            sheet.prefersGrabberVisible = true
+            sheet.prefersEdgeAttachedInCompactHeight = true
+        }
+        navigationController?.present(bonusesModuleView, animated: true)
     }
 }
