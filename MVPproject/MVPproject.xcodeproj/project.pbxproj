@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		52990D2D2B90C758004A2A87 /* CategoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */; };
 		52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */; };
+		52990D312B90F3D9004A2A87 /* SortButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D302B90F3D9004A2A87 /* SortButtonsView.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -58,6 +59,7 @@
 /* Begin PBXFileReference section */
 		52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPresenter.swift; sourceTree = "<group>"; };
 		52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		52990D302B90F3D9004A2A87 /* SortButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonsView.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				52A65F2F2B8FDEF5001EF2E0 /* RecipesViewController.swift */,
+				52990D302B90F3D9004A2A87 /* SortButtonsView.swift */,
 				52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */,
 			);
 			path = View;
@@ -500,6 +503,7 @@
 				DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */,
 				52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
+				52990D312B90F3D9004A2A87 /* SortButtonsView.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
 				C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */,
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,

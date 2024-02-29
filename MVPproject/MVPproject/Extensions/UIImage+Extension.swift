@@ -30,6 +30,8 @@ extension UIImage {
     static let salad = UIImage(named: "salad")
     static let sideDish = UIImage(named: "sideDish")
     static let soup = UIImage(named: "soup")
+    static let stackUp = UIImage(named: "stackUp")
+    static let stackDown = UIImage(named: "stackDown")
     static let timer = UIImage(named: "timer")
     static let pizza = UIImage(named: "pizza")
     static let chevronBold = UIImage(named: "chevronBold")
