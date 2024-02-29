@@ -1,4 +1,4 @@
-// RecipesViewPresenter.swift
+// RecipesPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
@@ -13,7 +13,7 @@ protocol RecipesPresenterProtocol: AnyObject {
 
 /// Презентер для экрана с типами рецептов
 
-final class RecipesViewPresenter {
+final class RecipesPresenter {
     private weak var view: RecipesViewProtocol?
     private weak var recipesCoordinator: RecipesCoordinator?
 
@@ -23,16 +23,15 @@ final class RecipesViewPresenter {
     }
 }
 
-// MARK: - RecipesViewPresenter + RecipesPresenterProtocol
+// MARK: - RecipesPresenter + RecipesPresenterProtocol
 
-extension RecipesViewPresenter: RecipesPresenterProtocol {
+extension RecipesPresenter: RecipesPresenterProtocol {
     func getRecipesCategory() {
         let categories = RecipesCategoriesCollectionConfig.getRecipesCategoryCellConfigs()
         view?.updateRecipes(categories: categories)
     }
 
     func showRecipesByCategory(category: RecipesCategoryCellConfig) {
-        // TODO: - Сюда придет модель c ячейки на которую мы нажали, ее будем передавать на следующий экран (Завтра обсудим)
-        recipesCoordinator?.showCategory()
+        recipesCoordinator?.showCategory(category: category.recipeCategory)
     }
 }

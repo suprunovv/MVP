@@ -3,7 +3,9 @@
 
 import UIKit
 
-protocol CategoryViewProtocol: AnyObject {}
+protocol CategoryViewProtocol: AnyObject {
+    func setScreenTitle(_ title: String)
+}
 
 /// Вью экрана выбранной категории рецепта
 final class CategoryViewController: UIViewController {
@@ -15,6 +17,20 @@ final class CategoryViewController: UIViewController {
         tableView.disableAutoresizingMask()
         return tableView
     }()
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .verdanaBold(ofSize: 28)
+        label.textColor = .black
+        return label
+    }()
+
+    private lazy var backButton = UIBarButtonItem(
+        image: .arrowBack,
+        style: .plain,
+        target: self,
+        action: #selector(closeCategory)
+    )
 
     // MARK: - Public properties
 
@@ -45,11 +61,21 @@ final class CategoryViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+
+    @objc private func closeCategory() {
+        presenter?.closeCategory()
+    }
 }
 
 // MARK: - CategoryViewController + CategoryViewProtocol
 
-extension CategoryViewController: CategoryViewProtocol {}
+extension CategoryViewController: CategoryViewProtocol {
+    func setScreenTitle(_ title: String) {
+        titleLabel.text = title
+        let titleBarItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.setLeftBarButtonItems([backButton, titleBarItem], animated: false)
+    }
+}
 
 // MARK: - CategoryViewController + UITableViewDataSource
 
