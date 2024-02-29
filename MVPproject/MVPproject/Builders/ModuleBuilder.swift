@@ -20,7 +20,7 @@ final class ModuleBuilder {
 
     static func makeRecipesModule(coordinator: RecipesCoordinator) -> UIViewController {
         let viewController = RecipesViewController()
-        let recipesPresenter = RecipesViewPresenter(view: viewController, coordinator: coordinator)
+        let recipesPresenter = RecipesPresenter(view: viewController, coordinator: coordinator)
         viewController.presenter = recipesPresenter
         viewController.tabBarItem = UITabBarItem(
             title: Constants.recipesTitle,
@@ -55,9 +55,9 @@ final class ModuleBuilder {
         return viewController
     }
 
-    static func makeCategoryModule(coordinator: RecipesCoordinator) -> UIViewController {
+    static func makeCategoryModule(coordinator: RecipesCoordinator, category: RecipesCategory) -> UIViewController {
         let viewController = CategoryViewController()
-        let presenter = CategoryPresenter(view: viewController, coordinator: coordinator)
+        let presenter = CategoryPresenter(view: viewController, coordinator: coordinator, category: category)
         viewController.presenter = presenter
         return viewController
     }

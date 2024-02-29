@@ -35,4 +35,5 @@ extension UIImage {
     static let timer = UIImage(named: "timer")
     static let pizza = UIImage(named: "pizza")
     static let chevronBold = UIImage(named: "chevronBold")
+    static let arrowBack = UIImage(named: "arrowBack")
 }

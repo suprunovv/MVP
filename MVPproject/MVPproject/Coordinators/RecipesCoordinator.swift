@@ -13,9 +13,19 @@ final class RecipesCoordinator: BaseCoordinator {
         navigationController = UINavigationController(rootViewController: recipesModuleView)
     }
 
-    func showCategory() {
-        guard let categoryModule = ModuleBuilder.makeCategoryModule(coordinator: self) as? CategoryViewController
+    func showCategory(category: RecipesCategory) {
+        guard let categoryModule = ModuleBuilder.makeCategoryModule(
+            coordinator: self,
+            category: category
+        ) as? CategoryViewController
         else { return }
         navigationController?.pushViewController(categoryModule, animated: true)
+    }
+
+    func closeCategory() {
+        guard (navigationController?.viewControllers.last as? CategoryViewController) != nil else {
+            return
+        }
+        navigationController?.popViewController(animated: true)
     }
 }

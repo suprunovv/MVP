@@ -3,10 +3,24 @@
 
 import UIKit
 
-protocol CategoryViewProtocol: AnyObject {}
+/// Протокол представления категории рецептов
+protocol CategoryViewProtocol: AnyObject {
+    /// Метод установки заголовка экрана
+    func setScreenTitle(_ title: String)
+}
 
 /// Вью экрана выбранной категории рецепта
 final class CategoryViewController: UIViewController {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let searchBarPlaceholder = "Search recipes"
+        static let searchBarToTableSpacing = 12.0
+        static let searchBarInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
+    }
+
+    // MARK: - Visual Components
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
@@ -15,6 +29,35 @@ final class CategoryViewController: UIViewController {
         tableView.disableAutoresizingMask()
         return tableView
     }()
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .verdanaBold(ofSize: 28)
+        label.textColor = .black
+        return label
+    }()
+
+    private let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
+            string: Constants.searchBarPlaceholder,
+            attributes: [
+                .font: UIFont.verdana(ofSize: 16) ?? UIFont.systemFont(ofSize: 16),
+                .foregroundColor: UIColor.grayTextPlaceholder
+            ]
+        )
+        searchBar.searchBarStyle = .minimal
+        searchBar.layoutMargins = Constants.searchBarInsets
+        searchBar.disableAutoresizingMask()
+        return searchBar
+    }()
+
+    private lazy var backButton = UIBarButtonItem(
+        image: .arrowBack,
+        style: .plain,
+        target: self,
+        action: #selector(closeCategory)
+    )
 
     // MARK: - Public properties
 
@@ -31,25 +74,40 @@ final class CategoryViewController: UIViewController {
 
     private func setupView() {
         // TODO: Добавить кнопки с фильтрами как хедер таблицы
-        // TODO: Добавить поиск как статический элемент вверху страницы
         view.backgroundColor = .white
-        view.addSubview(tableView)
+        view.addSubviews(tableView, searchBar)
         setupConstraints()
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.topAnchor.constraint(
+                equalTo: searchBar.bottomAnchor,
+                constant: Constants.searchBarToTableSpacing
+            ),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+
+    @objc private func closeCategory() {
+        presenter?.closeCategory()
+    }
 }
 
 // MARK: - CategoryViewController + CategoryViewProtocol
 
-extension CategoryViewController: CategoryViewProtocol {}
+extension CategoryViewController: CategoryViewProtocol {
+    func setScreenTitle(_ title: String) {
+        titleLabel.text = title
+        let titleBarItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.setLeftBarButtonItems([backButton, titleBarItem], animated: false)
+    }
+}
 
 // MARK: - CategoryViewController + UITableViewDataSource
 
