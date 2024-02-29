@@ -2,16 +2,43 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
+
 /// Протокол для делегата SortButtonsView
 protocol SortButtonViewDelegate: AnyObject {}
 
 /// Вью с 2мя кнопками сортировки
 final class SortButtonsView: UIView {
+    
+    // MARK: - Constants 
+    
+    /// Перечисление состояний кнопок
+    enum SortState {
+        case unsorted
+        case ascending
+        case descending
+
+        mutating func changeSort() {
+            switch self {
+            case .unsorted:
+                self = .ascending
+            case .ascending:
+                self = .descending
+            case .descending:
+                self = .unsorted
+            }
+        }
+    }
+
+    enum Constants {
+        static let calloriesTitle = "Calories  "
+        static let timeTitle = "Time  "
+    }
+
     // MARK: - Visual components
 
     private let caloriesButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Calories  ", for: .normal)
+        button.setTitle(Constants.calloriesTitle, for: .normal)
         button.setImage(.stackUp, for: .normal)
         button.semanticContentAttribute = .forceRightToLeft
         button.backgroundColor = .systemGray4
@@ -22,7 +49,7 @@ final class SortButtonsView: UIView {
 
     private let timeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Time  ", for: .normal)
+        button.setTitle(Constants.timeTitle, for: .normal)
         button.setImage(.stackUp, for: .normal)
         button.semanticContentAttribute = .forceRightToLeft
         button.backgroundColor = .systemGray4
@@ -41,17 +68,18 @@ final class SortButtonsView: UIView {
 
         return stack
     }()
-    
+
     // MARK: - Private properties
-    
-    private var caloriesButtonState = 0
-    private var timeButtonState = 0
+
+    private var caloriesButtonState: SortState = .unsorted
+    private var timeButtonState: SortState = .unsorted
 
     // MARK: - Public properties
 
     weak var delegate: SortButtonViewDelegate?
 
     // MARK: - Initializators
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -62,6 +90,7 @@ final class SortButtonsView: UIView {
     }
 
     // MARK: - Private methods
+
     private func setupView() {
         disableAutoresizingMask()
         addSubview(buttonsStackView)
@@ -75,44 +104,44 @@ final class SortButtonsView: UIView {
     }
 
     private func setButtonsStackConstaints() {
-        buttonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        buttonsStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        buttonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        buttonsStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        buttonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor).activate()
+        buttonsStackView.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+        buttonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor).activate()
+        buttonsStackView.topAnchor.constraint(equalTo: topAnchor).activate()
     }
 
     @objc private func tapSortButton(_ sender: UIButton) {
         switch sender {
         case caloriesButton:
-            timeButtonState = 0
+            timeButtonState = .unsorted
             timeButton.backgroundColor = .systemGray4
             timeButton.setImage(.stackUp, for: .normal)
             timeButton.tintColor = .black
-            caloriesButtonState += 1
-            if caloriesButtonState == 1 {
+            caloriesButtonState.changeSort()
+            if caloriesButtonState == .ascending {
                 caloriesButton.backgroundColor = .systemGray2
                 caloriesButton.tintColor = .white
-            } else if caloriesButtonState == 2 {
+            } else if caloriesButtonState == .descending {
                 caloriesButton.setImage(.stackDown, for: .normal)
             } else {
-                caloriesButtonState = 0
+                caloriesButtonState.changeSort()
                 caloriesButton.backgroundColor = .systemGray4
                 caloriesButton.setImage(.stackUp, for: .normal)
                 caloriesButton.tintColor = .black
             }
         case timeButton:
-            caloriesButtonState = 0
+            caloriesButtonState = .unsorted
             caloriesButton.backgroundColor = .systemGray4
             caloriesButton.setImage(.stackUp, for: .normal)
             caloriesButton.tintColor = .black
-            timeButtonState += 1
-            if timeButtonState == 1 {
+            timeButtonState.changeSort()
+            if timeButtonState == .ascending {
                 timeButton.backgroundColor = .systemGray2
                 timeButton.tintColor = .white
-            } else if timeButtonState == 2 {
+            } else if timeButtonState == .descending {
                 timeButton.setImage(.stackDown, for: .normal)
             } else {
-                timeButtonState = 0
+                timeButtonState = .unsorted
                 timeButton.backgroundColor = .systemGray4
                 timeButton.setImage(.stackUp, for: .normal)
                 timeButton.tintColor = .black
