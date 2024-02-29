@@ -16,7 +16,10 @@ final class CategoryViewController: UIViewController {
     private enum Constants {
         static let searchBarPlaceholder = "Search recipes"
         static let searchBarToTableSpacing = 12.0
+        static let sortingHeight = 36.0
+        static let sortingToViewSpacing = 20.0
         static let searchBarInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
+        static let sortingHeaderHeight = 20.0
     }
 
     // MARK: - Visual Components
@@ -24,6 +27,7 @@ final class CategoryViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.reuseID)
         tableView.separatorStyle = .none
         tableView.disableAutoresizingMask()
@@ -52,6 +56,28 @@ final class CategoryViewController: UIViewController {
         return searchBar
     }()
 
+    private let sortButtonsView: UIView = {
+        let containerView = UIView()
+        let view = SortButtonsView()
+        containerView.disableAutoresizingMask()
+        view.disableAutoresizingMask()
+        containerView.addSubview(view)
+        NSLayoutConstraint.activate([
+            containerView.heightAnchor.constraint(equalToConstant: Constants.sortingHeight),
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.leadingAnchor.constraint(
+                equalTo: containerView.leadingAnchor,
+                constant: Constants.sortingToViewSpacing
+            ),
+            containerView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: Constants.sortingToViewSpacing
+            ),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        return containerView
+    }()
+
     private lazy var backButton = UIBarButtonItem(
         image: .arrowBack,
         style: .plain,
@@ -73,7 +99,6 @@ final class CategoryViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
-        // TODO: Добавить кнопки с фильтрами как хедер таблицы
         view.backgroundColor = .white
         view.addSubviews(tableView, searchBar)
         setupConstraints()
@@ -123,5 +148,17 @@ extension CategoryViewController: UITableViewDataSource {
         else { return .init() }
         cell.configure(withRecipe: recipe)
         return cell
+    }
+}
+
+// MARK: - CategoryViewController + UITableViewDelegate
+
+extension CategoryViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        Constants.sortingHeaderHeight
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        sortButtonsView
     }
 }
