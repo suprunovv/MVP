@@ -1,12 +1,6 @@
 // CategoryPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
-//
-//  CategoryPresenter.swift
-//  MVPproject
-//
-//  Created by MacBookPro on 29.02.2024.
-//
 /// Протокол презентера экрана категории
 protocol CategoryPresenterProtocol: AnyObject {}
 /// Презентер экрана категории
