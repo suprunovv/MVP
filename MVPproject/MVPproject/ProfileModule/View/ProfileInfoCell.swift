@@ -3,6 +3,11 @@
 
 import UIKit
 
+/// протокол обработки событий в ячейке ProfileInfo
+protocol ProfileInfoCellDelegate: AnyObject {
+    func editNameButtonTapped()
+}
+
 /// Ячейка информации о профиле
 final class ProfileInfoCell: UITableViewCell {
     // MARK: - Constants
@@ -44,11 +49,12 @@ final class ProfileInfoCell: UITableViewCell {
         return label
     }()
 
-    private let editButton: UIButton = {
+    private lazy var editButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(.pencil, for: .normal)
         button.tintColor = .grayText
         button.disableAutoresizingMask()
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -64,6 +70,10 @@ final class ProfileInfoCell: UITableViewCell {
         profileStack.disableAutoresizingMask()
         return profileStack
     }()
+
+    // MARK: - Public Properties
+
+    weak var delegate: ProfileInfoCellDelegate?
 
     // MARK: - Initializers
 
@@ -90,6 +100,7 @@ final class ProfileInfoCell: UITableViewCell {
         selectionStyle = .none
         separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         contentView.addSubview(profileStackView)
+
         setupProfileStackViewConstraints()
     }
 
@@ -109,5 +120,9 @@ final class ProfileInfoCell: UITableViewCell {
                 constant: Constants.profileToCellBottomSpacing
             )
         ])
+    }
+
+    @objc private func editButtonTapped() {
+        delegate?.editNameButtonTapped()
     }
 }

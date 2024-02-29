@@ -1,7 +1,7 @@
 // AuthService.swift
 // Copyright © RoadMap. All rights reserved.
 
-/// Модель приложения
+/// Сервис авторизации приложения
 final class AuthService {
     /// Состояние приложения
     enum State {

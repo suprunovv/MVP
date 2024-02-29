@@ -43,11 +43,10 @@ final class ModuleBuilder {
         return viewController
     }
 
-    static func makeProfileModule() -> UIViewController {
-        // TODO: replace with real VC and setup presenter
-        let viewController = UIViewController()
-//        let profilePresenter = ProfilePresenter(view: viewController)
-//        viewController.presenter = profilePresenter
+    static func makeProfileModule(coordinator: ProfileCoordinator) -> UIViewController {
+        let viewController = ProfileViewController()
+        let profilePresenter = ProfilePresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = profilePresenter
         viewController.tabBarItem = UITabBarItem(
             title: Constants.profileTitle,
             image: .profileBarIcon,
@@ -60,6 +59,14 @@ final class ModuleBuilder {
         let viewController = CategoryViewController()
         let presenter = CategoryPresenter(view: viewController, coordinator: coordinator)
         viewController.presenter = presenter
+        return viewController
+    }
+
+    static func makeBonusesModule(coordinator: ProfileCoordinator) -> UIViewController {
+        let viewController = BonusesViewController()
+        let bonusesPresenter = BonusesPresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = bonusesPresenter
+
         return viewController
     }
 }
