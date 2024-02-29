@@ -3,7 +3,9 @@
 
 import UIKit
 
-protocol RecipesViewProtocol: AnyObject {}
+protocol RecipesViewProtocol: AnyObject {
+    func updateRecipes(categories: [RecipesCategory])
+}
 
 /// Вью экрана с типами рецептов
 final class RecipesViewController: UIViewController {
@@ -25,7 +27,7 @@ final class RecipesViewController: UIViewController {
 
     // MARK: - Moke Data
 
-    private let recipesTypes = RecipesTypes.getRecipesTypes()
+    private var recipesCategories: [RecipesCategory] = []
 
     // MARK: - Life cycle
 
@@ -40,6 +42,7 @@ final class RecipesViewController: UIViewController {
         view.backgroundColor = .white
         setupDishCollection()
         setTitle()
+        presenter?.getRecipesCategory()
     }
 
     private func setTitle() {
@@ -51,7 +54,7 @@ final class RecipesViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
     }
 
-    private func getFlowLayout() -> UICollectionViewFlowLayout {
+    private func makeFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = Constants.minimumLineSpacing
         layout.minimumInteritemSpacing = Constants.minimumInteritemSpacing
@@ -61,16 +64,16 @@ final class RecipesViewController: UIViewController {
     private func setupDishCollection() {
         typeDishCollectionView = UICollectionView(
             frame: .zero,
-            collectionViewLayout: getFlowLayout()
+            collectionViewLayout: makeFlowLayout()
         )
         typeDishCollectionView.register(
-            TypeRecipesCollectionViewCell.self,
-            forCellWithReuseIdentifier: TypeRecipesCollectionViewCell.reuseID
+            RecipesCategoryCell.self,
+            forCellWithReuseIdentifier: RecipesCategoryCell.reuseID
         )
         typeDishCollectionView.delegate = self
         typeDishCollectionView.dataSource = self
         view.addSubview(typeDishCollectionView)
-        typeDishCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        typeDishCollectionView.disableAutoresizingMask()
         NSLayoutConstraint.activate([
             typeDishCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             typeDishCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -84,7 +87,7 @@ final class RecipesViewController: UIViewController {
 
 extension RecipesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        recipesTypes.count
+        recipesCategories.count
     }
 
     func collectionView(
@@ -92,10 +95,10 @@ extension RecipesViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: TypeRecipesCollectionViewCell.reuseID,
+            withReuseIdentifier: RecipesCategoryCell.reuseID,
             for: indexPath
-        ) as? TypeRecipesCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupCell(type: recipesTypes[indexPath.item])
+        ) as? RecipesCategoryCell else { return UICollectionViewCell() }
+        cell.setupCell(category: recipesCategories[indexPath.item])
         return cell
     }
 }
@@ -104,7 +107,7 @@ extension RecipesViewController: UICollectionViewDataSource {
 
 extension RecipesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter?.getModelViewToPresenter(recipesType: recipesTypes[indexPath.item])
+        presenter?.showRecipesByCategory(category: recipesCategories[indexPath.item])
     }
 }
 
@@ -116,31 +119,21 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        switch indexPath.item {
-        case 0, 1:
+        switch recipesCategories[indexPath.item].cellType {
+        case .middle:
             return CGSize(
                 width: view.bounds.width / 2 - 22,
                 height: view.bounds.width / 2 - 22
             )
-        case 2:
+        case .big:
             return CGSize(
                 width: view.bounds.width - 140,
                 height: view.bounds.width - 140
             )
-        case 3, 4, 5:
+        case .smal:
             return CGSize(
                 width: view.bounds.width / 3 - 18,
                 height: view.bounds.width / 3 - 18
-            )
-        case 6:
-            return CGSize(
-                width: view.bounds.width - 140,
-                height: view.bounds.width - 140
-            )
-        default:
-            return CGSize(
-                width: view.bounds.width / 2 - 22,
-                height: view.bounds.width / 2 - 22
             )
         }
     }
@@ -156,4 +149,8 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - RecipesViewController + RecipesViewProtocol
 
-extension RecipesViewController: RecipesViewProtocol {}
+extension RecipesViewController: RecipesViewProtocol {
+    func updateRecipes(categories: [RecipesCategory]) {
+        recipesCategories = categories
+    }
+}

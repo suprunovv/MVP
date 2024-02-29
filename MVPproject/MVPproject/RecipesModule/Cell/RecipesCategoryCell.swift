@@ -1,13 +1,13 @@
-// TypeRecipesCollectionViewCell.swift
+// RecipesCategoryCell.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Ячека типа рецепта
-class TypeRecipesCollectionViewCell: UICollectionViewCell {
+final class RecipesCategoryCell: UICollectionViewCell {
     // MARK: - Constants
 
-    static let reuseID = "TypeRecipesCollectionViewCell"
+    static let reuseID = "RecipesCategoryCell"
 
     // MARK: - Visual Components
 
@@ -16,7 +16,7 @@ class TypeRecipesCollectionViewCell: UICollectionViewCell {
     private let bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .darkGray
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.disableAutoresizingMask()
         view.alpha = 0.7
         return view
     }()
@@ -27,7 +27,7 @@ class TypeRecipesCollectionViewCell: UICollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .white
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.disableAutoresizingMask()
         return label
     }()
 
@@ -45,9 +45,9 @@ class TypeRecipesCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public methods
 
-    func setupCell(type: RecipesType) {
-        bottomLabel.text = type.name
-        titleImageView.image = UIImage(named: type.imageName)
+    func setupCell(category: RecipesCategory) {
+        bottomLabel.text = category.name
+        titleImageView.image = UIImage(named: category.imageName)
     }
 
     // MARK: - Private methods
@@ -67,7 +67,7 @@ class TypeRecipesCollectionViewCell: UICollectionViewCell {
 
     private func setTitleImageViewConstaints() {
         addSubview(titleImageView)
-        titleImageView.translatesAutoresizingMaskIntoConstraints = false
+        titleImageView.disableAutoresizingMask()
         NSLayoutConstraint.activate([
             titleImageView.topAnchor.constraint(equalTo: topAnchor),
             titleImageView.bottomAnchor.constraint(equalTo: bottomAnchor),

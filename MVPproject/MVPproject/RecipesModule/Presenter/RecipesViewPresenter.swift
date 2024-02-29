@@ -4,29 +4,35 @@
 import Foundation
 
 // TODO: - Заприватить координатор (я попробовал, но под утро уже голова не варит :))
-
+/// Протокол для презентера экрана рецептов
 protocol RecipesPresenterProtocol: AnyObject {
-    /// Проперти для установки координатора
-    var recipesCoordinator: RecipesCoordinator? { get set }
-    // TODO: - Придумать нормальное название методу
-    func getModelViewToPresenter(recipesType: RecipesType)
+    /// Метод показывает выбранную категорию рецепта
+    func showRecipesByCategory(category: RecipesCategory)
+    /// Метод посылает на вью данные о категориях
+    func getRecipesCategory()
 }
 
 /// Презентер для экрана с типами рецептов
-class RecipesViewPresenter {
-    private weak var view: RecipesViewProtocol?
-    weak var recipesCoordinator: RecipesCoordinator?
 
-    init(view: RecipesViewProtocol) {
+final class RecipesViewPresenter {
+    private weak var view: RecipesViewProtocol?
+    private weak var recipesCoordinator: RecipesCoordinator?
+
+    init(view: RecipesViewProtocol, coordinator: RecipesCoordinator) {
         self.view = view
+        recipesCoordinator = coordinator
     }
 }
 
 // MARK: - RecipesViewPresenter + RecipesPresenterProtocol
 
 extension RecipesViewPresenter: RecipesPresenterProtocol {
-    func getModelViewToPresenter(recipesType: RecipesType) {
+    func getRecipesCategory() {
+        view?.updateRecipes(categories: RecipesCategories.getRecipesTypes())
+    }
+
+    func showRecipesByCategory(category: RecipesCategory) {
         // TODO: - Сюда придет модель c ячейки на которую мы нажали, ее будем передавать на следующий экран (Завтра обсудим)
-        print(recipesType.name)
+        print(category.name)
     }
 }

@@ -18,10 +18,9 @@ final class ModuleBuilder {
         return viewController
     }
 
-    static func makeRecipesModule() -> UIViewController {
-        // TODO: replace with real VC and setup presenter
+    static func makeRecipesModule(coordinator: RecipesCoordinator) -> UIViewController {
         let viewController = RecipesViewController()
-        let recipesPresenter = RecipesViewPresenter(view: viewController)
+        let recipesPresenter = RecipesViewPresenter(view: viewController, coordinator: coordinator)
         viewController.presenter = recipesPresenter
         viewController.tabBarItem = UITabBarItem(
             title: Constants.recipesTitle,
