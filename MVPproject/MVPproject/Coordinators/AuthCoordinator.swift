@@ -5,7 +5,7 @@ import UIKit
 
 /// Координатор авторизации
 final class AuthCoordinator: BaseCoordinator {
-    var finishFlowHandler: (() -> ())?
+    var finishFlowHandler: VoidHandler?
     private var navigationController: UINavigationController?
 
     override func start() {

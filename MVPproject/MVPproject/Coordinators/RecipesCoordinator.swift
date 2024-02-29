@@ -5,9 +5,11 @@ import UIKit
 
 /// Координатор рецептов
 final class RecipesCoordinator: BaseCoordinator {
-    private(set) var rootController: UINavigationController
+    private(set) var navigationController: UINavigationController?
 
-    init(rootController: UIViewController) {
-        self.rootController = UINavigationController(rootViewController: rootController)
+    override func start() {
+        guard let recipesModuleView = ModuleBuilder.makeRecipesModule(coordinator: self) as? RecipesViewController
+        else { return }
+        navigationController = UINavigationController(rootViewController: recipesModuleView)
     }
 }

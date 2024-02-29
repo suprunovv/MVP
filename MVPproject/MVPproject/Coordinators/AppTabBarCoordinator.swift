@@ -10,10 +10,8 @@ final class AppTabBarCoordinator: BaseCoordinator {
     override func start() {
         recipelyAppTabBarController = RecipelyAppTabBarController()
         /// Set Recipes
-        let recipesModuleView = ModuleBuilder.makeRecipesModule()
-        let recipesCoordinator = RecipesCoordinator(rootController: recipesModuleView)
-        // TODO: uncomment when presenter is implemented for that flow
-//        recipesModuleView.presenter?.recipesCoordinator = recipesCoordinator
+        let recipesCoordinator = RecipesCoordinator()
+        recipesCoordinator.start()
         add(coordinator: recipesCoordinator)
 
         /// Set Favorites
@@ -30,7 +28,7 @@ final class AppTabBarCoordinator: BaseCoordinator {
 
         recipelyAppTabBarController?.setViewControllers(
             [
-                recipesCoordinator.rootController,
+                recipesCoordinator.navigationController,
                 favoritesCoordinator.rootController,
                 profileCoordinator.navigationController
             ].compactMap { $0 },
