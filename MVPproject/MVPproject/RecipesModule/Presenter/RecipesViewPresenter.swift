@@ -32,6 +32,6 @@ extension RecipesViewPresenter: RecipesPresenterProtocol {
 
     func showRecipesByCategory(category: RecipesCategory) {
         // TODO: - Сюда придет модель c ячейки на которую мы нажали, ее будем передавать на следующий экран (Завтра обсудим)
-        print(category.name)
+        recipesCoordinator?.showCategory()
     }
 }

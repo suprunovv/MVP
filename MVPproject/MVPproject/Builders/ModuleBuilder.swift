@@ -55,4 +55,11 @@ final class ModuleBuilder {
         )
         return viewController
     }
+
+    static func makeCategoryModule(coordinator: RecipesCoordinator) -> UIViewController {
+        let viewController = CategoryViewController()
+        let presenter = CategoryPresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = presenter
+        return viewController
+    }
 }

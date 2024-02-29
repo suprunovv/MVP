@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52990D2D2B90C758004A2A87 /* CategoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */; };
+		52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -45,6 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPresenter.swift; sourceTree = "<group>"; };
+		52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +99,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52990D282B90C6E8004A2A87 /* CategoryModule */ = {
+			isa = PBXGroup;
+			children = (
+				52990D2B2B90C734004A2A87 /* Presenter */,
+				52990D2A2B90C72A004A2A87 /* Model */,
+				52990D292B90C721004A2A87 /* View */,
+			);
+			path = CategoryModule;
+			sourceTree = "<group>";
+		};
+		52990D292B90C721004A2A87 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		52990D2A2B90C72A004A2A87 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		52990D2B2B90C734004A2A87 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		52A65EFB2B8CDEB7001EF2E0 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +156,7 @@
 				DA3785522B8E1FF5005A190A /* AppTabBarModule */,
 				DA3785352B8D39B2005A190A /* AuthModule */,
 				DA37854C2B8E1AB4005A190A /* RecipesModule */,
+				52990D282B90C6E8004A2A87 /* CategoryModule */,
 				DA3785562B8E208A005A190A /* FavoritesModule */,
 				DA3785552B8E205C005A190A /* ProfileModule */,
 				DA37855A2B8E2113005A190A /* Builders */,
@@ -456,6 +494,7 @@
 			files = (
 				DA3785622B8E2392005A190A /* ProfileCoordinator.swift in Sources */,
 				DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */,
+				52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,
@@ -467,6 +506,7 @@
 				DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */,
 				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
 				52A65F2E2B8FDE2D001EF2E0 /* RecipesViewPresenter.swift in Sources */,
+				52990D2D2B90C758004A2A87 /* CategoryPresenter.swift in Sources */,
 				52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */,
 				DA37854B2B8E1955005A190A /* ModuleBuilder.swift in Sources */,
 				52A65F322B8FE74F001EF2E0 /* RecipesCategoryCell.swift in Sources */,
