@@ -14,7 +14,7 @@ final class AuthService {
     /// Общий истанс на все приложение
     static let shared = AuthService()
 
-    private(set) var state: State = .unauthorized
+    private(set) var state: State = .loggedIn(PersonData(email: "", password: ""))
 
     func login(_ user: PersonData) {
         state = .loggedIn(user)

@@ -18,4 +18,13 @@ extension UIImage {
     static let pencil = UIImage(named: "pencil")
     static let chevron = UIImage(named: "chevron")
     static let eyeFill = UIImage(systemName: "eye.fill")
+    static let chicken = UIImage(named: "chicken")
+    static let desserts = UIImage(named: "desserts")
+    static let drinks = UIImage(named: "drinks")
+    static let fish = UIImage(named: "fish")
+    static let meat = UIImage(named: "meat")
+    static let pancakes = UIImage(named: "pancakes")
+    static let salad = UIImage(named: "salad")
+    static let sideDish = UIImage(named: "sideDish")
+    static let soup = UIImage(named: "soup")
 }

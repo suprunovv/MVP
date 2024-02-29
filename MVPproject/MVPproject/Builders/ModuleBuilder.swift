@@ -20,9 +20,9 @@ final class ModuleBuilder {
 
     static func makeRecipesModule() -> UIViewController {
         // TODO: replace with real VC and setup presenter
-        let viewController = UIViewController()
-//        let recipesPresenter = RecipesPresenter(view: viewController)
-//        viewController.presenter = recipesPresenter
+        let viewController = RecipesViewController()
+        let recipesPresenter = RecipesViewPresenter(view: viewController)
+        viewController.presenter = recipesPresenter
         viewController.tabBarItem = UITabBarItem(
             title: Constants.recipesTitle,
             image: .cakeBarIcon,
