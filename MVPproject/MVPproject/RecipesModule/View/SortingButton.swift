@@ -12,6 +12,7 @@ protocol SortingButtonDelegate: AnyObject {
 /// Кнопка сортировки
 final class SortingButton: UIButton {
     // MARK: - Constants
+
     /// Перечисление состояний кнопок
     enum SortState {
         /// сортировка отключена
@@ -38,9 +39,11 @@ final class SortingButton: UIButton {
     }
 
     // MARK: - Public Properties
+
     weak var delegate: SortingButtonDelegate?
 
     // MARK: - Private Properties
+
     private var sortState: SortState = .unsorted {
         didSet {
             setNeedsUpdateConfiguration()
@@ -54,6 +57,7 @@ final class SortingButton: UIButton {
     }
 
     // MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupControl()
@@ -65,6 +69,7 @@ final class SortingButton: UIButton {
     }
 
     // MARK: - Private Methods
+
     private func setupControl() {
         setImage(.stackUp, for: .normal)
         configuration = UIButton.Configuration.filled()
