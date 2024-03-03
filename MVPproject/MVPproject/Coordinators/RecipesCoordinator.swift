@@ -28,4 +28,14 @@ final class RecipesCoordinator: BaseCoordinator {
         }
         navigationController?.popViewController(animated: true)
     }
+
+    func showDetail(recipe: Recipe) {
+        guard let detailModule = ModuleBuilder
+            .makeDetailModule(coordinator: self, recipe: recipe) as? DetailViewController else { return }
+        navigationController?.pushViewController(detailModule, animated: true)
+    }
+
+    func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
 }
