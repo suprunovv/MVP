@@ -18,11 +18,10 @@ final class ModuleBuilder {
         return viewController
     }
 
-    static func makeRecipesModule() -> UIViewController {
-        // TODO: replace with real VC and setup presenter
-        let viewController = UIViewController()
-//        let recipesPresenter = RecipesPresenter(view: viewController)
-//        viewController.presenter = recipesPresenter
+    static func makeRecipesModule(coordinator: RecipesCoordinator) -> UIViewController {
+        let viewController = RecipesViewController()
+        let recipesPresenter = RecipesPresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = recipesPresenter
         viewController.tabBarItem = UITabBarItem(
             title: Constants.recipesTitle,
             image: .cakeBarIcon,
@@ -44,16 +43,30 @@ final class ModuleBuilder {
         return viewController
     }
 
-    static func makeProfileModule() -> UIViewController {
-        // TODO: replace with real VC and setup presenter
-        let viewController = UIViewController()
-//        let profilePresenter = ProfilePresenter(view: viewController)
-//        viewController.presenter = profilePresenter
+    static func makeProfileModule(coordinator: ProfileCoordinator) -> UIViewController {
+        let viewController = ProfileViewController()
+        let profilePresenter = ProfilePresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = profilePresenter
         viewController.tabBarItem = UITabBarItem(
             title: Constants.profileTitle,
             image: .profileBarIcon,
             selectedImage: .profileFullBarIcon
         )
+        return viewController
+    }
+
+    static func makeCategoryModule(coordinator: RecipesCoordinator, category: RecipesCategory) -> UIViewController {
+        let viewController = CategoryViewController()
+        let presenter = CategoryPresenter(view: viewController, coordinator: coordinator, category: category)
+        viewController.presenter = presenter
+        return viewController
+    }
+
+    static func makeBonusesModule(coordinator: ProfileCoordinator) -> UIViewController {
+        let viewController = BonusesViewController()
+        let bonusesPresenter = BonusesPresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = bonusesPresenter
+
         return viewController
     }
 }

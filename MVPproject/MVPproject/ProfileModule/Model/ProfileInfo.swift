@@ -7,4 +7,6 @@ struct ProfileInfo {
     var avatarImageName: String
     /// Полное имя
     var fullName: String
+    /// Количество бонусов
+    var bonusesCount: Int
 }

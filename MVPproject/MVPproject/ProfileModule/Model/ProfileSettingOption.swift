@@ -3,6 +3,8 @@
 
 /// Настройка в профиле
 struct ProfileSettingOption {
+    /// Тип настройки
+    let type: ProfileConfiguration.ProfileSettingType
     /// Имя настройки
     let title: String
     /// Иконка настройки
