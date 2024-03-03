@@ -46,7 +46,6 @@ final class ImageTableViewCell: UITableViewCell {
     private let rightViewLabel: UILabel = {
         let label = UILabel()
         label.disableAutoresizingMask()
-        label.text = "7935 g"
         label.font = .verdana(ofSize: 10)
         label.textAlignment = .center
         label.textColor = .white
