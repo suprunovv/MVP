@@ -13,4 +13,6 @@ struct Recipe {
     let calories: Int
     /// Категория рецепта
     let categoryType: RecipesCategory.CategoryType
+    /// Вес готового блюда
+    let weight: Int
 }

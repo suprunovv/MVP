@@ -10,6 +10,12 @@
 		52990D2D2B90C758004A2A87 /* CategoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */; };
 		52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */; };
 		52990D312B90F3D9004A2A87 /* SortButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D302B90F3D9004A2A87 /* SortButtonsView.swift */; };
+		52990D332B93BAE3004A2A87 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D322B93BAE3004A2A87 /* DetailPresenter.swift */; };
+		52990D352B93BB86004A2A87 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D342B93BB86004A2A87 /* DetailViewController.swift */; };
+		52990D382B93C86B004A2A87 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D372B93C86B004A2A87 /* ImageTableViewCell.swift */; };
+		52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */; };
+		52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3B2B93F1B0004A2A87 /* EnergyView.swift */; };
+		52990D3E2B9404DB004A2A87 /* FullRecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -61,6 +67,12 @@
 		52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPresenter.swift; sourceTree = "<group>"; };
 		52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		52990D302B90F3D9004A2A87 /* SortButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortButtonsView.swift; sourceTree = "<group>"; };
+		52990D322B93BAE3004A2A87 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
+		52990D342B93BB86004A2A87 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		52990D372B93C86B004A2A87 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
+		52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyValueTableViewCell.swift; sourceTree = "<group>"; };
+		52990D3B2B93F1B0004A2A87 /* EnergyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyView.swift; sourceTree = "<group>"; };
+		52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRecipeTableViewCell.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +133,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52990D362B93C844004A2A87 /* DetailsCells */ = {
+			isa = PBXGroup;
+			children = (
+				52990D372B93C86B004A2A87 /* ImageTableViewCell.swift */,
+				52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */,
+				52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */,
+			);
+			path = DetailsCells;
+			sourceTree = "<group>";
+		};
 		52A65EFB2B8CDEB7001EF2E0 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +183,7 @@
 			children = (
 				52A65F2D2B8FDE2D001EF2E0 /* RecipesPresenter.swift */,
 				52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */,
+				52990D322B93BAE3004A2A87 /* DetailPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -184,6 +207,8 @@
 				52990D302B90F3D9004A2A87 /* SortButtonsView.swift */,
 				52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */,
 				DA3785962B913B0E005A190A /* SortingButton.swift */,
+				52990D342B93BB86004A2A87 /* DetailViewController.swift */,
+				52990D3B2B93F1B0004A2A87 /* EnergyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -193,6 +218,7 @@
 			children = (
 				52A65F312B8FE74F001EF2E0 /* RecipesCategoryCell.swift */,
 				DA3785942B90E9A9005A190A /* RecipeCell.swift */,
+				52990D362B93C844004A2A87 /* DetailsCells */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -510,18 +536,23 @@
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
 				C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */,
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,
+				52990D382B93C86B004A2A87 /* ImageTableViewCell.swift in Sources */,
 				52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */,
 				DA37858F2B90DB35005A190A /* RecipesCategoryCellConfig.swift in Sources */,
 				DA37858B2B907E03005A190A /* Typealias.swift in Sources */,
 				DA37853D2B8E0A51005A190A /* Coordinator.swift in Sources */,
 				DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */,
 				DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */,
+				52990D3E2B9404DB004A2A87 /* FullRecipeTableViewCell.swift in Sources */,
 				DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */,
+				52990D352B93BB86004A2A87 /* DetailViewController.swift in Sources */,
 				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
+				52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */,
 				52A65F2E2B8FDE2D001EF2E0 /* RecipesPresenter.swift in Sources */,
 				DA3785932B90DEEE005A190A /* RecipesCategoriesDataSource.swift in Sources */,
 				52990D2D2B90C758004A2A87 /* CategoryPresenter.swift in Sources */,
 				52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */,
+				52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */,
 				DA3785912B90DE99005A190A /* RecipesDataSource.swift in Sources */,
 				DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */,
 				DA37854B2B8E1955005A190A /* ModuleBuilder.swift in Sources */,
@@ -540,6 +571,7 @@
 				DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */,
 				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,
 				DA37856D2B8E32E9005A190A /* ProfileInfo.swift in Sources */,
+				52990D332B93BAE3004A2A87 /* DetailPresenter.swift in Sources */,
 				DA3785712B8E342B005A190A /* ProfileConfiguration.swift in Sources */,
 				DA3785662B8E30A9005A190A /* UIView+Extension.swift in Sources */,
 				DA3785972B913B0E005A190A /* SortingButton.swift in Sources */,
