@@ -3,6 +3,9 @@
 
 import UIKit
 
+/// Протокол для вью детального экрана
+protocol DetailViewProtocol: AnyObject {}
+
 /// Вью экрана с детальным описанием рецепта
 final class DetailViewController: UIViewController {
     // MARK: - Visual components

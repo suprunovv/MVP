@@ -15,10 +15,8 @@ final class AppTabBarCoordinator: BaseCoordinator {
         add(coordinator: recipesCoordinator)
 
         /// Set Favorites
-        let favoritesModuleView = ModuleBuilder.makeFavoritesModule()
-        let favoritesCoordinator = FavoritesCoordinator(rootController: favoritesModuleView)
-        // TODO: uncomment when presenter is implemented for that flow
-//        favoritesModuleView.presenter?.favoritesCoordinator = favoritesCoordinator
+        let favoritesCoordinator = FavoritesCoordinator()
+        favoritesCoordinator.start()
         add(coordinator: favoritesCoordinator)
 
         /// Set Profile
@@ -29,7 +27,7 @@ final class AppTabBarCoordinator: BaseCoordinator {
         recipelyAppTabBarController?.setViewControllers(
             [
                 recipesCoordinator.navigationController,
-                favoritesCoordinator.rootController,
+                favoritesCoordinator.navigationController,
                 profileCoordinator.navigationController
             ].compactMap { $0 },
             animated: false

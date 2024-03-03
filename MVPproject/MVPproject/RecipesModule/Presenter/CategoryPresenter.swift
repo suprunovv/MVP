@@ -38,6 +38,6 @@ extension CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func showRecipeDetails(recipe: Recipe) {
-        coordinator?.showDetail(recipe: recipe)
+        coordinator?.showDetails(recipe: recipe)
     }
 }

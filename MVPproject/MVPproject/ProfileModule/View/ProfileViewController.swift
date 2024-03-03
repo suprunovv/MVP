@@ -74,11 +74,11 @@ final class ProfileViewController: UIViewController {
     }
 
     private func setupNavigationItem() {
-        title = Constants.title
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.largeTitleTextAttributes = [
-            .font: UIFont.verdanaBold(ofSize: 28) ?? UIFont.boldSystemFont(ofSize: 28)
-        ]
+        let label = UILabel()
+        label.font = .verdanaBold(ofSize: 28)
+        label.textColor = .black
+        label.text = Constants.title
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
     }
 
     private func setupView() {
