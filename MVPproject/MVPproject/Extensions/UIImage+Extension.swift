@@ -39,4 +39,6 @@ extension UIImage {
     static let pot = UIImage(named: "pot")
     static let timerPdf = UIImage(named: "timerPdf")
     static let paperplane = UIImage(systemName: "paperplane")
+    static let bookmarkSquare = UIImage(named: "bookmarkSquare")
+    static let searchSquare = UIImage(named: "searchSquare")
 }

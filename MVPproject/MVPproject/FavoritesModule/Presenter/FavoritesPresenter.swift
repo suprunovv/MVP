@@ -9,6 +9,8 @@ protocol FavoritesPresenterProtocol: AnyObject {
     var favoriteRecipes: [Recipe] { get }
     /// Запрос на открытие деталей о рецепте
     func showRecipeDetails(recipe: Recipe)
+    /// Обновить избранное
+    func refreshFavorites()
 }
 
 /// Презентер избранных рецептов
@@ -27,6 +29,14 @@ final class FavoritesPresenter {
 // MARK: - FavoritesPresenter + FavoritesPresenterProtocol
 
 extension FavoritesPresenter: FavoritesPresenterProtocol {
+    func refreshFavorites() {
+        if favoriteRecipes.isEmpty {
+            view?.showEmptyMessage()
+        } else {
+            view?.showFavorites()
+        }
+    }
+
     func showRecipeDetails(recipe: Recipe) {
         coordinator?.showDetails(recipe: recipe)
     }

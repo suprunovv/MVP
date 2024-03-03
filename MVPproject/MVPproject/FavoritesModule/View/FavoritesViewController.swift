@@ -4,16 +4,31 @@
 import UIKit
 
 /// Протокол представления Избранное
-protocol FavoritesViewProtocol: AnyObject {}
+protocol FavoritesViewProtocol: AnyObject {
+    /// Показать сообщение пустой страницы
+    func showEmptyMessage()
+    /// Показать избранные рецепты
+    func showFavorites()
+}
 
 /// Избранное
 final class FavoritesViewController: UIViewController {
     // MARK: - Constants
+
     private enum Constants {
         static let title = "Favorites"
+        static let emptyPageTitle = "There's nothing here yet"
+        static let emptyPageDescription = "Add interesting recipes to make ordering products convenient"
+        static let emptyMessageToViewSpacing = 20.0
     }
 
     // MARK: - Visual Components
+
+    private let emptyMessageView = EmptyPageMessageView(
+        icon: .bookmarkSquare,
+        title: Constants.emptyPageTitle,
+        description: Constants.emptyPageDescription
+    )
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -21,25 +36,32 @@ final class FavoritesViewController: UIViewController {
         tableView.delegate = self
         tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.reuseID)
         tableView.separatorStyle = .none
+        tableView.isHidden = true
         tableView.disableAutoresizingMask()
         return tableView
     }()
 
     // MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
 
     // MARK: - Public Properties
+
     var presenter: FavoritesPresenterProtocol?
 
     // MARK: - Private Methods
+
     private func setupView() {
         view.backgroundColor = .white
-        view.addSubview(tableView)
-        setupConstraints()
+        view.addSubviews(tableView, emptyMessageView)
+        setupTableConstraints()
+        setupEmptyMessageConstraints()
         setupNavigationItem()
+
+        presenter?.refreshFavorites()
     }
 
     private func setupNavigationItem() {
@@ -50,7 +72,7 @@ final class FavoritesViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
     }
 
-    private func setupConstraints() {
+    private func setupTableConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor
@@ -58,6 +80,20 @@ final class FavoritesViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+
+    private func setupEmptyMessageConstraints() {
+        NSLayoutConstraint.activate([
+            emptyMessageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            emptyMessageView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: Constants.emptyMessageToViewSpacing
+            ),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(
+                equalTo: emptyMessageView.trailingAnchor,
+                constant: Constants.emptyMessageToViewSpacing
+            )
         ])
     }
 }
@@ -90,4 +126,14 @@ extension FavoritesViewController: UITableViewDelegate {
 
 // MARK: - FavoritesViewController + FavoritesViewProtocol
 
-extension FavoritesViewController: FavoritesViewProtocol {}
+extension FavoritesViewController: FavoritesViewProtocol {
+    func showEmptyMessage() {
+        emptyMessageView.isHidden = false
+        tableView.isHidden = true
+    }
+
+    func showFavorites() {
+        emptyMessageView.isHidden = true
+        tableView.isHidden = false
+    }
+}
