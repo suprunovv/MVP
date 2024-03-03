@@ -164,6 +164,6 @@ extension CategoryViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let recipe = presenter?.recipes[indexPath.row] else { return }
-        presenter?.showDetailView(recipe: recipe)
+        presenter?.showRecipeDetails(recipe: recipe)
     }
 }

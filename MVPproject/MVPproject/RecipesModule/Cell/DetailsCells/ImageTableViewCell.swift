@@ -7,9 +7,9 @@ import UIKit
 final class ImageTableViewCell: UITableViewCell {
     // MARK: - Constants
 
-    static let reuseID = "ImageTableViewCell"
+    static let reuseID = String(describing: ImageTableViewCell.self)
 
-    enum Constants {
+    private enum Constants {
         static let cookingTime = "Cooking time"
         static let min = "min"
         static let gram = "g"
@@ -20,7 +20,8 @@ final class ImageTableViewCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.disableAutoresizingMask()
-        label.font = .verdana(ofSize: 20)
+        label.font = .verdanaBold(ofSize: 20)
+        label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         label.textColor = .black
         return label
@@ -35,7 +36,7 @@ final class ImageTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    private let rightView: UIView = {
+    private let portionSizeView: UIView = {
         let view = UIView()
         view.disableAutoresizingMask()
         view.backgroundColor = .greenAlpha
@@ -43,7 +44,7 @@ final class ImageTableViewCell: UITableViewCell {
         return view
     }()
 
-    private let rightViewLabel: UILabel = {
+    private let portionSizeLabel: UILabel = {
         let label = UILabel()
         label.disableAutoresizingMask()
         label.font = .verdana(ofSize: 10)
@@ -52,14 +53,14 @@ final class ImageTableViewCell: UITableViewCell {
         return label
     }()
 
-    private let rightImageView: UIImageView = {
+    private let portionSizeImageView: UIImageView = {
         let imageView = UIImageView(image: .pot)
         imageView.disableAutoresizingMask()
         imageView.tintColor = .white
         return imageView
     }()
 
-    private let bottomView: UIView = {
+    private let cookingTimeView: UIView = {
         let view = UIView()
         view.disableAutoresizingMask()
         view.backgroundColor = .greenAlpha
@@ -67,14 +68,14 @@ final class ImageTableViewCell: UITableViewCell {
         return view
     }()
 
-    private let bottomImageView: UIImageView = {
+    private let cookingTimeImageView: UIImageView = {
         let imageView = UIImageView(image: .timerPdf)
         imageView.disableAutoresizingMask()
         imageView.tintColor = .white
         return imageView
     }()
 
-    private let bottomLabel: UILabel = {
+    private let cookingTimeLabel: UILabel = {
         let label = UILabel()
         label.disableAutoresizingMask()
         label.numberOfLines = 0
@@ -86,8 +87,30 @@ final class ImageTableViewCell: UITableViewCell {
 
     // MARK: - Initializators
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCell()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    // MARK: - Public methods
+
+    func configureCell(recipe: Recipe?) {
+        guard let recipe = recipe else {
+            return
+        }
+        titleImageView.image = UIImage(named: recipe.imageName)
+        cookingTimeLabel.text = "\(Constants.cookingTime)\n \(recipe.cookingTime) \(Constants.min)"
+        portionSizeLabel.text = "\(recipe.weight) \(Constants.gram)"
+        titleLabel.text = recipe.name
+    }
+
+    // MARK: - Private methods
+
+    private func setupCell() {
         setTitleLabelConstraint()
         setImageViewConstraints()
         setRightViewConstraint()
@@ -98,20 +121,6 @@ final class ImageTableViewCell: UITableViewCell {
         setBottomLabelConstraint()
     }
 
-    // MARK: - Public methods
-
-    func configureCell(recipe: Recipe?) {
-        guard let recipe = recipe else {
-            return
-        }
-        titleImageView.image = UIImage(named: recipe.imageName)
-        bottomLabel.text = "\(Constants.cookingTime)\n \(recipe.cookingTime) \(Constants.min)"
-        rightViewLabel.text = "\(recipe.weight) \(Constants.gram)"
-        titleLabel.text = recipe.name
-    }
-
-    // MARK: - Private methods
-
     private func setImageViewConstraints() {
         addSubview(titleImageView)
         titleImageView.widthAnchor.constraint(equalToConstant: 300).activate()
@@ -121,11 +130,11 @@ final class ImageTableViewCell: UITableViewCell {
     }
 
     private func setRightViewConstraint() {
-        titleImageView.addSubview(rightView)
-        rightView.widthAnchor.constraint(equalToConstant: 50).activate()
-        rightView.heightAnchor.constraint(equalToConstant: 50).activate()
-        rightView.topAnchor.constraint(equalTo: titleImageView.topAnchor, constant: 8).activate()
-        rightView.trailingAnchor.constraint(equalTo: titleImageView.trailingAnchor, constant: -10).activate()
+        titleImageView.addSubview(portionSizeView)
+        portionSizeView.widthAnchor.constraint(equalToConstant: 50).activate()
+        portionSizeView.heightAnchor.constraint(equalToConstant: 50).activate()
+        portionSizeView.topAnchor.constraint(equalTo: titleImageView.topAnchor, constant: 8).activate()
+        portionSizeView.trailingAnchor.constraint(equalTo: titleImageView.trailingAnchor, constant: -10).activate()
     }
 
     private func setTitleLabelConstraint() {
@@ -137,42 +146,42 @@ final class ImageTableViewCell: UITableViewCell {
     }
 
     private func setRightImageViewConstraint() {
-        addSubview(rightImageView)
-        rightImageView.widthAnchor.constraint(equalToConstant: 20).activate()
-        rightImageView.heightAnchor.constraint(equalToConstant: 17).activate()
-        rightImageView.centerXAnchor.constraint(equalTo: rightView.centerXAnchor).activate()
-        rightImageView.topAnchor.constraint(equalTo: rightView.topAnchor, constant: 7).activate()
+        addSubview(portionSizeImageView)
+        portionSizeImageView.widthAnchor.constraint(equalToConstant: 20).activate()
+        portionSizeImageView.heightAnchor.constraint(equalToConstant: 17).activate()
+        portionSizeImageView.centerXAnchor.constraint(equalTo: portionSizeView.centerXAnchor).activate()
+        portionSizeImageView.topAnchor.constraint(equalTo: portionSizeView.topAnchor, constant: 7).activate()
     }
 
     private func setRightLabelConstraint() {
-        rightView.addSubview(rightViewLabel)
-        rightViewLabel.widthAnchor.constraint(equalToConstant: 39).activate()
-        rightViewLabel.heightAnchor.constraint(equalToConstant: 15).activate()
-        rightViewLabel.centerXAnchor.constraint(equalTo: rightView.centerXAnchor).activate()
-        rightViewLabel.topAnchor.constraint(equalTo: rightImageView.bottomAnchor, constant: 6).activate()
+        portionSizeView.addSubview(portionSizeLabel)
+        portionSizeLabel.widthAnchor.constraint(equalToConstant: 39).activate()
+        portionSizeLabel.heightAnchor.constraint(equalToConstant: 15).activate()
+        portionSizeLabel.centerXAnchor.constraint(equalTo: portionSizeView.centerXAnchor).activate()
+        portionSizeLabel.topAnchor.constraint(equalTo: portionSizeImageView.bottomAnchor, constant: 6).activate()
     }
 
     private func setBottomViewConstraint() {
-        titleImageView.addSubview(bottomView)
-        bottomView.widthAnchor.constraint(equalToConstant: 154).activate()
-        bottomView.heightAnchor.constraint(equalToConstant: 48).activate()
-        bottomView.leadingAnchor.constraint(equalTo: titleImageView.leadingAnchor, constant: 176).activate()
-        bottomView.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor).activate()
+        titleImageView.addSubview(cookingTimeView)
+        cookingTimeView.widthAnchor.constraint(equalToConstant: 154).activate()
+        cookingTimeView.heightAnchor.constraint(equalToConstant: 48).activate()
+        cookingTimeView.leadingAnchor.constraint(equalTo: titleImageView.leadingAnchor, constant: 176).activate()
+        cookingTimeView.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor).activate()
     }
 
     private func setBottomImageViewConsraint() {
-        bottomView.addSubview(bottomImageView)
-        bottomImageView.widthAnchor.constraint(equalToConstant: 25).activate()
-        bottomImageView.heightAnchor.constraint(equalToConstant: 25).activate()
-        bottomImageView.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor).activate()
-        bottomImageView.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 8).activate()
+        cookingTimeView.addSubview(cookingTimeImageView)
+        cookingTimeImageView.widthAnchor.constraint(equalToConstant: 25).activate()
+        cookingTimeImageView.heightAnchor.constraint(equalToConstant: 25).activate()
+        cookingTimeImageView.centerYAnchor.constraint(equalTo: cookingTimeView.centerYAnchor).activate()
+        cookingTimeImageView.leadingAnchor.constraint(equalTo: cookingTimeView.leadingAnchor, constant: 8).activate()
     }
 
     private func setBottomLabelConstraint() {
-        bottomView.addSubview(bottomLabel)
-        bottomLabel.widthAnchor.constraint(equalToConstant: 83).activate()
-        bottomLabel.heightAnchor.constraint(equalToConstant: 30).activate()
-        bottomLabel.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor).activate()
-        bottomLabel.leadingAnchor.constraint(equalTo: bottomImageView.trailingAnchor).activate()
+        cookingTimeView.addSubview(cookingTimeLabel)
+        cookingTimeLabel.widthAnchor.constraint(equalToConstant: 83).activate()
+        cookingTimeLabel.heightAnchor.constraint(equalToConstant: 30).activate()
+        cookingTimeLabel.centerYAnchor.constraint(equalTo: cookingTimeView.centerYAnchor).activate()
+        cookingTimeLabel.leadingAnchor.constraint(equalTo: cookingTimeImageView.trailingAnchor).activate()
     }
 }

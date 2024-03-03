@@ -100,12 +100,11 @@ extension DetailViewController: DetailViewProtocol {}
 
 extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let cells = presenter?.getCellTypes() else { return 0 }
-        return cells.count
+        presenter?.cellTypes.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cells = presenter?.getCellTypes()
+        let cells = presenter?.cellTypes
         guard let cells = cells else { return UITableViewCell() }
         switch cells[indexPath.row] {
         case .image:
@@ -127,6 +126,7 @@ extension DetailViewController: UITableViewDataSource {
                 withIdentifier: FullRecipeTableViewCell.reuseID,
                 for: indexPath
             ) as? FullRecipeTableViewCell else { return UITableViewCell() }
+            cell.setupDescription(text: presenter?.getRecipe().description)
             return cell
         }
     }
@@ -136,7 +136,7 @@ extension DetailViewController: UITableViewDataSource {
 
 extension DetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cell = presenter?.getCellTypes()[indexPath.row]
+        let cell = presenter?.cellTypes[indexPath.row]
         guard let cell = cell else { return 0 }
         switch cell {
         case .image:

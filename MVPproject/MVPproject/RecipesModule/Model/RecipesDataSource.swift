@@ -10,7 +10,8 @@ struct RecipesDataSource {
             cookingTime: 60,
             calories: 274,
             categoryType: .fish,
-            weight: 543
+            weight: 543,
+            description: RecipesDataSource.description
         ),
         Recipe(
             imageName: "fishDish2",
@@ -18,7 +19,8 @@ struct RecipesDataSource {
             cookingTime: 90,
             calories: 616,
             categoryType: .fish,
-            weight: 618
+            weight: 618,
+            description: RecipesDataSource.description
         ),
         Recipe(
             imageName: "fishDish3",
@@ -26,7 +28,8 @@ struct RecipesDataSource {
             cookingTime: 90,
             calories: 226,
             categoryType: .fish,
-            weight: 310
+            weight: 310,
+            description: RecipesDataSource.description
         ),
         Recipe(
             imageName: "fishDish4",
@@ -34,7 +37,8 @@ struct RecipesDataSource {
             cookingTime: 80,
             calories: 94,
             categoryType: .fish,
-            weight: 891
+            weight: 891,
+            description: RecipesDataSource.description
         ),
         Recipe(
             imageName: "fishDish5",
@@ -42,7 +46,8 @@ struct RecipesDataSource {
             cookingTime: 100,
             calories: 410,
             categoryType: .fish,
-            weight: 1432
+            weight: 1432,
+            description: RecipesDataSource.description
         ),
         Recipe(
             imageName: "fishDish6",
@@ -50,7 +55,8 @@ struct RecipesDataSource {
             cookingTime: 100,
             calories: 174,
             categoryType: .fish,
-            weight: 431
+            weight: 431,
+            description: RecipesDataSource.description
         ),
     ]
 
@@ -62,4 +68,38 @@ struct RecipesDataSource {
         }
         return recipesByCategories
     }
+
+    static let description = """
+    1/2 to 2 fish heads, depending on size, about 5 pounds total
+    2 tablespoons vegetable oil
+    1/4 cup red or green thai curry paste
+    3 tablespoons fish sauce or anchovy sauce
+    1 tablespoon sugar
+    1 can coconut milk, about 12 ounces
+    3 medium size asian eggplants, cut int 1 inch rounds
+    Handful of bird's eye chilies
+    1/2 cup thai basil leaves
+    Juice of 3 limes
+    1/2 to 2 fish heads, depending on size, about 5 pounds total
+    2 tablespoons vegetable oil
+    1/4 cup red or green thai curry paste
+    3 tablespoons fish sauce or anchovy sauce
+    1 tablespoon sugar
+    1 can coconut milk, about 12 ounces
+    3 medium size asian eggplants, cut int 1 inch rounds
+    Handful of bird's eye chilies
+    1/2 cup thai basil leaves
+    Juice of 3 limes
+    1/2 to 2 fish heads, depending on size, about 5 pounds total
+    2 tablespoons vegetable oil
+    1/4 cup red or green thai curry paste
+    3 tablespoons fish sauce or anchovy sauce
+    1 tablespoon sugar
+    1 can coconut milk, about 12 ounces
+    3 medium size asian eggplants, cut int 1 inch rounds
+    Handful of bird's eye chilies
+    1/2 cup thai basil leaves
+    Juice of 3 limes
+
+    """
 }

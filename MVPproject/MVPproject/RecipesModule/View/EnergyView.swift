@@ -20,7 +20,7 @@ final class EnergyView: UIView {
         case enerckcal = "Enerc kcal"
         /// Углеводы
         case carbohydrates = "Carbohydrates"
-        /// Жыры
+        /// Жиры
         case fats = "Fats"
         /// Белки
         case proteins = "Proteins"

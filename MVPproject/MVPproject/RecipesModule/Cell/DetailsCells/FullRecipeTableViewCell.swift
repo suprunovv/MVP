@@ -7,7 +7,7 @@ import UIKit
 final class FullRecipeTableViewCell: UITableViewCell {
     // MARK: - Constants
 
-    static let reuseID = "FullRecipeTableViewCell"
+    static let reuseID = String(describing: FullRecipeTableViewCell.self)
 
     // MARK: - Visual components
 
@@ -22,12 +22,23 @@ final class FullRecipeTableViewCell: UITableViewCell {
 
     // MARK: - Initializators
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLabelConstraints()
-        setText()
         setCell()
-        heightAnchor.constraint(equalTo: descriptionLabel.heightAnchor, constant: 20).activate()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    // MARK: - Public methods
+
+    func setupDescription(text: String?) {
+        guard let text = text else {
+            return
+        }
+        descriptionLabel.text = text
     }
 
     // MARK: - Private methods
@@ -40,46 +51,9 @@ final class FullRecipeTableViewCell: UITableViewCell {
     }
 
     private func setCell() {
-        backgroundColor = .fullRecipeColor
+        heightAnchor.constraint(equalTo: descriptionLabel.heightAnchor, constant: 20).activate()
+        backgroundColor = .blueRecipeBg
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         layer.cornerRadius = 24
-    }
-
-    // MARK: - ЭТОГО ТУТ ПОНЯТНОЕ ДЕЛО НЕ БУДЕТ НИКОГДА, Временно что бы отображалось, Потом будет добавлятся в методе setupCell, а пока что текст один для всего
-
-    private func setText() {
-        descriptionLabel.text = """
-        1/2 to 2 fish heads, depending on size, about 5 pounds total
-        2 tablespoons vegetable oil
-        1/4 cup red or green thai curry paste
-        3 tablespoons fish sauce or anchovy sauce
-        1 tablespoon sugar
-        1 can coconut milk, about 12 ounces
-        3 medium size asian eggplants, cut int 1 inch rounds
-        Handful of bird's eye chilies
-        1/2 cup thai basil leaves
-        Juice of 3 limes
-        1/2 to 2 fish heads, depending on size, about 5 pounds total
-        2 tablespoons vegetable oil
-        1/4 cup red or green thai curry paste
-        3 tablespoons fish sauce or anchovy sauce
-        1 tablespoon sugar
-        1 can coconut milk, about 12 ounces
-        3 medium size asian eggplants, cut int 1 inch rounds
-        Handful of bird's eye chilies
-        1/2 cup thai basil leaves
-        Juice of 3 limes
-        1/2 to 2 fish heads, depending on size, about 5 pounds total
-        2 tablespoons vegetable oil
-        1/4 cup red or green thai curry paste
-        3 tablespoons fish sauce or anchovy sauce
-        1 tablespoon sugar
-        1 can coconut milk, about 12 ounces
-        3 medium size asian eggplants, cut int 1 inch rounds
-        Handful of bird's eye chilies
-        1/2 cup thai basil leaves
-        Juice of 3 limes
-
-        """
     }
 }

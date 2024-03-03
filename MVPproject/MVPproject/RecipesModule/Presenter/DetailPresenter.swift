@@ -5,8 +5,8 @@
 protocol DetailPresenterProtocol: AnyObject {
     /// Метод поучает модель рецепта
     func getRecipe() -> Recipe
-    /// Метод возвращает массив типов ячеек
-    func getCellTypes() -> [DetailCellType]
+    /// Mассив типов ячеек
+    var cellTypes: [DetailCellType] { get }
     /// Метод закрывает экран деталей
     func closeDetails()
 }
@@ -28,6 +28,7 @@ enum DetailCellType {
 final class DetailPresenter {
     // MARK: - Private properties
 
+    private(set) var cellTypes: [DetailCellType] = [.image, .energy, .description]
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipesCoordinator?
     private var recipe: Recipe
@@ -46,10 +47,6 @@ final class DetailPresenter {
 extension DetailPresenter: DetailPresenterProtocol {
     func closeDetails() {
         coordinator?.goBack()
-    }
-
-    func getCellTypes() -> [DetailCellType] {
-        [.image, .energy, .description]
     }
 
     func getRecipe() -> Recipe {
