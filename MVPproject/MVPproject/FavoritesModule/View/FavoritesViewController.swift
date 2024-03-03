@@ -41,16 +41,16 @@ final class FavoritesViewController: UIViewController {
         return tableView
     }()
 
+    // MARK: - Public Properties
+
+    var presenter: FavoritesPresenterProtocol?
+
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
-
-    // MARK: - Public Properties
-
-    var presenter: FavoritesPresenterProtocol?
 
     // MARK: - Private Methods
 
