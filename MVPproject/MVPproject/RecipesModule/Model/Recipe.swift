@@ -15,4 +15,6 @@ struct Recipe {
     let categoryType: RecipesCategory.CategoryType
     /// Вес готового блюда
     let weight: Int
+    /// Полное описание приготовления
+    let description: String
 }

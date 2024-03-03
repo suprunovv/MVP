@@ -7,14 +7,14 @@ import UIKit
 final class EnergyValueTableViewCell: UITableViewCell {
     // MARK: - Constants
 
-    static let reuseID = "EnergyValueTableViewCell"
+    static let reuseID = String(describing: EnergyValueTableViewCell.self)
 
     // MARK: - Visual components
 
-    let caloriesView = EnergyView()
-    let carbohydratesView = EnergyView()
-    let fatsView = EnergyView()
-    let proteinsView = EnergyView()
+    private let caloriesView = EnergyView()
+    private let carbohydratesView = EnergyView()
+    private let fatsView = EnergyView()
+    private let proteinsView = EnergyView()
 
     private lazy var viewsStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [caloriesView, carbohydratesView, fatsView, proteinsView])
@@ -26,10 +26,16 @@ final class EnergyValueTableViewCell: UITableViewCell {
 
     // MARK: - Initializators
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setStackViewConstraint()
     }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    // MARK: - Public methods
 
     func setupCell(recipe: Recipe?) {
         guard let recipe = recipe else {

@@ -8,7 +8,7 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// Запрос на закрытие категории
     func closeCategory()
     /// Переход на экран с детальным описанием рецепта
-    func showDetailView(recipe: Recipe)
+    func showRecipeDetails(recipe: Recipe)
 }
 
 /// Презентер экрана категории
@@ -37,7 +37,7 @@ extension CategoryPresenter: CategoryPresenterProtocol {
         coordinator?.closeCategory()
     }
 
-    func showDetailView(recipe: Recipe) {
+    func showRecipeDetails(recipe: Recipe) {
         coordinator?.showDetail(recipe: recipe)
     }
 }
