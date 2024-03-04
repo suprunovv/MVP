@@ -7,6 +7,8 @@ import UIKit
 protocol CategoryViewProtocol: AnyObject {
     /// Метод установки заголовка экрана
     func setScreenTitle(_ title: String)
+    /// Метод обновляющий таблицу с рецептами
+    func reloadRecipeTabel()
 }
 
 /// Вью экрана выбранной категории рецепта
@@ -56,9 +58,10 @@ final class CategoryViewController: UIViewController {
         return searchBar
     }()
 
-    private let sortButtonsView: UIView = {
+    private lazy var sortButtonsView: UIView = {
         let containerView = UIView()
         let view = SortButtonsView()
+        view.delegate = self
         containerView.disableAutoresizingMask()
         view.disableAutoresizingMask()
         containerView.addSubview(view)
@@ -127,6 +130,10 @@ final class CategoryViewController: UIViewController {
 // MARK: - CategoryViewController + CategoryViewProtocol
 
 extension CategoryViewController: CategoryViewProtocol {
+    func reloadRecipeTabel() {
+        tableView.reloadData()
+    }
+
     func setScreenTitle(_ title: String) {
         titleLabel.text = title
         let titleBarItem = UIBarButtonItem(customView: titleLabel)
@@ -165,5 +172,17 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let recipe = presenter?.recipes[indexPath.row] else { return }
         presenter?.showRecipeDetails(recipe: recipe)
+    }
+}
+
+// MARK: - CategoryViewController + SortButtonViewDelegate
+
+extension CategoryViewController: SortButtonViewDelegate {
+    func updateTimeSorting(_ sorting: SortingButton.SortState) {
+        presenter?.stateByTime(state: sorting)
+    }
+
+    func updateCaloriesSorting(_ sorting: SortingButton.SortState) {
+        presenter?.stateByCalories(state: sorting)
     }
 }
