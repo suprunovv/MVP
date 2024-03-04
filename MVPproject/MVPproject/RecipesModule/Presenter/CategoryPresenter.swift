@@ -26,11 +26,13 @@ final class CategoryPresenter {
             sortRecipes(by: timeSortingState, caloriesSortState: caloriesSortingState)
         }
     }
+
     private var caloriesSortingState = SortingButton.SortState.unsorted {
         didSet {
             sortRecipes(by: timeSortingState, caloriesSortState: caloriesSortingState)
         }
     }
+
     private(set) var recipes: [Recipe] = [] {
         didSet {
             view?.reloadRecipeTabel()
@@ -53,7 +55,9 @@ final class CategoryPresenter {
                     return recipe1.cookingTime > recipe2.cookingTime
                 }
             } else if timeSortState == .descending {
-                return recipe1.cookingTime < recipe2.cookingTime
+                if recipe1.cookingTime != recipe2.cookingTime {
+                    return recipe1.cookingTime < recipe2.cookingTime
+                }
             }
             if caloriesSortState == .ascending {
                 return recipe1.calories > recipe2.calories
