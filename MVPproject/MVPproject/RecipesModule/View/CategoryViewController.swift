@@ -43,8 +43,9 @@ final class CategoryViewController: UIViewController {
         return label
     }()
 
-    private let searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.delegate = self
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
             string: Constants.searchBarPlaceholder,
             attributes: [
@@ -173,6 +174,10 @@ extension CategoryViewController: UITableViewDelegate {
         guard let recipe = presenter?.recipes[indexPath.row] else { return }
         presenter?.showRecipeDetails(recipe: recipe)
     }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
 }
 
 // MARK: - CategoryViewController + SortButtonViewDelegate
@@ -184,5 +189,13 @@ extension CategoryViewController: SortButtonViewDelegate {
 
     func updateCaloriesSorting(_ sorting: SortingButton.SortState) {
         presenter?.stateByCalories(state: sorting)
+    }
+}
+
+// MARK: - CategoryViewController + UISearchBarDelegate
+
+extension CategoryViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.updateSearchTerm(searchText)
     }
 }
