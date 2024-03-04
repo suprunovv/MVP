@@ -175,6 +175,8 @@ extension CategoryViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - CategoryViewController + SortButtonViewDelegate
+
 extension CategoryViewController: SortButtonViewDelegate {
     func updateTimeSorting(_ sorting: SortingButton.SortState) {
         presenter?.stateByTime(state: sorting)

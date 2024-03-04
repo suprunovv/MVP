@@ -50,18 +50,16 @@ final class CategoryPresenter {
 
     private func sortRecipes(by timeSortState: SortingButton.SortState, caloriesSortState: SortingButton.SortState) {
         recipes.sort { recipe1, recipe2 in
-            if timeSortState == .ascending {
-                if recipe1.cookingTime != recipe2.cookingTime {
-                    return recipe1.cookingTime > recipe2.cookingTime
-                }
-            } else if timeSortState == .descending {
-                if recipe1.cookingTime != recipe2.cookingTime {
-                    return recipe1.cookingTime < recipe2.cookingTime
-                }
+            if timeSortState == .ascending, recipe1.cookingTime != recipe2.cookingTime {
+                return recipe1.cookingTime > recipe2.cookingTime
+            }
+            if timeSortState == .descending, recipe1.cookingTime != recipe2.cookingTime {
+                return recipe1.cookingTime < recipe2.cookingTime
             }
             if caloriesSortState == .ascending {
                 return recipe1.calories > recipe2.calories
-            } else if caloriesSortState == .descending {
+            }
+            if caloriesSortState == .descending {
                 return recipe1.calories < recipe2.calories
             }
             return true
