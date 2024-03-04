@@ -36,4 +36,9 @@ extension UIImage {
     static let pizza = UIImage(named: "pizza")
     static let chevronBold = UIImage(named: "chevronBold")
     static let arrowBack = UIImage(named: "arrowBack")
+    static let pot = UIImage(named: "pot")
+    static let timerPdf = UIImage(named: "timerPdf")
+    static let paperplane = UIImage(systemName: "paperplane")
+    static let bookmarkSquare = UIImage(named: "bookmarkSquare")
+    static let searchSquare = UIImage(named: "searchSquare")
 }

@@ -161,4 +161,9 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         sortButtonsView
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let recipe = presenter?.recipes[indexPath.row] else { return }
+        presenter?.showRecipeDetails(recipe: recipe)
+    }
 }

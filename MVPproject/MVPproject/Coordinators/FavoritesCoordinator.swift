@@ -3,11 +3,13 @@
 
 import UIKit
 
-/// Координатор избранных
-final class FavoritesCoordinator: BaseCoordinator {
-    private(set) var rootController: UINavigationController
+/// Координатор избранных рецептов
+final class FavoritesCoordinator: BaseCoordinator, RecipeWithDetailsCoordinatorProtocol {
+    private(set) var navigationController: UINavigationController?
 
-    init(rootController: UIViewController) {
-        self.rootController = UINavigationController(rootViewController: rootController)
+    override func start() {
+        guard let favoritesModuleView = ModuleBuilder
+            .makeFavoritesModule(coordinator: self) as? FavoritesViewController else { return }
+        navigationController = UINavigationController(rootViewController: favoritesModuleView)
     }
 }

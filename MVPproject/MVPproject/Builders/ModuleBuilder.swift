@@ -30,11 +30,10 @@ final class ModuleBuilder {
         return viewController
     }
 
-    static func makeFavoritesModule() -> UIViewController {
-        // TODO: replace with real VC and setup presenter
-        let viewController = UIViewController()
-//        let favoritesPresenter = FavoritesPresenter(view: viewController)
-//        viewController.presenter = favoritesPresenter
+    static func makeFavoritesModule(coordinator: FavoritesCoordinator) -> UIViewController {
+        let viewController = FavoritesViewController()
+        let favoritesPresenter = FavoritesPresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = favoritesPresenter
         viewController.tabBarItem = UITabBarItem(
             title: Constants.favoritrsTitle,
             image: .bookmarkBarIcon,
@@ -67,6 +66,16 @@ final class ModuleBuilder {
         let bonusesPresenter = BonusesPresenter(view: viewController, coordinator: coordinator)
         viewController.presenter = bonusesPresenter
 
+        return viewController
+    }
+
+    static func makeDetailModule(
+        coordinator: RecipeWithDetailsCoordinatorProtocol,
+        recipe: Recipe
+    ) -> UIViewController {
+        let viewController = DetailViewController()
+        let presenter = DetailPresenter(view: viewController, coordinator: coordinator, recipe: recipe)
+        viewController.presenter = presenter
         return viewController
     }
 }
