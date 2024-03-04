@@ -39,7 +39,7 @@ final class CategoryPresenter {
 
     private(set) var recipes: [Recipe] = [] {
         didSet {
-            view?.reloadRecipeTabel()
+            updateRecipesView()
         }
     }
 
@@ -50,6 +50,15 @@ final class CategoryPresenter {
         self.coordinator = coordinator
         recipes = RecipesDataSource.recipesByCategories[category.type] ?? []
         view.setScreenTitle(category.name)
+    }
+
+    private func updateRecipesView() {
+        view?.reloadRecipeTabel()
+        if recipes.isEmpty {
+            view?.showEmptyMessage()
+        } else {
+            view?.hideEmptyMessage()
+        }
     }
 
     private func sortRecipes(by timeSortState: SortingButton.SortState, caloriesSortState: SortingButton.SortState) {
