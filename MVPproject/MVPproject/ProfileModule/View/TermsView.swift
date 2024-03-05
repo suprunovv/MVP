@@ -10,9 +10,9 @@ protocol TermsViewDelegate: AnyObject {
 
 /// Вью с политикой
 final class TermsView: UIView {
-    
     // MARK: - Constants
-    enum Constants {
+
+    private enum Constants {
         static let titleText = "Terms of Use"
         static let infoLabelText = """
         Welcome to our recipe app! We're thrilled to have
@@ -45,7 +45,7 @@ final class TermsView: UIView {
         Enjoy exploring and cooking up a storm!
         """
     }
-    
+
     // MARK: - Visual components
 
     private let lineView: UIView = {
@@ -89,12 +89,13 @@ final class TermsView: UIView {
         view.disableAutoresizingMask()
         return view
     }()
-    
+
     // MARK: - Public properties
 
     weak var delegate: TermsViewDelegate?
 
     // MARK: - Initializators
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -103,14 +104,15 @@ final class TermsView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     // MARK: - Public methods
+
     func addGestureRecognizer(_ recognizer: UIPanGestureRecognizer) {
         topView.addGestureRecognizer(recognizer)
     }
 
     // MARK: - Private methods
-    
+
     private func setupView() {
         layer.cornerRadius = 30
         clipsToBounds = true

@@ -13,7 +13,7 @@ protocol ProfilePresenterProtocol: AnyObject {
     func handleNameChanged(_ fullName: String)
     /// Показать бонусы
     func showBonuses()
-    /// Показать tetms
+    /// Показать terms
     func showTerms()
     /// Обработка выбора настройки
     func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
@@ -35,7 +35,6 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
-    
     func showTerms() {
         view?.showTerms()
     }

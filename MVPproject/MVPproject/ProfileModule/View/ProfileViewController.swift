@@ -26,6 +26,9 @@ final class ProfileViewController: UIViewController {
         static let cancelEditNameButtonText = "Cancel"
         static let submitEditNameButtonText = "Ok"
         static let editNameTextFieldPlaceholder = "Name Surname"
+        static let extraTermsHeight: CGFloat = 100
+        static let termsTopSpace: CGFloat = 150
+        static let termsBottomSpase: CGFloat = 44
     }
 
     enum TermsViewState {
@@ -65,7 +68,7 @@ final class ProfileViewController: UIViewController {
         return alert
     }()
 
-    private lazy var termsView = TermsView()
+    private var termsView = TermsView()
 
     // MARK: - Public Properties
 
@@ -73,11 +76,12 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private lazy var termsHeight = self.view.bounds.height
-    private var termsVisible = false
+    private lazy var termsHeight = self.view.bounds.height + Constants.extraTermsHeight
+    private var isTermsVisible = false
     private var nextState: TermsViewState {
-        termsVisible ? .collapsed : .expanded
+        isTermsVisible ? .collapsed : .expanded
     }
+
     private var visualEffectView: UIVisualEffectView!
     private var runingAnimations: [UIViewPropertyAnimator] = []
     private var animationProgressWhenInterrupted: CGFloat = 0
@@ -85,13 +89,14 @@ final class ProfileViewController: UIViewController {
     private var profileCells: ProfileCells = []
 
     // MARK: - Life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItem()
         setupView()
         presenter?.refreshProfileData()
     }
-    
+
     // MARK: - Private methods
 
     private func setupNavigationItem() {
@@ -139,22 +144,22 @@ final class ProfileViewController: UIViewController {
                 guard let self = self else { return }
                 switch state {
                 case .expanded:
-                    self.termsView.frame.origin.y = self.view.frame.height - 750
+                    self.termsView.frame.origin.y = self.view.frame.height - self.termsHeight + Constants.termsTopSpace
                 case .collapsed:
-                    self.termsView.frame.origin.y = self.view.frame.height - 44
+                    self.termsView.frame.origin.y = self.view.frame.height - Constants.termsBottomSpase
                 }
             }
 
             frameAnimator.addCompletion { [weak self] _ in
                 guard let self = self else { return }
-                self.termsVisible.toggle()
+                self.isTermsVisible.toggle()
                 self.runingAnimations.removeAll()
             }
 
             frameAnimator.startAnimation()
             runingAnimations.append(frameAnimator)
 
-            let blureAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+            let blurAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
                 case .expanded:
                     self.visualEffectView.effect = UIBlurEffect(style: .dark)
@@ -162,8 +167,8 @@ final class ProfileViewController: UIViewController {
                     self.visualEffectView.effect = nil
                 }
             }
-            blureAnimator.startAnimation()
-            runingAnimations.append(blureAnimator)
+            blurAnimator.startAnimation()
+            runingAnimations.append(blurAnimator)
         }
     }
 
@@ -188,7 +193,7 @@ final class ProfileViewController: UIViewController {
             animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
         }
     }
-    
+
     @objc func handleTermsPan(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .began:
@@ -196,7 +201,7 @@ final class ProfileViewController: UIViewController {
         case .changed:
             let translation = recognizer.translation(in: termsView.topView)
             var fractionComplete = translation.y / termsHeight
-            fractionComplete = termsVisible ? fractionComplete : -fractionComplete
+            fractionComplete = isTermsVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
             continueInteractiveTransition()
