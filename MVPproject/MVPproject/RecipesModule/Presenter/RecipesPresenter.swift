@@ -6,9 +6,9 @@ import Foundation
 /// Перечисление с состояниями загрузки данных
 enum LoadingState {
     /// Данные загружены
-    case loaded
+    case isLoaded
     /// Данные еще не загружены
-    case unloaded
+    case isLoading
 }
 
 /// Протокол для презентера экрана рецептов
@@ -24,17 +24,14 @@ protocol RecipesPresenterProtocol: AnyObject {
 /// Презентер для экрана с типами рецептов
 
 final class RecipesPresenter {
-    // MARK: - Public properties
-
-    private var timer = Timer()
-
+    
     // MARK: - Private properties
-
+    private var timer = Timer()
     private weak var view: RecipesViewProtocol?
     private weak var recipesCoordinator: RecipesCoordinator?
-    private(set) var isLoadingData: LoadingState = .unloaded
+    private(set) var isLoadingData: LoadingState = .isLoading
 
-    // MARK: - Initializators
+    // MARK: - Initializers
 
     init(view: RecipesViewProtocol, coordinator: RecipesCoordinator) {
         self.view = view
@@ -55,7 +52,7 @@ final class RecipesPresenter {
     }
 
     @objc private func updateLoadingDate() {
-        isLoadingData = .loaded
+        isLoadingData = .isLoaded
         view?.reloadCollection()
         timer.invalidate()
     }

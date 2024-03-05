@@ -97,16 +97,16 @@ extension RecipesViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let isLoading = presenter?.isLoadingData ?? .unloaded
+        let isLoading = presenter?.isLoadingData ?? .isLoading
         switch isLoading {
-        case .loaded:
+        case .isLoaded:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecipesCategoryCell.reuseID,
                 for: indexPath
             ) as? RecipesCategoryCell else { return UICollectionViewCell() }
             cell.setupCell(category: recipesCategories[indexPath.item])
             return cell
-        case .unloaded:
+        case .isLoading:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: ShimmerCell.reuseID,
                 for: indexPath
