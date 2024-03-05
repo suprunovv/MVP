@@ -16,6 +16,7 @@
 		52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */; };
 		52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3B2B93F1B0004A2A87 /* EnergyView.swift */; };
 		52990D3E2B9404DB004A2A87 /* FullRecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */; };
+		52990D462B9789EB004A2A87 /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D452B9789EB004A2A87 /* TermsView.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -76,6 +77,7 @@
 		52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyValueTableViewCell.swift; sourceTree = "<group>"; };
 		52990D3B2B93F1B0004A2A87 /* EnergyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyView.swift; sourceTree = "<group>"; };
 		52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRecipeTableViewCell.swift; sourceTree = "<group>"; };
+		52990D452B9789EB004A2A87 /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3785632B8E2EEF005A190A /* ProfileViewController.swift */,
+				52990D452B9789EB004A2A87 /* TermsView.swift */,
 				DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */,
 				DA3785722B8E3838005A190A /* ProfileSettingCell.swift */,
 				DA3785842B8FE636005A190A /* BonusesViewController.swift */,
@@ -592,6 +595,7 @@
 				DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */,
 				DA37854B2B8E1955005A190A /* ModuleBuilder.swift in Sources */,
 				52A65F322B8FE74F001EF2E0 /* RecipesCategoryCell.swift in Sources */,
+				52990D462B9789EB004A2A87 /* TermsView.swift in Sources */,
 				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
 				DA3785482B8E186E005A190A /* AppTabBarCoordinator.swift in Sources */,
 				DA3785442B8E1116005A190A /* AuthService.swift in Sources */,
