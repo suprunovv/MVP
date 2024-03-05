@@ -29,6 +29,7 @@
 		DA2D5EA62B94D35900CF339F /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA52B94D35900CF339F /* FavoritesViewController.swift */; };
 		DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */; };
 		DA2D5EAC2B94DF7D00CF339F /* EmptyPageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */; };
+		DA2D5EB12B97ADE800CF339F /* ShimmerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */; };
 		DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */; };
 		DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785272B8D1393005A190A /* UIFont+Extension.swift */; };
 		DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */; };
@@ -91,6 +92,7 @@
 		DA2D5EA52B94D35900CF339F /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageMessageView.swift; sourceTree = "<group>"; };
+		DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerLayer.swift; sourceTree = "<group>"; };
 		DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipelyAppTabBarController.swift; sourceTree = "<group>"; };
 		DA3785272B8D1393005A190A /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 		52A65F062B8CDEB7001EF2E0 /* MVPproject */ = {
 			isa = PBXGroup;
 			children = (
+				DA2D5EAF2B97ADDB00CF339F /* Shared */,
 				DA3785542B8E201E005A190A /* Application */,
 				DA3785382B8D39EE005A190A /* AppModule */,
 				DA3785522B8E1FF5005A190A /* AppTabBarModule */,
@@ -260,6 +263,14 @@
 				DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		DA2D5EAF2B97ADDB00CF339F /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		DA3785262B8D1382005A190A /* Extensions */ = {
@@ -567,6 +578,7 @@
 				DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
 				52990D312B90F3D9004A2A87 /* SortButtonsView.swift in Sources */,
+				DA2D5EB12B97ADE800CF339F /* ShimmerLayer.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
 				C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */,
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,
