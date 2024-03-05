@@ -5,6 +5,8 @@ import UIKit
 
 protocol RecipesViewProtocol: AnyObject {
     func updateRecipes(categories: [RecipesCategoryCellConfig])
+    /// Метод обновляет данные в коллекции
+    func reloadCollection()
 }
 
 /// Вью экрана с типами рецептов
@@ -70,6 +72,7 @@ final class RecipesViewController: UIViewController {
             RecipesCategoryCell.self,
             forCellWithReuseIdentifier: RecipesCategoryCell.reuseID
         )
+        typeDishCollectionView.register(ShimmerCell.self, forCellWithReuseIdentifier: ShimmerCell.reuseID)
         typeDishCollectionView.delegate = self
         typeDishCollectionView.dataSource = self
         view.addSubview(typeDishCollectionView)
@@ -94,12 +97,22 @@ extension RecipesViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: RecipesCategoryCell.reuseID,
-            for: indexPath
-        ) as? RecipesCategoryCell else { return UICollectionViewCell() }
-        cell.setupCell(category: recipesCategories[indexPath.item])
-        return cell
+        let isLoading = presenter?.isLoadingData ?? .unloaded
+        switch isLoading {
+        case .loaded:
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RecipesCategoryCell.reuseID,
+                for: indexPath
+            ) as? RecipesCategoryCell else { return UICollectionViewCell() }
+            cell.setupCell(category: recipesCategories[indexPath.item])
+            return cell
+        case .unloaded:
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ShimmerCell.reuseID,
+                for: indexPath
+            ) as? ShimmerCell else { return UICollectionViewCell() }
+            return cell
+        }
     }
 }
 
@@ -150,6 +163,10 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - RecipesViewController + RecipesViewProtocol
 
 extension RecipesViewController: RecipesViewProtocol {
+    func reloadCollection() {
+        typeDishCollectionView.reloadData()
+    }
+
     func updateRecipes(categories: [RecipesCategoryCellConfig]) {
         recipesCategories = categories
     }
