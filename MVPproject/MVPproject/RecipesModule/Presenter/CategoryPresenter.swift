@@ -13,6 +13,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     func stateByCalories(state: SortingButton.SortState)
     /// Метод для получения состояния кнопки time
     func stateByTime(state: SortingButton.SortState)
+    /// Обновление строки в поиске
+    func updateSearchTerm(_ search: String)
 }
 
 /// Презентер экрана категории
@@ -33,9 +35,11 @@ final class CategoryPresenter {
         }
     }
 
+    private var recipesBeforeFiltering: [Recipe] = []
+
     private(set) var recipes: [Recipe] = [] {
         didSet {
-            view?.reloadRecipeTabel()
+            updateRecipesView()
         }
     }
 
@@ -46,6 +50,15 @@ final class CategoryPresenter {
         self.coordinator = coordinator
         recipes = RecipesDataSource.recipesByCategories[category.type] ?? []
         view.setScreenTitle(category.name)
+    }
+
+    private func updateRecipesView() {
+        view?.reloadRecipeTabel()
+        if recipes.isEmpty {
+            view?.showEmptyMessage()
+        } else {
+            view?.hideEmptyMessage()
+        }
     }
 
     private func sortRecipes(by timeSortState: SortingButton.SortState, caloriesSortState: SortingButton.SortState) {
@@ -70,6 +83,22 @@ final class CategoryPresenter {
 // MARK: - CategoryPresenter + CategoryPresenterProtocol
 
 extension CategoryPresenter: CategoryPresenterProtocol {
+    func updateSearchTerm(_ search: String) {
+        if recipesBeforeFiltering.isEmpty {
+            recipesBeforeFiltering = recipes
+        }
+        if search.count < 3 {
+            if recipes.count != recipesBeforeFiltering.count {
+                recipes = recipesBeforeFiltering
+                recipesBeforeFiltering = []
+            }
+            return
+        }
+        recipes = recipesBeforeFiltering.filter { recipe in
+            recipe.name.range(of: search, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+        }
+    }
+
     func stateByTime(state: SortingButton.SortState) {
         timeSortingState = state
     }
