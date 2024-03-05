@@ -9,6 +9,10 @@ protocol CategoryViewProtocol: AnyObject {
     func setScreenTitle(_ title: String)
     /// Метод обновляющий таблицу с рецептами
     func reloadRecipeTable()
+    /// Показать сообщение пустой страницы
+    func showEmptyMessage()
+    /// Скрыть сообщение пустой страницы
+    func hideEmptyMessage()
 }
 
 /// Вью экрана выбранной категории рецепта
@@ -22,9 +26,25 @@ final class CategoryViewController: UIViewController {
         static let sortingToViewSpacing = 20.0
         static let searchBarInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         static let sortingHeaderHeight = 20.0
+        static let emptyPageTitle = "Nothing found"
+        static let emptyPageDescription = "Try entering your query differently"
+        static let emptyMessageToViewSpacing = 20.0
     }
 
     // MARK: - Visual Components
+
+    private let emptyMessageView = EmptyPageMessageView(
+        icon: .searchSquare,
+        title: Constants.emptyPageTitle,
+        description: Constants.emptyPageDescription
+    )
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .verdanaBold(ofSize: 28)
+        label.textColor = .black
+        return label
+    }()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -36,15 +56,9 @@ final class CategoryViewController: UIViewController {
         return tableView
     }()
 
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .verdanaBold(ofSize: 28)
-        label.textColor = .black
-        return label
-    }()
-
-    private let searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.delegate = self
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
             string: Constants.searchBarPlaceholder,
             attributes: [
@@ -102,9 +116,11 @@ final class CategoryViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
+        emptyMessageView.isHidden = true
         view.backgroundColor = .white
-        view.addSubviews(tableView, searchBar)
+        view.addSubviews(tableView, searchBar, emptyMessageView)
         setupConstraints()
+        setupEmptyMessageConstraints()
     }
 
     private func setupConstraints() {
@@ -122,6 +138,20 @@ final class CategoryViewController: UIViewController {
         ])
     }
 
+    private func setupEmptyMessageConstraints() {
+        NSLayoutConstraint.activate([
+            emptyMessageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            emptyMessageView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: Constants.emptyMessageToViewSpacing
+            ),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(
+                equalTo: emptyMessageView.trailingAnchor,
+                constant: Constants.emptyMessageToViewSpacing
+            )
+        ])
+    }
+
     @objc private func closeCategory() {
         presenter?.closeCategory()
     }
@@ -130,6 +160,14 @@ final class CategoryViewController: UIViewController {
 // MARK: - CategoryViewController + CategoryViewProtocol
 
 extension CategoryViewController: CategoryViewProtocol {
+    func showEmptyMessage() {
+        emptyMessageView.isHidden = false
+    }
+
+    func hideEmptyMessage() {
+        emptyMessageView.isHidden = true
+    }
+
     func reloadRecipeTable() {
         tableView.reloadData()
     }
@@ -184,6 +222,10 @@ extension CategoryViewController: UITableViewDelegate {
         guard let recipe = presenter?.recipes[indexPath.row] else { return }
         presenter?.showRecipeDetails(recipe: recipe)
     }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
 }
 
 // MARK: - CategoryViewController + SortButtonViewDelegate
@@ -195,5 +237,13 @@ extension CategoryViewController: SortButtonViewDelegate {
 
     func updateCaloriesSorting(_ sorting: SortingButton.SortState) {
         presenter?.stateByCalories(state: sorting)
+    }
+}
+
+// MARK: - CategoryViewController + UISearchBarDelegate
+
+extension CategoryViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.updateSearchTerm(searchText)
     }
 }

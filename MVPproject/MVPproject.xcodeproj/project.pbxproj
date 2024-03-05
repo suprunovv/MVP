@@ -16,6 +16,8 @@
 		52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */; };
 		52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3B2B93F1B0004A2A87 /* EnergyView.swift */; };
 		52990D3E2B9404DB004A2A87 /* FullRecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */; };
+		52990D402B969ADD004A2A87 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3F2B969ADD004A2A87 /* ShimmerView.swift */; };
+		52990D442B975F37004A2A87 /* ShimmerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D432B975F37004A2A87 /* ShimmerCell.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -77,6 +79,8 @@
 		52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyValueTableViewCell.swift; sourceTree = "<group>"; };
 		52990D3B2B93F1B0004A2A87 /* EnergyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyView.swift; sourceTree = "<group>"; };
 		52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRecipeTableViewCell.swift; sourceTree = "<group>"; };
+		52990D3F2B969ADD004A2A87 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
+		52990D432B975F37004A2A87 /* ShimmerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerCell.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 				52990D342B93BB86004A2A87 /* DetailViewController.swift */,
 				52990D3B2B93F1B0004A2A87 /* EnergyView.swift */,
 				DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */,
+				52990D3F2B969ADD004A2A87 /* ShimmerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -227,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				52A65F312B8FE74F001EF2E0 /* RecipesCategoryCell.swift */,
+				52990D432B975F37004A2A87 /* ShimmerCell.swift */,
 				DA3785942B90E9A9005A190A /* RecipeCell.swift */,
 				52990D362B93C844004A2A87 /* DetailsCells */,
 			);
@@ -609,11 +615,13 @@
 				DA3785442B8E1116005A190A /* AuthService.swift in Sources */,
 				DA37857C2B8E7040005A190A /* LoginViewPresenter.swift in Sources */,
 				52A65F382B901975001EF2E0 /* RecipesCategory.swift in Sources */,
+				52990D402B969ADD004A2A87 /* ShimmerView.swift in Sources */,
 				DA3785512B8E1C2E005A190A /* RecipesCoordinator.swift in Sources */,
 				DA3785732B8E3838005A190A /* ProfileSettingCell.swift in Sources */,
 				DA3785872B8FE877005A190A /* NSLayoutConstraint+Extension.swift in Sources */,
 				DA3785952B90E9A9005A190A /* RecipeCell.swift in Sources */,
 				DA3785682B8E31E7005A190A /* ProfileInfoCell.swift in Sources */,
+				52990D442B975F37004A2A87 /* ShimmerCell.swift in Sources */,
 				DA3785642B8E2EEF005A190A /* ProfileViewController.swift in Sources */,
 				DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */,
 				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,
