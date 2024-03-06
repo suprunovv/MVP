@@ -3,6 +3,16 @@
 
 /// Моковые данные для рецептов
 struct RecipesDataSource {
+    static let recipePlaceholder = Recipe(
+        imageName: "",
+        name: "",
+        cookingTime: 0,
+        calories: 0,
+        categoryType: .chicken,
+        weight: 0,
+        description: ""
+    )
+
     static let recipes: [Recipe] = [
         Recipe(
             imageName: "fishDish1",

@@ -8,7 +8,7 @@ protocol CategoryViewProtocol: AnyObject {
     /// Метод установки заголовка экрана
     func setScreenTitle(_ title: String)
     /// Метод обновляющий таблицу с рецептами
-    func reloadRecipeTabel()
+    func reloadRecipeTable()
     /// Показать сообщение пустой страницы
     func showEmptyMessage()
     /// Скрыть сообщение пустой страницы
@@ -168,7 +168,7 @@ extension CategoryViewController: CategoryViewProtocol {
         emptyMessageView.isHidden = true
     }
 
-    func reloadRecipeTabel() {
+    func reloadRecipeTable() {
         tableView.reloadData()
     }
 
@@ -189,9 +189,20 @@ extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let recipe = presenter?.recipes[indexPath.row]
         guard let recipe = recipe,
-              let cell = tableView.dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
+              let cell = tableView
+              .dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
         else { return .init() }
-        cell.configure(withRecipe: recipe)
+        switch presenter?.loadingState {
+        case .initial, .loading:
+            tableView.isScrollEnabled = false
+            cell.maskWithShimmer()
+        case .loaded:
+            tableView.isScrollEnabled = true
+            cell.configure(withRecipe: recipe)
+        default:
+            break
+        }
+
         return cell
     }
 }

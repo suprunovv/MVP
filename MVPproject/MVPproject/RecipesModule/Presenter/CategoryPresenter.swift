@@ -1,10 +1,14 @@
 // CategoryPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Foundation
+
 /// Протокол презентера экрана категории
 protocol CategoryPresenterProtocol: AnyObject {
     /// Рецепты в категории
     var recipes: [Recipe] { get }
+    ///
+    var loadingState: CategoryPresenter.LoadingState { get }
     /// Запрос на закрытие категории
     func closeCategory()
     /// Переход на экран с детальным описанием рецепта
@@ -19,10 +23,18 @@ protocol CategoryPresenterProtocol: AnyObject {
 
 /// Презентер экрана категории
 final class CategoryPresenter {
+    enum LoadingState {
+        case initial
+        case loading
+        case loaded
+    }
+
     // MARK: - private propertise
 
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
+
+    private let recipesPlaceholder = Array(repeating: RecipesDataSource.recipePlaceholder, count: 7)
     private var timeSortingState = SortingButton.SortState.unsorted {
         didSet {
             sortRecipes(by: timeSortingState, caloriesSortState: caloriesSortingState)
@@ -32,6 +44,14 @@ final class CategoryPresenter {
     private var caloriesSortingState = SortingButton.SortState.unsorted {
         didSet {
             sortRecipes(by: timeSortingState, caloriesSortState: caloriesSortingState)
+        }
+    }
+
+    private(set) var loadingState: LoadingState = .initial {
+        didSet {
+            if loadingState == .loading {
+                recipes = recipesPlaceholder
+            }
         }
     }
 
@@ -48,12 +68,20 @@ final class CategoryPresenter {
     init(view: CategoryViewProtocol, coordinator: RecipesCoordinator, category: RecipesCategory) {
         self.view = view
         self.coordinator = coordinator
-        recipes = RecipesDataSource.recipesByCategories[category.type] ?? []
         view.setScreenTitle(category.name)
+        loadRecipes(byCategory: category)
+    }
+
+    private func loadRecipes(byCategory category: RecipesCategory) {
+        loadingState = .loading
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            self?.loadingState = .loaded
+            self?.recipes = RecipesDataSource.recipesByCategories[category.type] ?? []
+        }
     }
 
     private func updateRecipesView() {
-        view?.reloadRecipeTabel()
+        view?.reloadRecipeTable()
         if recipes.isEmpty {
             view?.showEmptyMessage()
         } else {

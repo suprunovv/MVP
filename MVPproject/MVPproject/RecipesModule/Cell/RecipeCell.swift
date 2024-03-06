@@ -4,7 +4,7 @@
 import UIKit
 
 /// Ячейка рецепта
-final class RecipeCell: UITableViewCell {
+class RecipeCell: UITableViewCell {
     // MARK: - Constants
 
     private enum Constants {
@@ -21,13 +21,16 @@ final class RecipeCell: UITableViewCell {
         static let cellOuterSpacing = (x: 20.0, y: 7.0)
         static let timeInfoText = "min"
         static let caloriesInfoText = "kkal"
+        static let recipeNameLabelSize = CGSize(width: 197, height: 32)
+        static let cookingTimeSize = CGSize(width: 74, height: 15)
+        static let caloriesSize = CGSize(width: 91, height: 15)
     }
 
-    static let reuseID = String(describing: RecipeCell.self)
+    static var reuseID: String { String(describing: RecipeCell.self) }
 
     // MARK: - Visual Components
 
-    private let recipeImageView: UIImageView = {
+    private(set) var recipeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Constants.recipeImageCornerRadius
         imageView.clipsToBounds = true
@@ -39,14 +42,15 @@ final class RecipeCell: UITableViewCell {
         return imageView
     }()
 
-    private let recipeNameLabel: UILabel = {
+    private(set) var recipeNameLabel: UILabel = {
         let label = UILabel()
         label.font = .verdana(ofSize: 14)
         label.numberOfLines = 0
+        label.disableAutoresizingMask()
         return label
     }()
 
-    private let chevronImageView: UIImageView = {
+    private(set) var chevronImageView: UIImageView = {
         let imageView = UIImageView(image: .chevronBold)
         imageView.contentMode = .center
         imageView.disableAutoresizingMask()
@@ -68,8 +72,8 @@ final class RecipeCell: UITableViewCell {
     private let cookingTimeLabel = UILabel()
     private let caloriesLabel = UILabel()
 
-    private lazy var cookingTimeStackView = makeInfoStack(label: cookingTimeLabel, image: .timer)
-    private lazy var caloriesStackView = makeInfoStack(label: caloriesLabel, image: .pizza)
+    private(set) lazy var cookingTimeStackView = makeInfoStack(label: cookingTimeLabel, image: .timer)
+    private(set) lazy var caloriesStackView = makeInfoStack(label: caloriesLabel, image: .pizza)
 
     private lazy var infoStackView: UIStackView = {
         let infoStack = UIStackView(arrangedSubviews: [cookingTimeStackView, caloriesStackView])
@@ -93,6 +97,25 @@ final class RecipeCell: UITableViewCell {
         return stack
     }()
 
+    private var isMaskedWithShimmer = false {
+        didSet {
+            updateLayout()
+        }
+    }
+
+    private lazy var shimmeredViews = [recipeImageView, cookingTimeStackView, caloriesStackView, recipeNameLabel]
+    private lazy var shimmerConstraints = [
+        recipeNameLabel.widthAnchor.constraint(equalToConstant: Constants.recipeNameLabelSize.width),
+        recipeNameLabel.heightAnchor.constraint(equalToConstant: Constants.recipeNameLabelSize.height),
+
+        cookingTimeStackView.widthAnchor.constraint(equalToConstant: Constants.cookingTimeSize.width),
+        cookingTimeStackView.heightAnchor.constraint(equalToConstant: Constants.cookingTimeSize.height),
+
+        caloriesStackView.widthAnchor.constraint(equalToConstant: Constants.caloriesSize.width),
+        caloriesStackView.heightAnchor.constraint(equalToConstant: Constants.caloriesSize.height)
+    ]
+    private var shimmerLayersMap: [String: ShimmerLayer] = [:]
+
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -107,11 +130,25 @@ final class RecipeCell: UITableViewCell {
 
     // MARK: - Public Methods
 
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        if isMaskedWithShimmer {
+            for item in [recipeImageView, cookingTimeStackView, caloriesStackView, recipeNameLabel] {
+                addShimmerLayer(view: item)
+            }
+        }
+    }
+
     func configure(withRecipe recipe: Recipe) {
+        isMaskedWithShimmer = false
         recipeImageView.image = UIImage(named: recipe.imageName)
         recipeNameLabel.text = recipe.name
         cookingTimeLabel.text = "\(recipe.cookingTime) \(Constants.timeInfoText)"
         caloriesLabel.text = "\(recipe.calories) \(Constants.caloriesInfoText)"
+    }
+
+    func maskWithShimmer() {
+        isMaskedWithShimmer = true
     }
 
     // MARK: - Private Methods
@@ -121,6 +158,34 @@ final class RecipeCell: UITableViewCell {
         recipeView.addSubview(recipeStackView)
         contentView.addSubview(recipeView)
         setupConstraints()
+    }
+
+    private func updateLayout() {
+        if isMaskedWithShimmer {
+            NSLayoutConstraint.activate(shimmerConstraints)
+            shimmeredViews.forEach { addShimmerLayer(view: $0) }
+            chevronImageView.isHidden = true
+        } else {
+            NSLayoutConstraint.deactivate(shimmerConstraints)
+            shimmeredViews.forEach { removeShimmerLayer(view: $0) }
+            chevronImageView.isHidden = false
+        }
+    }
+
+    private func addShimmerLayer(view: UIView) {
+        let viewStringKey = String(describing: view)
+        if shimmerLayersMap[viewStringKey] != nil || view.bounds.size == .zero { return }
+        let shimmerLayer = ShimmerLayer(clearColor: .greenBgAccent)
+        shimmerLayer.frame = view.bounds
+        view.layer.addSublayer(shimmerLayer)
+        shimmerLayersMap[viewStringKey] = shimmerLayer
+    }
+
+    private func removeShimmerLayer(view: UIView) {
+        let viewStringKey = String(describing: view)
+        guard let shimmerLayer = shimmerLayersMap[viewStringKey] else { return }
+        shimmerLayer.removeFromSuperlayer()
+        shimmerLayersMap[viewStringKey] = nil
     }
 
     private func setupConstraints() {
@@ -164,6 +229,7 @@ final class RecipeCell: UITableViewCell {
         let stack = UIStackView(arrangedSubviews: [imageView, label])
         stack.spacing = Constants.infoIconToLabelSpacing
         stack.alignment = .leading
+        stack.disableAutoresizingMask()
         return stack
     }
 }
