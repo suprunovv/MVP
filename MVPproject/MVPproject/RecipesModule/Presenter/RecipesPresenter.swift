@@ -24,8 +24,8 @@ protocol RecipesPresenterProtocol: AnyObject {
 /// Презентер для экрана с типами рецептов
 
 final class RecipesPresenter {
-    
     // MARK: - Private properties
+
     private var timer = Timer()
     private weak var view: RecipesViewProtocol?
     private weak var recipesCoordinator: RecipesCoordinator?
@@ -38,7 +38,7 @@ final class RecipesPresenter {
         recipesCoordinator = coordinator
         startLoadingData()
     }
-    
+
     // MARK: - Private methods
 
     private func startLoadingData() {

@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Заглушка с шимером 
+/// Заглушка с шимером
 final class ShimmerView: UIView {
     // MARK: - Private properties
 

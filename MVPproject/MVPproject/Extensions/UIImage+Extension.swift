@@ -41,4 +41,5 @@ extension UIImage {
     static let paperplane = UIImage(systemName: "paperplane")
     static let bookmarkSquare = UIImage(named: "bookmarkSquare")
     static let searchSquare = UIImage(named: "searchSquare")
+    static let xMark = UIImage(systemName: "xmark")
 }

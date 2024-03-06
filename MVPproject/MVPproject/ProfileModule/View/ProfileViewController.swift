@@ -9,6 +9,8 @@ protocol ProfileViewProtocol: AnyObject {
     func updateProfile(profileCells: ProfileConfiguration.ProfileCells)
     /// Вывод UI для изменения имени
     func showNameEdit(title: String, currentName: String)
+    /// Анимированная презентация terms
+    func animateTermsView(_ termsView: TermsView)
 }
 
 /// Профиль
@@ -16,6 +18,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Types
 
     typealias ProfileCells = ProfileConfiguration.ProfileCells
+    typealias TermsViewState = ProfilePresenter.TermsViewState
 
     // MARK: - Constants
 
@@ -24,6 +27,8 @@ final class ProfileViewController: UIViewController {
         static let cancelEditNameButtonText = "Cancel"
         static let submitEditNameButtonText = "Ok"
         static let editNameTextFieldPlaceholder = "Name Surname"
+        static let handleAreaHeight: CGFloat = 100
+        static let termsTopOffset: CGFloat = 44
     }
 
     // MARK: - Visual Components
@@ -64,7 +69,15 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Private Properties
 
+    private var termsView: TermsView!
+    private let termsHeight = UIScreen.main.bounds.height - Constants.termsTopOffset
+    private var visualEffectView: UIVisualEffectView!
+    private var runingAnimations: [UIViewPropertyAnimator] = []
+    private var animationProgressWhenInterrupted: CGFloat = 0
+
     private var profileCells: ProfileCells = []
+
+    // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +85,8 @@ final class ProfileViewController: UIViewController {
         setupView()
         presenter?.refreshProfileData()
     }
+
+    // MARK: - Private methods
 
     private func setupNavigationItem() {
         let label = UILabel()
@@ -93,6 +108,95 @@ final class ProfileViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+
+    private func setupTermsView() {
+        visualEffectView = UIVisualEffectView()
+        visualEffectView.frame = view.frame
+        view.addSubview(visualEffectView)
+
+        termsView.delegate = self
+        termsView.frame = CGRect(
+            x: 0,
+            y: UIScreen.main.bounds.height - Constants.handleAreaHeight,
+            width: view.bounds.width,
+            height: termsHeight
+        )
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTermsPan(recognizer:)))
+        termsView.handleView.addGestureRecognizer(panRecognizer)
+    }
+
+    private func animateTransitionIfNeeded(state: TermsViewState, duration: TimeInterval) {
+        if runingAnimations.isEmpty {
+            let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) { [weak self] in
+                guard let self = self else { return }
+                switch state {
+                case .expanded:
+                    self.termsView.frame.origin.y = UIScreen.main.bounds.height - self.termsHeight
+                case .collapsed:
+                    self.termsView.frame.origin.y = UIScreen.main.bounds.height - Constants.handleAreaHeight
+                }
+            }
+
+            frameAnimator.addCompletion { [weak self] _ in
+                guard let self = self else { return }
+                self.presenter?.finishTermsPanGesture()
+                self.runingAnimations.removeAll()
+            }
+
+            frameAnimator.startAnimation()
+            runingAnimations.append(frameAnimator)
+
+            let blurAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+                switch state {
+                case .expanded:
+                    self.visualEffectView.effect = UIBlurEffect(style: .dark)
+                case .collapsed:
+                    self.visualEffectView.effect = nil
+                }
+            }
+            blurAnimator.startAnimation()
+            runingAnimations.append(blurAnimator)
+        }
+    }
+
+    private func startInteractiveTransition(state: TermsViewState, duration: TimeInterval) {
+        if runingAnimations.isEmpty {
+            animateTransitionIfNeeded(state: state, duration: duration)
+        }
+        for animator in runingAnimations {
+            animator.pauseAnimation()
+            animationProgressWhenInterrupted = animator.fractionComplete
+        }
+    }
+
+    private func updateInteractiveTransition(fractionCompleted: CGFloat) {
+        for animator in runingAnimations {
+            animator.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
+        }
+    }
+
+    private func continueInteractiveTransition() {
+        for animator in runingAnimations {
+            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        }
+    }
+
+    @objc func handleTermsPan(recognizer: UIPanGestureRecognizer) {
+        guard let presenter = presenter else { return }
+        switch recognizer.state {
+        case .began:
+            startInteractiveTransition(state: presenter.nextState, duration: 0.9)
+        case .changed:
+            let translation = recognizer.translation(in: termsView.handleView)
+            var fractionComplete = translation.y / termsHeight
+            fractionComplete = presenter.isTermsVisible ? fractionComplete : -fractionComplete
+            updateInteractiveTransition(fractionCompleted: fractionComplete)
+        case .ended:
+            continueInteractiveTransition()
+        default:
+            break
+        }
     }
 }
 
@@ -139,6 +243,11 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - ProfileViewController + ProfileViewProtocol
 
 extension ProfileViewController: ProfileViewProtocol {
+    func animateTermsView(_ termsView: TermsView) {
+        self.termsView = termsView
+        setupTermsView()
+    }
+
     func showNameEdit(title: String, currentName: String) {
         guard let nameTextField = editNameAlert.textFields?[0] else { return }
         editNameAlert.title = title
@@ -157,5 +266,14 @@ extension ProfileViewController: ProfileViewProtocol {
 extension ProfileViewController: ProfileInfoCellDelegate {
     func editNameButtonTapped() {
         presenter?.editNameButtonTapped()
+    }
+}
+
+// MARK: - ProfileViewController + TermsViewDelegate
+
+extension ProfileViewController: TermsViewDelegate {
+    func hideTermsView() {
+        presenter?.hideTerms()
+        visualEffectView.removeFromSuperview()
     }
 }
