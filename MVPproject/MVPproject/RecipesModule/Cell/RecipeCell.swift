@@ -84,7 +84,7 @@ class RecipeCell: UITableViewCell {
         stack.distribution = .equalSpacing
         stack.alignment = .leading
         stack.disableAutoresizingMask()
-        stack.heightAnchor.constraint(equalToConstant: Constants.infoStackHeight).activate()
+        stack.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.infoStackHeight).activate()
         return stack
     }()
 
@@ -96,25 +96,6 @@ class RecipeCell: UITableViewCell {
         stack.disableAutoresizingMask()
         return stack
     }()
-
-    private var isMaskedWithShimmer = false {
-        didSet {
-            updateLayout()
-        }
-    }
-
-    private lazy var shimmeredViews = [recipeImageView, cookingTimeStackView, caloriesStackView, recipeNameLabel]
-    private lazy var shimmerConstraints = [
-        recipeNameLabel.widthAnchor.constraint(equalToConstant: Constants.recipeNameLabelSize.width),
-        recipeNameLabel.heightAnchor.constraint(equalToConstant: Constants.recipeNameLabelSize.height),
-
-        cookingTimeStackView.widthAnchor.constraint(equalToConstant: Constants.cookingTimeSize.width),
-        cookingTimeStackView.heightAnchor.constraint(equalToConstant: Constants.cookingTimeSize.height),
-
-        caloriesStackView.widthAnchor.constraint(equalToConstant: Constants.caloriesSize.width),
-        caloriesStackView.heightAnchor.constraint(equalToConstant: Constants.caloriesSize.height)
-    ]
-    private var shimmerLayersMap: [String: ShimmerLayer] = [:]
 
     // MARK: - Initializers
 
@@ -130,25 +111,11 @@ class RecipeCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        if isMaskedWithShimmer {
-            for item in [recipeImageView, cookingTimeStackView, caloriesStackView, recipeNameLabel] {
-                addShimmerLayer(view: item)
-            }
-        }
-    }
-
     func configure(withRecipe recipe: Recipe) {
-        isMaskedWithShimmer = false
         recipeImageView.image = UIImage(named: recipe.imageName)
         recipeNameLabel.text = recipe.name
         cookingTimeLabel.text = "\(recipe.cookingTime) \(Constants.timeInfoText)"
         caloriesLabel.text = "\(recipe.calories) \(Constants.caloriesInfoText)"
-    }
-
-    func maskWithShimmer() {
-        isMaskedWithShimmer = true
     }
 
     // MARK: - Private Methods
@@ -158,34 +125,6 @@ class RecipeCell: UITableViewCell {
         recipeView.addSubview(recipeStackView)
         contentView.addSubview(recipeView)
         setupConstraints()
-    }
-
-    private func updateLayout() {
-        if isMaskedWithShimmer {
-            NSLayoutConstraint.activate(shimmerConstraints)
-            shimmeredViews.forEach { addShimmerLayer(view: $0) }
-            chevronImageView.isHidden = true
-        } else {
-            NSLayoutConstraint.deactivate(shimmerConstraints)
-            shimmeredViews.forEach { removeShimmerLayer(view: $0) }
-            chevronImageView.isHidden = false
-        }
-    }
-
-    private func addShimmerLayer(view: UIView) {
-        let viewStringKey = String(describing: view)
-        if shimmerLayersMap[viewStringKey] != nil || view.bounds.size == .zero { return }
-        let shimmerLayer = ShimmerLayer(clearColor: .greenBgAccent)
-        shimmerLayer.frame = view.bounds
-        view.layer.addSublayer(shimmerLayer)
-        shimmerLayersMap[viewStringKey] = shimmerLayer
-    }
-
-    private func removeShimmerLayer(view: UIView) {
-        let viewStringKey = String(describing: view)
-        guard let shimmerLayer = shimmerLayersMap[viewStringKey] else { return }
-        shimmerLayer.removeFromSuperlayer()
-        shimmerLayersMap[viewStringKey] = nil
     }
 
     private func setupConstraints() {
