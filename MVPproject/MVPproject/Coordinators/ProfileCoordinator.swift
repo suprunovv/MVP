@@ -38,6 +38,7 @@ final class ProfileCoordinator: BaseCoordinator {
     }
 
     func hideTerms() {
+        navigationController?.tabBarController?.tabBar.isHidden = false
         termsView?.removeFromSuperview()
         termsView = nil
     }
