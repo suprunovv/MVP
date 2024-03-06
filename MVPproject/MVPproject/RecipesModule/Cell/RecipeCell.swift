@@ -4,7 +4,7 @@
 import UIKit
 
 /// Ячейка рецепта
-final class RecipeCell: UITableViewCell {
+class RecipeCell: UITableViewCell {
     // MARK: - Constants
 
     private enum Constants {
@@ -21,13 +21,16 @@ final class RecipeCell: UITableViewCell {
         static let cellOuterSpacing = (x: 20.0, y: 7.0)
         static let timeInfoText = "min"
         static let caloriesInfoText = "kkal"
+        static let recipeNameLabelSize = CGSize(width: 197, height: 32)
+        static let cookingTimeSize = CGSize(width: 74, height: 15)
+        static let caloriesSize = CGSize(width: 91, height: 15)
     }
 
-    static let reuseID = String(describing: RecipeCell.self)
+    static var reuseID: String { String(describing: RecipeCell.self) }
 
     // MARK: - Visual Components
 
-    private let recipeImageView: UIImageView = {
+    private(set) var recipeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Constants.recipeImageCornerRadius
         imageView.clipsToBounds = true
@@ -39,14 +42,15 @@ final class RecipeCell: UITableViewCell {
         return imageView
     }()
 
-    private let recipeNameLabel: UILabel = {
+    private(set) var recipeNameLabel: UILabel = {
         let label = UILabel()
         label.font = .verdana(ofSize: 14)
         label.numberOfLines = 0
+        label.disableAutoresizingMask()
         return label
     }()
 
-    private let chevronImageView: UIImageView = {
+    private(set) var chevronImageView: UIImageView = {
         let imageView = UIImageView(image: .chevronBold)
         imageView.contentMode = .center
         imageView.disableAutoresizingMask()
@@ -68,8 +72,8 @@ final class RecipeCell: UITableViewCell {
     private let cookingTimeLabel = UILabel()
     private let caloriesLabel = UILabel()
 
-    private lazy var cookingTimeStackView = makeInfoStack(label: cookingTimeLabel, image: .timer)
-    private lazy var caloriesStackView = makeInfoStack(label: caloriesLabel, image: .pizza)
+    private(set) lazy var cookingTimeStackView = makeInfoStack(label: cookingTimeLabel, image: .timer)
+    private(set) lazy var caloriesStackView = makeInfoStack(label: caloriesLabel, image: .pizza)
 
     private lazy var infoStackView: UIStackView = {
         let infoStack = UIStackView(arrangedSubviews: [cookingTimeStackView, caloriesStackView])
@@ -80,7 +84,7 @@ final class RecipeCell: UITableViewCell {
         stack.distribution = .equalSpacing
         stack.alignment = .leading
         stack.disableAutoresizingMask()
-        stack.heightAnchor.constraint(equalToConstant: Constants.infoStackHeight).activate()
+        stack.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.infoStackHeight).activate()
         return stack
     }()
 
@@ -164,6 +168,7 @@ final class RecipeCell: UITableViewCell {
         let stack = UIStackView(arrangedSubviews: [imageView, label])
         stack.spacing = Constants.infoIconToLabelSpacing
         stack.alignment = .leading
+        stack.disableAutoresizingMask()
         return stack
     }
 }

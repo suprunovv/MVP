@@ -7,6 +7,12 @@ import UIKit
 protocol CategoryViewProtocol: AnyObject {
     /// Метод установки заголовка экрана
     func setScreenTitle(_ title: String)
+    /// Метод обновляющий таблицу с рецептами
+    func reloadRecipeTable()
+    /// Показать сообщение пустой страницы
+    func showEmptyMessage()
+    /// Скрыть сообщение пустой страницы
+    func hideEmptyMessage()
 }
 
 /// Вью экрана выбранной категории рецепта
@@ -20,19 +26,18 @@ final class CategoryViewController: UIViewController {
         static let sortingToViewSpacing = 20.0
         static let searchBarInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         static let sortingHeaderHeight = 20.0
+        static let emptyPageTitle = "Nothing found"
+        static let emptyPageDescription = "Try entering your query differently"
+        static let emptyMessageToViewSpacing = 20.0
     }
 
     // MARK: - Visual Components
 
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.reuseID)
-        tableView.separatorStyle = .none
-        tableView.disableAutoresizingMask()
-        return tableView
-    }()
+    private let emptyMessageView = EmptyPageMessageView(
+        icon: .searchSquare,
+        title: Constants.emptyPageTitle,
+        description: Constants.emptyPageDescription
+    )
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -41,8 +46,20 @@ final class CategoryViewController: UIViewController {
         return label
     }()
 
-    private let searchBar: UISearchBar = {
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.reuseID)
+        tableView.register(RecipeShimmeredCell.self, forCellReuseIdentifier: RecipeShimmeredCell.reuseID)
+        tableView.separatorStyle = .none
+        tableView.disableAutoresizingMask()
+        return tableView
+    }()
+
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.delegate = self
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
             string: Constants.searchBarPlaceholder,
             attributes: [
@@ -56,9 +73,10 @@ final class CategoryViewController: UIViewController {
         return searchBar
     }()
 
-    private let sortButtonsView: UIView = {
+    private lazy var sortButtonsView: UIView = {
         let containerView = UIView()
         let view = SortButtonsView()
+        view.delegate = self
         containerView.disableAutoresizingMask()
         view.disableAutoresizingMask()
         containerView.addSubview(view)
@@ -99,9 +117,11 @@ final class CategoryViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
+        emptyMessageView.isHidden = true
         view.backgroundColor = .white
-        view.addSubviews(tableView, searchBar)
+        view.addSubviews(tableView, searchBar, emptyMessageView)
         setupConstraints()
+        setupEmptyMessageConstraints()
     }
 
     private func setupConstraints() {
@@ -119,6 +139,20 @@ final class CategoryViewController: UIViewController {
         ])
     }
 
+    private func setupEmptyMessageConstraints() {
+        NSLayoutConstraint.activate([
+            emptyMessageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            emptyMessageView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: Constants.emptyMessageToViewSpacing
+            ),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(
+                equalTo: emptyMessageView.trailingAnchor,
+                constant: Constants.emptyMessageToViewSpacing
+            )
+        ])
+    }
+
     @objc private func closeCategory() {
         presenter?.closeCategory()
     }
@@ -127,6 +161,18 @@ final class CategoryViewController: UIViewController {
 // MARK: - CategoryViewController + CategoryViewProtocol
 
 extension CategoryViewController: CategoryViewProtocol {
+    func showEmptyMessage() {
+        emptyMessageView.isHidden = false
+    }
+
+    func hideEmptyMessage() {
+        emptyMessageView.isHidden = true
+    }
+
+    func reloadRecipeTable() {
+        tableView.reloadData()
+    }
+
     func setScreenTitle(_ title: String) {
         titleLabel.text = title
         let titleBarItem = UIBarButtonItem(customView: titleLabel)
@@ -142,12 +188,27 @@ extension CategoryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let recipe = presenter?.recipes[indexPath.row]
-        guard let recipe = recipe,
-              let cell = tableView.dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
-        else { return .init() }
-        cell.configure(withRecipe: recipe)
-        return cell
+        switch presenter?.loadingState {
+        case .initial, .loading:
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: RecipeShimmeredCell.reuseID) as? RecipeShimmeredCell
+            else { return .init() }
+            tableView.isScrollEnabled = false
+            tableView.allowsSelection = false
+            return cell
+        case .loaded:
+            let recipe = presenter?.recipes[indexPath.row]
+            guard let recipe = recipe,
+                  let cell = tableView
+                  .dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
+            else { return .init() }
+            tableView.isScrollEnabled = true
+            tableView.allowsSelection = true
+            cell.configure(withRecipe: recipe)
+            return cell
+        default:
+            return .init()
+        }
     }
 }
 
@@ -165,5 +226,29 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let recipe = presenter?.recipes[indexPath.row] else { return }
         presenter?.showRecipeDetails(recipe: recipe)
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+}
+
+// MARK: - CategoryViewController + SortButtonViewDelegate
+
+extension CategoryViewController: SortButtonViewDelegate {
+    func updateTimeSorting(_ sorting: SortingButton.SortState) {
+        presenter?.stateByTime(state: sorting)
+    }
+
+    func updateCaloriesSorting(_ sorting: SortingButton.SortState) {
+        presenter?.stateByCalories(state: sorting)
+    }
+}
+
+// MARK: - CategoryViewController + UISearchBarDelegate
+
+extension CategoryViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter?.updateSearchTerm(searchText)
     }
 }

@@ -16,6 +16,9 @@
 		52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */; };
 		52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3B2B93F1B0004A2A87 /* EnergyView.swift */; };
 		52990D3E2B9404DB004A2A87 /* FullRecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */; };
+		52990D402B969ADD004A2A87 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3F2B969ADD004A2A87 /* ShimmerView.swift */; };
+		52990D442B975F37004A2A87 /* ShimmerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D432B975F37004A2A87 /* ShimmerCell.swift */; };
+		52990D462B9789EB004A2A87 /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D452B9789EB004A2A87 /* TermsView.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -29,6 +32,8 @@
 		DA2D5EA62B94D35900CF339F /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA52B94D35900CF339F /* FavoritesViewController.swift */; };
 		DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */; };
 		DA2D5EAC2B94DF7D00CF339F /* EmptyPageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */; };
+		DA2D5EB12B97ADE800CF339F /* ShimmerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */; };
+		DA2D5EB32B97E34700CF339F /* TermsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */; };
 		DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */; };
 		DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785272B8D1393005A190A /* UIFont+Extension.swift */; };
 		DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */; };
@@ -64,6 +69,7 @@
 		DA3785932B90DEEE005A190A /* RecipesCategoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785922B90DEEE005A190A /* RecipesCategoriesDataSource.swift */; };
 		DA3785952B90E9A9005A190A /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785942B90E9A9005A190A /* RecipeCell.swift */; };
 		DA3785972B913B0E005A190A /* SortingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785962B913B0E005A190A /* SortingButton.swift */; };
+		DAAED4D42B98D20400FD8DCB /* RecipeShimmeredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +82,9 @@
 		52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyValueTableViewCell.swift; sourceTree = "<group>"; };
 		52990D3B2B93F1B0004A2A87 /* EnergyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyView.swift; sourceTree = "<group>"; };
 		52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRecipeTableViewCell.swift; sourceTree = "<group>"; };
+		52990D3F2B969ADD004A2A87 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
+		52990D432B975F37004A2A87 /* ShimmerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerCell.swift; sourceTree = "<group>"; };
+		52990D452B9789EB004A2A87 /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +100,8 @@
 		DA2D5EA52B94D35900CF339F /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageMessageView.swift; sourceTree = "<group>"; };
+		DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerLayer.swift; sourceTree = "<group>"; };
+		DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsDataSource.swift; sourceTree = "<group>"; };
 		DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipelyAppTabBarController.swift; sourceTree = "<group>"; };
 		DA3785272B8D1393005A190A /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -126,6 +137,7 @@
 		DA3785922B90DEEE005A190A /* RecipesCategoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCategoriesDataSource.swift; sourceTree = "<group>"; };
 		DA3785942B90E9A9005A190A /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		DA3785962B913B0E005A190A /* SortingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingButton.swift; sourceTree = "<group>"; };
+		DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeShimmeredCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +180,7 @@
 		52A65F062B8CDEB7001EF2E0 /* MVPproject */ = {
 			isa = PBXGroup;
 			children = (
+				DA2D5EAF2B97ADDB00CF339F /* Shared */,
 				DA3785542B8E201E005A190A /* Application */,
 				DA3785382B8D39EE005A190A /* AppModule */,
 				DA3785522B8E1FF5005A190A /* AppTabBarModule */,
@@ -216,6 +229,7 @@
 				52990D342B93BB86004A2A87 /* DetailViewController.swift */,
 				52990D3B2B93F1B0004A2A87 /* EnergyView.swift */,
 				DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */,
+				52990D3F2B969ADD004A2A87 /* ShimmerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -224,7 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				52A65F312B8FE74F001EF2E0 /* RecipesCategoryCell.swift */,
+				52990D432B975F37004A2A87 /* ShimmerCell.swift */,
 				DA3785942B90E9A9005A190A /* RecipeCell.swift */,
+				DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */,
 				52990D362B93C844004A2A87 /* DetailsCells */,
 			);
 			path = Cell;
@@ -260,6 +276,14 @@
 				DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		DA2D5EAF2B97ADDB00CF339F /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		DA3785262B8D1382005A190A /* Extensions */ = {
@@ -419,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3785632B8E2EEF005A190A /* ProfileViewController.swift */,
+				52990D452B9789EB004A2A87 /* TermsView.swift */,
 				DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */,
 				DA3785722B8E3838005A190A /* ProfileSettingCell.swift */,
 				DA3785842B8FE636005A190A /* BonusesViewController.swift */,
@@ -432,6 +457,7 @@
 				DA37856C2B8E32E9005A190A /* ProfileInfo.swift */,
 				DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */,
 				DA3785702B8E342B005A190A /* ProfileConfiguration.swift */,
+				DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -567,6 +593,7 @@
 				DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
 				52990D312B90F3D9004A2A87 /* SortButtonsView.swift in Sources */,
+				DA2D5EB12B97ADE800CF339F /* ShimmerLayer.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
 				C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */,
 				DA37856F2B8E33C3005A190A /* ProfileSettingOption.swift in Sources */,
@@ -585,23 +612,28 @@
 				52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */,
 				52A65F2E2B8FDE2D001EF2E0 /* RecipesPresenter.swift in Sources */,
 				DA3785932B90DEEE005A190A /* RecipesCategoriesDataSource.swift in Sources */,
+				DAAED4D42B98D20400FD8DCB /* RecipeShimmeredCell.swift in Sources */,
 				52990D2D2B90C758004A2A87 /* CategoryPresenter.swift in Sources */,
 				52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */,
 				52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */,
 				DA3785912B90DE99005A190A /* RecipesDataSource.swift in Sources */,
 				DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */,
+				DA2D5EB32B97E34700CF339F /* TermsDataSource.swift in Sources */,
 				DA37854B2B8E1955005A190A /* ModuleBuilder.swift in Sources */,
 				52A65F322B8FE74F001EF2E0 /* RecipesCategoryCell.swift in Sources */,
+				52990D462B9789EB004A2A87 /* TermsView.swift in Sources */,
 				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
 				DA3785482B8E186E005A190A /* AppTabBarCoordinator.swift in Sources */,
 				DA3785442B8E1116005A190A /* AuthService.swift in Sources */,
 				DA37857C2B8E7040005A190A /* LoginViewPresenter.swift in Sources */,
 				52A65F382B901975001EF2E0 /* RecipesCategory.swift in Sources */,
+				52990D402B969ADD004A2A87 /* ShimmerView.swift in Sources */,
 				DA3785512B8E1C2E005A190A /* RecipesCoordinator.swift in Sources */,
 				DA3785732B8E3838005A190A /* ProfileSettingCell.swift in Sources */,
 				DA3785872B8FE877005A190A /* NSLayoutConstraint+Extension.swift in Sources */,
 				DA3785952B90E9A9005A190A /* RecipeCell.swift in Sources */,
 				DA3785682B8E31E7005A190A /* ProfileInfoCell.swift in Sources */,
+				52990D442B975F37004A2A87 /* ShimmerCell.swift in Sources */,
 				DA3785642B8E2EEF005A190A /* ProfileViewController.swift in Sources */,
 				DA3785752B8E6482005A190A /* LoginFormValidator.swift in Sources */,
 				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,

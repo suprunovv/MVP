@@ -13,16 +13,37 @@ protocol ProfilePresenterProtocol: AnyObject {
     func handleNameChanged(_ fullName: String)
     /// Показать бонусы
     func showBonuses()
+    /// Показать terms
+    func showTerms()
+    /// Скрыть политики
+    func hideTerms()
+    /// Отобразить политики на экране
+    func presentTerms(_ termsView: TermsView)
+    /// Запрос на обработку конца вытягивания/сбрасывания terms
+    func finishTermsPanGesture()
     /// Обработка выбора настройки
     func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
 }
 
 /// Презентер экрана профиля
 final class ProfilePresenter {
+    /// Состояние вью политик
+    enum TermsViewState {
+        /// открытое
+        case expanded
+        /// схлопнутое
+        case collapsed
+    }
+
+    var nextState: TermsViewState {
+        isTermsVisible ? .collapsed : .expanded
+    }
+
     private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
 
     private var profileConfiguration = ProfileConfiguration.shared
+    private(set) var isTermsVisible = false
 
     init(view: ProfileViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view
@@ -33,10 +54,28 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+    func finishTermsPanGesture() {
+        isTermsVisible.toggle()
+    }
+
+    func hideTerms() {
+        profileCoordinator?.hideTerms()
+    }
+
+    func presentTerms(_ termsView: TermsView) {
+        view?.animateTermsView(termsView)
+    }
+
+    func showTerms() {
+        profileCoordinator?.showTerms()
+    }
+
     func settingSelected(_ profileSettingType: ProfileConfiguration.ProfileSettingType) {
         switch profileSettingType {
         case .bonuses:
             showBonuses()
+        case .terms:
+            showTerms()
         default:
             break
         }
