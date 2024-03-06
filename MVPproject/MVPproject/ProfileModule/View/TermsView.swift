@@ -3,6 +3,7 @@
 
 import UIKit
 
+/// Протокол делегата вьюшки политики исспользования
 protocol TermsViewDelegate: AnyObject {
     /// Метод для закрытия вью
     func hideTermsView()
@@ -14,36 +15,6 @@ final class TermsView: UIView {
 
     private enum Constants {
         static let titleText = "Terms of Use"
-        static let infoLabelText = """
-        Welcome to our recipe app! We're thrilled to have
-        you on board. To ensure a delightful experience
-        for everyone, please take a moment to familiarize
-        yourself with our rules:
-        User Accounts:
-        · Maintain one account per user.
-        · Safeguard your login credentials; don't share them with others.
-        Content Usage:
-        · Recipes and content are for personal use only.
-        · Do not redistribute or republish recipes without proper attribution.
-        Respect Copyright:
-        · Honor the copyright of recipe authors and contributors.
-        · Credit the original source when adapting or modifying a recipe.
-        Community Guidelines:
-        · Show respect in community features.
-        · Avoid offensive language or content that violates community standards.
-        Feedback and Reviews:
-        · Share constructive feedback and reviews.
-        · Do not submit false or misleading information.
-        Data Privacy:
-        ·  Review and understand our privacy policy regarding data collection and usage.
-        Compliance with Laws:
-        · Use the app in compliance with all applicable laws and regulations.
-        Updates to Terms:
-        · Stay informed about updates; we'll notify you of any changes.
-        · By using our recipe app, you agree to adhere to these rules.
-        Thank you for being a part of our culinary community!
-        Enjoy exploring and cooking up a storm!
-        """
     }
 
     // MARK: - Visual components
@@ -72,17 +43,19 @@ final class TermsView: UIView {
         return button
     }()
 
+    private let scrollView = UIScrollView()
+
     private let infoLabel: UILabel = {
         let label = UILabel()
         label.font = .verdana(ofSize: 14)
         label.textColor = .black
         label.numberOfLines = 0
-        label.text = Constants.infoLabelText
+        label.text = TermsDataSource.terms
         label.disableAutoresizingMask()
         return label
     }()
 
-    let topView: UIView = {
+    let handleView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.isUserInteractionEnabled = true
@@ -105,45 +78,40 @@ final class TermsView: UIView {
         super.init(coder: coder)
     }
 
-    // MARK: - Public methods
-
-    func addGestureRecognizer(_ recognizer: UIPanGestureRecognizer) {
-        topView.addGestureRecognizer(recognizer)
-    }
-
     // MARK: - Private methods
 
     private func setupView() {
         layer.cornerRadius = 30
         clipsToBounds = true
         backgroundColor = .white
-        setTopViewConstraints()
+        setHandleViewConstraints()
         setLineViewConstraints()
         setTitleLabelConstraints()
         setCloseButton()
+        setupScrollView()
         setInfoLabel()
     }
 
-    private func setTopViewConstraints() {
-        addSubview(topView)
-        topView.leadingAnchor.constraint(equalTo: leadingAnchor).activate()
-        topView.heightAnchor.constraint(equalToConstant: 34).activate()
-        topView.trailingAnchor.constraint(equalTo: trailingAnchor).activate()
-        topView.topAnchor.constraint(equalTo: topAnchor).activate()
+    private func setHandleViewConstraints() {
+        addSubview(handleView)
+        handleView.leadingAnchor.constraint(equalTo: leadingAnchor).activate()
+        handleView.heightAnchor.constraint(equalToConstant: 34).activate()
+        handleView.trailingAnchor.constraint(equalTo: trailingAnchor).activate()
+        handleView.topAnchor.constraint(equalTo: topAnchor).activate()
     }
 
     private func setLineViewConstraints() {
-        topView.addSubview(lineView)
+        handleView.addSubview(lineView)
         lineView.heightAnchor.constraint(equalToConstant: 5).activate()
         lineView.widthAnchor.constraint(equalToConstant: 50).activate()
-        lineView.centerXAnchor.constraint(equalTo: topView.centerXAnchor).activate()
-        lineView.centerYAnchor.constraint(equalTo: topView.centerYAnchor).activate()
+        lineView.centerXAnchor.constraint(equalTo: handleView.centerXAnchor).activate()
+        lineView.centerYAnchor.constraint(equalTo: handleView.centerYAnchor).activate()
     }
 
     private func setTitleLabelConstraints() {
         addSubview(titleLabel)
         titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25).activate()
-        titleLabel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 16).activate()
+        titleLabel.topAnchor.constraint(equalTo: handleView.bottomAnchor, constant: 16).activate()
     }
 
     private func setCloseButton() {
@@ -155,11 +123,26 @@ final class TermsView: UIView {
         closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15).activate()
     }
 
+    private func setupScrollView() {
+        scrollView.disableAutoresizingMask()
+        addSubview(scrollView)
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+
     private func setInfoLabel() {
-        addSubview(infoLabel)
-        infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).activate()
-        infoLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25).activate()
-        infoLabel.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
+        scrollView.addSubview(infoLabel)
+        NSLayoutConstraint.activate([
+            infoLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            infoLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 25),
+            infoLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -25),
+            infoLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -15),
+            infoLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -50)
+        ])
     }
 
     @objc private func tapCloseButton() {

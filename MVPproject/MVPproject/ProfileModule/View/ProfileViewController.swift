@@ -26,9 +26,8 @@ final class ProfileViewController: UIViewController {
         static let cancelEditNameButtonText = "Cancel"
         static let submitEditNameButtonText = "Ok"
         static let editNameTextFieldPlaceholder = "Name Surname"
-        static let extraTermsHeight: CGFloat = 100
-        static let termsTopSpace: CGFloat = 150
-        static let termsBottomSpase: CGFloat = 44
+        static let handleAreaHeight: CGFloat = 100
+        static let termsTopOffset: CGFloat = 44
     }
 
     enum TermsViewState {
@@ -68,7 +67,7 @@ final class ProfileViewController: UIViewController {
         return alert
     }()
 
-    private var termsView = TermsView()
+    private let termsView = TermsView()
 
     // MARK: - Public Properties
 
@@ -76,7 +75,7 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private lazy var termsHeight = self.view.bounds.height + Constants.extraTermsHeight
+    private let termsHeight = UIScreen.main.bounds.height - Constants.termsTopOffset
     private var isTermsVisible = false
     private var nextState: TermsViewState {
         isTermsVisible ? .collapsed : .expanded
@@ -130,12 +129,12 @@ final class ProfileViewController: UIViewController {
         termsView.delegate = self
         termsView.frame = CGRect(
             x: 0,
-            y: view.frame.height - 44,
+            y: UIScreen.main.bounds.height - Constants.handleAreaHeight,
             width: view.bounds.width,
             height: termsHeight
         )
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTermsPan(recognizer:)))
-        termsView.addGestureRecognizer(panRecognizer)
+        termsView.handleView.addGestureRecognizer(panRecognizer)
     }
 
     private func animateTransitionIfNeeded(state: TermsViewState, duration: TimeInterval) {
@@ -144,9 +143,9 @@ final class ProfileViewController: UIViewController {
                 guard let self = self else { return }
                 switch state {
                 case .expanded:
-                    self.termsView.frame.origin.y = self.view.frame.height - self.termsHeight + Constants.termsTopSpace
+                    self.termsView.frame.origin.y = UIScreen.main.bounds.height - self.termsHeight
                 case .collapsed:
-                    self.termsView.frame.origin.y = self.view.frame.height - Constants.termsBottomSpase
+                    self.termsView.frame.origin.y = UIScreen.main.bounds.height - Constants.handleAreaHeight
                 }
             }
 
@@ -199,7 +198,7 @@ final class ProfileViewController: UIViewController {
         case .began:
             startInteractiveTransition(state: nextState, duration: 0.9)
         case .changed:
-            let translation = recognizer.translation(in: termsView.topView)
+            let translation = recognizer.translation(in: termsView.handleView)
             var fractionComplete = translation.y / termsHeight
             fractionComplete = isTermsVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
@@ -255,6 +254,7 @@ extension ProfileViewController: UITableViewDelegate {
 
 extension ProfileViewController: ProfileViewProtocol {
     func showTerms() {
+        tabBarController?.tabBar.isHidden = true
         setupTermsView()
     }
 
