@@ -69,9 +69,9 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private var termsView: TermsView!
+    private var termsView: TermsView?
     private let termsHeight = UIScreen.main.bounds.height - Constants.termsTopOffset
-    private var visualEffectView: UIVisualEffectView!
+    private var visualEffectView: UIVisualEffectView?
     private var runingAnimations: [UIViewPropertyAnimator] = []
     private var animationProgressWhenInterrupted: CGFloat = 0
 
@@ -112,18 +112,19 @@ final class ProfileViewController: UIViewController {
 
     private func setupTermsView() {
         visualEffectView = UIVisualEffectView()
+        guard let visualEffectView = visualEffectView else { return }
         visualEffectView.frame = view.frame
         view.addSubview(visualEffectView)
 
-        termsView.delegate = self
-        termsView.frame = CGRect(
+        termsView?.delegate = self
+        termsView?.frame = CGRect(
             x: 0,
             y: UIScreen.main.bounds.height - Constants.handleAreaHeight,
             width: view.bounds.width,
             height: termsHeight
         )
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTermsPan(recognizer:)))
-        termsView.handleView.addGestureRecognizer(panRecognizer)
+        termsView?.handleView.addGestureRecognizer(panRecognizer)
     }
 
     private func animateTransitionIfNeeded(state: TermsViewState, duration: TimeInterval) {
@@ -132,9 +133,9 @@ final class ProfileViewController: UIViewController {
                 guard let self = self else { return }
                 switch state {
                 case .expanded:
-                    self.termsView.frame.origin.y = UIScreen.main.bounds.height - self.termsHeight
+                    self.termsView?.frame.origin.y = UIScreen.main.bounds.height - self.termsHeight
                 case .collapsed:
-                    self.termsView.frame.origin.y = UIScreen.main.bounds.height - Constants.handleAreaHeight
+                    self.termsView?.frame.origin.y = UIScreen.main.bounds.height - Constants.handleAreaHeight
                 }
             }
 
@@ -150,9 +151,9 @@ final class ProfileViewController: UIViewController {
             let blurAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
                 case .expanded:
-                    self.visualEffectView.effect = UIBlurEffect(style: .dark)
+                    self.visualEffectView?.effect = UIBlurEffect(style: .dark)
                 case .collapsed:
-                    self.visualEffectView.effect = nil
+                    self.visualEffectView?.effect = nil
                 }
             }
             blurAnimator.startAnimation()
@@ -188,7 +189,7 @@ final class ProfileViewController: UIViewController {
         case .began:
             startInteractiveTransition(state: presenter.nextState, duration: 0.9)
         case .changed:
-            let translation = recognizer.translation(in: termsView.handleView)
+            let translation = recognizer.translation(in: termsView?.handleView)
             var fractionComplete = translation.y / termsHeight
             fractionComplete = presenter.isTermsVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
@@ -249,7 +250,7 @@ extension ProfileViewController: ProfileViewProtocol {
     }
 
     func showNameEdit(title: String, currentName: String) {
-        guard let nameTextField = editNameAlert.textFields?[0] else { return }
+        guard let nameTextField = editNameAlert.textFields?.first else { return }
         editNameAlert.title = title
         nameTextField.text = currentName
         present(editNameAlert, animated: true)
@@ -274,6 +275,6 @@ extension ProfileViewController: ProfileInfoCellDelegate {
 extension ProfileViewController: TermsViewDelegate {
     func hideTermsView() {
         presenter?.hideTerms()
-        visualEffectView.removeFromSuperview()
+        visualEffectView?.removeFromSuperview()
     }
 }

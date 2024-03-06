@@ -5,6 +5,10 @@ import UIKit
 
 /// Заглушка с шимером
 final class ShimmerView: UIView {
+    private enum Constants {
+        static let gadientKey = "shimmerAnimation"
+    }
+
     // MARK: - Private properties
 
     private let gradientLayer: CAGradientLayer = {
@@ -37,6 +41,6 @@ final class ShimmerView: UIView {
         animation.toValue = [0.75, 1.0]
         animation.duration = 1.5
         animation.repeatCount = .infinity
-        gradientLayer.add(animation, forKey: "shimmerAnimation")
+        gradientLayer.add(animation, forKey: Constants.gadientKey)
     }
 }

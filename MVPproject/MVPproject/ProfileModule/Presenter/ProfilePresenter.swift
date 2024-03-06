@@ -35,14 +35,15 @@ final class ProfilePresenter {
         case collapsed
     }
 
+    var nextState: TermsViewState {
+        isTermsVisible ? .collapsed : .expanded
+    }
+
     private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
 
     private var profileConfiguration = ProfileConfiguration.shared
     private(set) var isTermsVisible = false
-    var nextState: TermsViewState {
-        isTermsVisible ? .collapsed : .expanded
-    }
 
     init(view: ProfileViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view

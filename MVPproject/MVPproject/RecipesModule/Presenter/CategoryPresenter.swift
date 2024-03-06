@@ -55,6 +55,8 @@ final class CategoryPresenter {
         }
     }
 
+    private var category: RecipesCategory?
+
     private var recipesBeforeFiltering: [Recipe] = []
 
     private(set) var recipes: [Recipe] = [] {
@@ -68,6 +70,7 @@ final class CategoryPresenter {
     init(view: CategoryViewProtocol, coordinator: RecipesCoordinator, category: RecipesCategory) {
         self.view = view
         self.coordinator = coordinator
+        self.category = category
         view.setScreenTitle(category.name)
         loadRecipes(byCategory: category)
     }
