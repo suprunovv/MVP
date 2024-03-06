@@ -6,9 +6,11 @@ import UIKit
 /// Ячейка с шимером для экрана с выбором категорий рецептов
 final class ShimmerCell: UICollectionViewCell {
     // MARK: - Constants
+
     static let reuseID = String(describing: ShimmerCell.self)
 
     // MARK: - Initializators
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         startShimmerAnimation(cell: self)
@@ -17,7 +19,7 @@ final class ShimmerCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     // MARK: - Private methods
 
     private func startShimmerAnimation(cell: UICollectionViewCell) {

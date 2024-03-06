@@ -16,6 +16,7 @@
 		52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */; };
 		52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3B2B93F1B0004A2A87 /* EnergyView.swift */; };
 		52990D3E2B9404DB004A2A87 /* FullRecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */; };
+		52990D462B9789EB004A2A87 /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D452B9789EB004A2A87 /* TermsView.swift */; };
 		52990D402B969ADD004A2A87 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D3F2B969ADD004A2A87 /* ShimmerView.swift */; };
 		52990D442B975F37004A2A87 /* ShimmerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D432B975F37004A2A87 /* ShimmerCell.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
@@ -32,6 +33,7 @@
 		DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */; };
 		DA2D5EAC2B94DF7D00CF339F /* EmptyPageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */; };
 		DA2D5EB12B97ADE800CF339F /* ShimmerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */; };
+		DA2D5EB32B97E34700CF339F /* TermsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */; };
 		DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */; };
 		DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785272B8D1393005A190A /* UIFont+Extension.swift */; };
 		DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */; };
@@ -79,6 +81,7 @@
 		52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyValueTableViewCell.swift; sourceTree = "<group>"; };
 		52990D3B2B93F1B0004A2A87 /* EnergyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyView.swift; sourceTree = "<group>"; };
 		52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRecipeTableViewCell.swift; sourceTree = "<group>"; };
+		52990D452B9789EB004A2A87 /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
 		52990D3F2B969ADD004A2A87 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
 		52990D432B975F37004A2A87 /* ShimmerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerCell.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +100,7 @@
 		DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageMessageView.swift; sourceTree = "<group>"; };
 		DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerLayer.swift; sourceTree = "<group>"; };
+		DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsDataSource.swift; sourceTree = "<group>"; };
 		DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipelyAppTabBarController.swift; sourceTree = "<group>"; };
 		DA3785272B8D1393005A190A /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -436,6 +440,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3785632B8E2EEF005A190A /* ProfileViewController.swift */,
+				52990D452B9789EB004A2A87 /* TermsView.swift */,
 				DA3785672B8E31E7005A190A /* ProfileInfoCell.swift */,
 				DA3785722B8E3838005A190A /* ProfileSettingCell.swift */,
 				DA3785842B8FE636005A190A /* BonusesViewController.swift */,
@@ -449,6 +454,7 @@
 				DA37856C2B8E32E9005A190A /* ProfileInfo.swift */,
 				DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */,
 				DA3785702B8E342B005A190A /* ProfileConfiguration.swift */,
+				DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -608,8 +614,10 @@
 				52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */,
 				DA3785912B90DE99005A190A /* RecipesDataSource.swift in Sources */,
 				DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */,
+				DA2D5EB32B97E34700CF339F /* TermsDataSource.swift in Sources */,
 				DA37854B2B8E1955005A190A /* ModuleBuilder.swift in Sources */,
 				52A65F322B8FE74F001EF2E0 /* RecipesCategoryCell.swift in Sources */,
+				52990D462B9789EB004A2A87 /* TermsView.swift in Sources */,
 				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
 				DA3785482B8E186E005A190A /* AppTabBarCoordinator.swift in Sources */,
 				DA3785442B8E1116005A190A /* AuthService.swift in Sources */,
