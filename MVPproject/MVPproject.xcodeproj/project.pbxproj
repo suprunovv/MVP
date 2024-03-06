@@ -30,6 +30,7 @@
 		DA2D5EA62B94D35900CF339F /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA52B94D35900CF339F /* FavoritesViewController.swift */; };
 		DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */; };
 		DA2D5EAC2B94DF7D00CF339F /* EmptyPageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */; };
+		DA2D5EB32B97E34700CF339F /* TermsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */; };
 		DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */; };
 		DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785272B8D1393005A190A /* UIFont+Extension.swift */; };
 		DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */; };
@@ -93,6 +94,7 @@
 		DA2D5EA52B94D35900CF339F /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageMessageView.swift; sourceTree = "<group>"; };
+		DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsDataSource.swift; sourceTree = "<group>"; };
 		DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipelyAppTabBarController.swift; sourceTree = "<group>"; };
 		DA3785272B8D1393005A190A /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		DA3785292B8D1DD8005A190A /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 				DA37856C2B8E32E9005A190A /* ProfileInfo.swift */,
 				DA37856E2B8E33C3005A190A /* ProfileSettingOption.swift */,
 				DA3785702B8E342B005A190A /* ProfileConfiguration.swift */,
+				DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 				52990D3C2B93F1B0004A2A87 /* EnergyView.swift in Sources */,
 				DA3785912B90DE99005A190A /* RecipesDataSource.swift in Sources */,
 				DA3785852B8FE636005A190A /* BonusesViewController.swift in Sources */,
+				DA2D5EB32B97E34700CF339F /* TermsDataSource.swift in Sources */,
 				DA37854B2B8E1955005A190A /* ModuleBuilder.swift in Sources */,
 				52A65F322B8FE74F001EF2E0 /* RecipesCategoryCell.swift in Sources */,
 				52990D462B9789EB004A2A87 /* TermsView.swift in Sources */,
