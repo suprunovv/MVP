@@ -63,23 +63,24 @@ final class RecipeShimmeredCell: UITableViewCell {
         caloriesShimmerLayer.frame = caloriesView.bounds
     }
 
-    func shimmer() {
-        recipeImageView.layer.addSublayer(recipeImageShimmerLayer)
-        recipeNameView.layer.addSublayer(recipeNameShimmerLayer)
-        cookingTimeView.layer.addSublayer(cookingTimeShimmerLayer)
-        caloriesView.layer.addSublayer(caloriesShimmerLayer)
-    }
-
     // MARK: - Private Methods
 
     private func setupCell() {
         recipeView.addSubviews(recipeImageView, cookingTimeView, caloriesView, recipeNameView)
         contentView.addSubview(recipeView)
+        addShimmerLayers()
         setupRecipeView()
         setupRecipeImageView()
         setupRecipeNameView()
         setupCookingTimeView()
         setupCaloriesView()
+    }
+
+    private func addShimmerLayers() {
+        recipeImageView.layer.addSublayer(recipeImageShimmerLayer)
+        recipeNameView.layer.addSublayer(recipeNameShimmerLayer)
+        cookingTimeView.layer.addSublayer(cookingTimeShimmerLayer)
+        caloriesView.layer.addSublayer(caloriesShimmerLayer)
     }
 
     private func setupRecipeView() {

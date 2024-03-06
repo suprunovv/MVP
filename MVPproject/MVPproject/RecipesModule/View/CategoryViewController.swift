@@ -195,7 +195,6 @@ extension CategoryViewController: UITableViewDataSource {
             else { return .init() }
             tableView.isScrollEnabled = false
             tableView.allowsSelection = false
-            cell.shimmer()
             return cell
         case .loaded:
             let recipe = presenter?.recipes[indexPath.row]
