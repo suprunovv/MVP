@@ -118,15 +118,22 @@ extension CategoryPresenter: CategoryPresenterProtocol {
         if recipesBeforeFiltering.isEmpty {
             recipesBeforeFiltering = recipes
         }
+
+        loadingState = .loading
         if search.count < 3 {
             if recipes.count != recipesBeforeFiltering.count {
                 recipes = recipesBeforeFiltering
                 recipesBeforeFiltering = []
             }
+            loadingState = .loaded
             return
         }
-        recipes = recipesBeforeFiltering.filter { recipe in
-            recipe.name.range(of: search, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self = self else { return }
+            recipes = recipesBeforeFiltering.filter { recipe in
+                recipe.name.range(of: search, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+            }
+            loadingState = .loaded
         }
     }
 

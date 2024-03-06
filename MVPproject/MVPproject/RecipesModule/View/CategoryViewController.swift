@@ -51,6 +51,7 @@ final class CategoryViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.reuseID)
+        tableView.register(RecipeShimmeredCell.self, forCellReuseIdentifier: RecipeShimmeredCell.reuseID)
         tableView.separatorStyle = .none
         tableView.disableAutoresizingMask()
         return tableView
@@ -187,23 +188,27 @@ extension CategoryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let recipe = presenter?.recipes[indexPath.row]
-        guard let recipe = recipe,
-              let cell = tableView
-              .dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
-        else { return .init() }
         switch presenter?.loadingState {
         case .initial, .loading:
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: RecipeShimmeredCell.reuseID) as? RecipeShimmeredCell
+            else { return .init() }
             tableView.isScrollEnabled = false
-            cell.maskWithShimmer()
+            tableView.allowsSelection = false
+            return cell
         case .loaded:
+            let recipe = presenter?.recipes[indexPath.row]
+            guard let recipe = recipe,
+                  let cell = tableView
+                  .dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
+            else { return .init() }
             tableView.isScrollEnabled = true
+            tableView.allowsSelection = true
             cell.configure(withRecipe: recipe)
+            return cell
         default:
-            break
+            return .init()
         }
-
-        return cell
     }
 }
 
