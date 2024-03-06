@@ -27,7 +27,6 @@ final class ProfileViewController: UIViewController {
         static let cancelEditNameButtonText = "Cancel"
         static let submitEditNameButtonText = "Ok"
         static let editNameTextFieldPlaceholder = "Name Surname"
-        static let handleAreaHeight: CGFloat = 100
         static let termsTopOffset: CGFloat = 44
     }
 
@@ -119,7 +118,7 @@ final class ProfileViewController: UIViewController {
         termsView?.delegate = self
         termsView?.frame = CGRect(
             x: 0,
-            y: UIScreen.main.bounds.height - Constants.handleAreaHeight,
+            y: UIScreen.main.bounds.height - termsHeight / 2,
             width: view.bounds.width,
             height: termsHeight
         )
@@ -135,7 +134,7 @@ final class ProfileViewController: UIViewController {
                 case .expanded:
                     self.termsView?.frame.origin.y = UIScreen.main.bounds.height - self.termsHeight
                 case .collapsed:
-                    self.termsView?.frame.origin.y = UIScreen.main.bounds.height - Constants.handleAreaHeight
+                    self.termsView?.frame.origin.y = UIScreen.main.bounds.height - termsHeight / 2
                 }
             }
 
