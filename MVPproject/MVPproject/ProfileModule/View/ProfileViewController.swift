@@ -10,7 +10,7 @@ protocol ProfileViewProtocol: AnyObject {
     /// Вывод UI для изменения имени
     func showNameEdit(title: String, currentName: String)
     /// Презентация вью с текстом
-    func showTerms()
+    func showTerms(_ termsView: TermsView)
 }
 
 /// Профиль
@@ -67,8 +67,6 @@ final class ProfileViewController: UIViewController {
         return alert
     }()
 
-    private let termsView = TermsView()
-
     // MARK: - Public Properties
 
     var presenter: ProfilePresenter?
@@ -81,6 +79,7 @@ final class ProfileViewController: UIViewController {
         isTermsVisible ? .collapsed : .expanded
     }
 
+    private var termsView: TermsView!
     private var visualEffectView: UIVisualEffectView!
     private var runingAnimations: [UIViewPropertyAnimator] = []
     private var animationProgressWhenInterrupted: CGFloat = 0
@@ -123,9 +122,8 @@ final class ProfileViewController: UIViewController {
     private func setupTermsView() {
         visualEffectView = UIVisualEffectView()
         visualEffectView.frame = view.frame
-
         view.addSubview(visualEffectView)
-        tabBarController?.view.addSubview(termsView)
+
         termsView.delegate = self
         termsView.frame = CGRect(
             x: 0,
@@ -253,8 +251,8 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - ProfileViewController + ProfileViewProtocol
 
 extension ProfileViewController: ProfileViewProtocol {
-    func showTerms() {
-        tabBarController?.tabBar.isHidden = true
+    func showTerms(_ termsView: TermsView) {
+        self.termsView = termsView
         setupTermsView()
     }
 
@@ -283,7 +281,7 @@ extension ProfileViewController: ProfileInfoCellDelegate {
 
 extension ProfileViewController: TermsViewDelegate {
     func hideTermsView() {
-        termsView.removeFromSuperview()
+        presenter?.hideTerms()
         visualEffectView.removeFromSuperview()
     }
 }

@@ -6,6 +6,7 @@ import UIKit
 /// Координатор профиля
 final class ProfileCoordinator: BaseCoordinator {
     private(set) var navigationController: UINavigationController?
+    private var termsView: TermsView?
 
     override func start() {
         guard let profileModuleView = ModuleBuilder.makeProfileModule(coordinator: self) as? ProfileViewController
@@ -24,5 +25,20 @@ final class ProfileCoordinator: BaseCoordinator {
             sheet.prefersEdgeAttachedInCompactHeight = true
         }
         navigationController?.present(bonusesModuleView, animated: true)
+    }
+
+    func showTerms() {
+        guard let profileViewController = navigationController?.topViewController as? ProfileViewController
+        else { return }
+        let termsView = TermsView()
+        self.termsView = termsView
+        navigationController?.tabBarController?.tabBar.isHidden = true
+        navigationController?.tabBarController?.view.addSubview(termsView)
+        profileViewController.presenter?.presentTerms(termsView)
+    }
+
+    func hideTerms() {
+        termsView?.removeFromSuperview()
+        termsView = nil
     }
 }

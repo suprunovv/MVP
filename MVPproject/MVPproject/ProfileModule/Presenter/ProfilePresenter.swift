@@ -15,6 +15,10 @@ protocol ProfilePresenterProtocol: AnyObject {
     func showBonuses()
     /// Показать terms
     func showTerms()
+    /// Скрыть политики
+    func hideTerms()
+    /// Отобразить политики на экране
+    func presentTerms(_ termsView: TermsView)
     /// Обработка выбора настройки
     func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
 }
@@ -35,8 +39,16 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+    func hideTerms() {
+        profileCoordinator?.hideTerms()
+    }
+
+    func presentTerms(_ termsView: TermsView) {
+        view?.showTerms(termsView)
+    }
+
     func showTerms() {
-        view?.showTerms()
+        profileCoordinator?.showTerms()
     }
 
     func settingSelected(_ profileSettingType: ProfileConfiguration.ProfileSettingType) {

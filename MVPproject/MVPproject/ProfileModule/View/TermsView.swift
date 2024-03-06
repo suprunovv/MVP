@@ -55,6 +55,10 @@ final class TermsView: UIView {
         return label
     }()
 
+    // MARK: - Public properties
+
+    weak var delegate: TermsViewDelegate?
+
     let handleView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -62,10 +66,6 @@ final class TermsView: UIView {
         view.disableAutoresizingMask()
         return view
     }()
-
-    // MARK: - Public properties
-
-    weak var delegate: TermsViewDelegate?
 
     // MARK: - Initializators
 
