@@ -19,16 +19,30 @@ protocol ProfilePresenterProtocol: AnyObject {
     func hideTerms()
     /// Отобразить политики на экране
     func presentTerms(_ termsView: TermsView)
+    /// Запрос на обработку конца вытягивания/сбрасывания terms
+    func finishTermsPanGesture()
     /// Обработка выбора настройки
     func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
 }
 
 /// Презентер экрана профиля
 final class ProfilePresenter {
+    /// Состояние вью политик
+    enum TermsViewState {
+        /// открытое
+        case expanded
+        /// схлопнутое
+        case collapsed
+    }
+
     private weak var profileCoordinator: ProfileCoordinator?
     private weak var view: ProfileViewProtocol?
 
     private var profileConfiguration = ProfileConfiguration.shared
+    private(set) var isTermsVisible = false
+    var nextState: TermsViewState {
+        isTermsVisible ? .collapsed : .expanded
+    }
 
     init(view: ProfileViewProtocol, coordinator: ProfileCoordinator) {
         self.view = view
@@ -39,12 +53,16 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+    func finishTermsPanGesture() {
+        isTermsVisible.toggle()
+    }
+
     func hideTerms() {
         profileCoordinator?.hideTerms()
     }
 
     func presentTerms(_ termsView: TermsView) {
-        view?.showTerms(termsView)
+        view?.animateTermsView(termsView)
     }
 
     func showTerms() {

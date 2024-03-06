@@ -9,8 +9,8 @@ protocol ProfileViewProtocol: AnyObject {
     func updateProfile(profileCells: ProfileConfiguration.ProfileCells)
     /// Вывод UI для изменения имени
     func showNameEdit(title: String, currentName: String)
-    /// Презентация вью с текстом
-    func showTerms(_ termsView: TermsView)
+    /// Анимированная презентация terms
+    func animateTermsView(_ termsView: TermsView)
 }
 
 /// Профиль
@@ -18,6 +18,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Types
 
     typealias ProfileCells = ProfileConfiguration.ProfileCells
+    typealias TermsViewState = ProfilePresenter.TermsViewState
 
     // MARK: - Constants
 
@@ -28,11 +29,6 @@ final class ProfileViewController: UIViewController {
         static let editNameTextFieldPlaceholder = "Name Surname"
         static let handleAreaHeight: CGFloat = 100
         static let termsTopOffset: CGFloat = 44
-    }
-
-    enum TermsViewState {
-        case expanded
-        case collapsed
     }
 
     // MARK: - Visual Components
@@ -73,13 +69,8 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private let termsHeight = UIScreen.main.bounds.height - Constants.termsTopOffset
-    private var isTermsVisible = false
-    private var nextState: TermsViewState {
-        isTermsVisible ? .collapsed : .expanded
-    }
-
     private var termsView: TermsView!
+    private let termsHeight = UIScreen.main.bounds.height - Constants.termsTopOffset
     private var visualEffectView: UIVisualEffectView!
     private var runingAnimations: [UIViewPropertyAnimator] = []
     private var animationProgressWhenInterrupted: CGFloat = 0
@@ -149,7 +140,7 @@ final class ProfileViewController: UIViewController {
 
             frameAnimator.addCompletion { [weak self] _ in
                 guard let self = self else { return }
-                self.isTermsVisible.toggle()
+                self.presenter?.finishTermsPanGesture()
                 self.runingAnimations.removeAll()
             }
 
@@ -192,13 +183,14 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc func handleTermsPan(recognizer: UIPanGestureRecognizer) {
+        guard let presenter = presenter else { return }
         switch recognizer.state {
         case .began:
-            startInteractiveTransition(state: nextState, duration: 0.9)
+            startInteractiveTransition(state: presenter.nextState, duration: 0.9)
         case .changed:
             let translation = recognizer.translation(in: termsView.handleView)
             var fractionComplete = translation.y / termsHeight
-            fractionComplete = isTermsVisible ? fractionComplete : -fractionComplete
+            fractionComplete = presenter.isTermsVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
             continueInteractiveTransition()
@@ -251,7 +243,7 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - ProfileViewController + ProfileViewProtocol
 
 extension ProfileViewController: ProfileViewProtocol {
-    func showTerms(_ termsView: TermsView) {
+    func animateTermsView(_ termsView: TermsView) {
         self.termsView = termsView
         setupTermsView()
     }

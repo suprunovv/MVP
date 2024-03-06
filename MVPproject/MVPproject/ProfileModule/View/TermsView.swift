@@ -22,7 +22,7 @@ final class TermsView: UIView {
     private let lineView: UIView = {
         let view = UIView()
         view.disableAutoresizingMask()
-        view.backgroundColor = .blueSearch
+        view.backgroundColor = .grayHandle
         return view
     }()
 
