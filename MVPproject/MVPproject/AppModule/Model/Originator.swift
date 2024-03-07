@@ -49,7 +49,7 @@ final class Originator {
         memento?.setUserName(userName: userName)
     }
 
-    func setUserAvatar(imageName: String) {
-        memento?.setUserImageName(imageName: imageName)
+    func setUserAvatar(imageData: Data) {
+        memento?.setUserImageData(imageData: imageData)
     }
 }

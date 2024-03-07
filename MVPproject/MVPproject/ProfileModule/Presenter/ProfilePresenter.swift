@@ -27,6 +27,10 @@ protocol ProfilePresenterProtocol: AnyObject {
     func loadMemento()
     /// Экран загружен
     func screenLoaded()
+    /// Открытие галереи
+    func openGalery()
+    /// Обновление аватара
+    func updateAvatar(imageData: Data)
 }
 
 /// Презентер экрана профиля
@@ -58,8 +62,20 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+
     func screenLoaded() {
         TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Profile")))
+    }
+
+    func updateAvatar(imageData: Data) {
+        profileConfiguration.updateAvatarImage(data: imageData)
+        Originator.shared.setUserAvatar(imageData: imageData)
+        Originator.shared.saveToUserDefaults()
+        view?.updateProfile(profileCells: profileConfiguration.profileTableCells)
+    }
+
+    func openGalery() {
+        view?.openPhotoGalery()
     }
 
     func loadMemento() {
