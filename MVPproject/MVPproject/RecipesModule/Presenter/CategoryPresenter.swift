@@ -19,6 +19,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     func stateByTime(state: SortingButton.SortState)
     /// Обновление строки в поиске
     func updateSearchTerm(_ search: String)
+    /// Экран загружен
+    func screenLoaded()
 }
 
 /// Презентер экрана категории
@@ -55,7 +57,7 @@ final class CategoryPresenter {
         }
     }
 
-    private var category: RecipesCategory?
+    private var category: RecipesCategory
 
     private var recipesBeforeFiltering: [Recipe] = []
 
@@ -114,6 +116,11 @@ final class CategoryPresenter {
 // MARK: - CategoryPresenter + CategoryPresenterProtocol
 
 extension CategoryPresenter: CategoryPresenterProtocol {
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Category")))
+        TxtFileLoggerInvoker.shared.log(.openCategory(category))
+    }
+
     func updateSearchTerm(_ search: String) {
         if recipesBeforeFiltering.isEmpty {
             recipesBeforeFiltering = recipes

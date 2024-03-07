@@ -19,6 +19,8 @@ protocol RecipesPresenterProtocol: AnyObject {
     func getRecipesCategory()
     /// Свойство отображающее загружены ли данные
     var isLoadingData: LoadingState { get }
+    /// Экран загружен
+    func screenLoaded()
 }
 
 /// Презентер для экрана с типами рецептов
@@ -61,6 +63,10 @@ final class RecipesPresenter {
 // MARK: - RecipesPresenter + RecipesPresenterProtocol
 
 extension RecipesPresenter: RecipesPresenterProtocol {
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Recipes")))
+    }
+
     func getRecipesCategory() {
         let categories = RecipesCategoriesCollectionConfig.getRecipesCategoryCellConfigs()
         view?.updateRecipes(categories: categories)

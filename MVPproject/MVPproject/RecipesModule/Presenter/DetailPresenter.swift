@@ -9,6 +9,10 @@ protocol DetailPresenterProtocol: AnyObject {
     var cellTypes: [DetailCellType] { get }
     /// Метод закрывает экран деталей
     func closeDetails()
+    /// Экран загружен
+    func screenLoaded()
+    /// Пошарить рецепт
+    func shareRecipe()
 }
 
 /// Перечисление возможных типов ячеек
@@ -42,6 +46,15 @@ final class DetailPresenter {
 // MARK: - DetailPresenter + DetailPresenterProtocol
 
 extension DetailPresenter: DetailPresenterProtocol {
+    func shareRecipe() {
+        TxtFileLoggerInvoker.shared.log(.shareRecipe(recipe))
+    }
+
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Recipe details")))
+        TxtFileLoggerInvoker.shared.log(.openDetails(recipe))
+    }
+
     func closeDetails() {
         coordinator?.closeDetails()
     }

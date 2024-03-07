@@ -2,7 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 /// Модель рецепта
-struct Recipe {
+struct Recipe: Codable {
     /// Имя картинки
     let imageName: String
     /// Название рецепта

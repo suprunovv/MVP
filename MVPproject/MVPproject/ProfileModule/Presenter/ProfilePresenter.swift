@@ -25,6 +25,8 @@ protocol ProfilePresenterProtocol: AnyObject {
     func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
     /// Загрузка данных из мементо
     func loadMemento()
+    /// Экран загружен
+    func screenLoaded()
     /// Открытие галереи
     func openGalery()
     /// Обновление аватара
@@ -60,6 +62,10 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Profile")))
+    }
+
     func updateAvatar(imageData: Data) {
         profileConfiguration.updateAvatarImage(data: imageData)
         Originator.shared.setUserAvatar(imageData: imageData)

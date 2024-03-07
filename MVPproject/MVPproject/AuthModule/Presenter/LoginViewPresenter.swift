@@ -13,6 +13,8 @@ protocol LoginPresenterProtocol: AnyObject {
     func toggleSecureButton()
     /// Метод обрабатывает нажатие на вью и вызывает у нее метод скрывающий клавиатуру
     func hideViewKeyboard()
+    /// Экран загружен
+    func screenLoaded()
 }
 
 /// Презентер для экрана логин
@@ -88,6 +90,10 @@ final class LoginPresenter {
 // MARK: - LoginPresenter + LoginPresenterProtocol
 
 extension LoginPresenter: LoginPresenterProtocol {
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Login")))
+    }
+
     func hideViewKeyboard() {
         view?.hideKeyboardOnTap()
     }
