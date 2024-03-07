@@ -134,7 +134,7 @@ final class ProfileViewController: UIViewController {
                 case .expanded:
                     self.termsView?.frame.origin.y = UIScreen.main.bounds.height - self.termsHeight
                 case .collapsed:
-                    self.termsView?.frame.origin.y = UIScreen.main.bounds.height - termsHeight / 2
+                    self.termsView?.frame.origin.y = UIScreen.main.bounds.height - self.termsHeight / 2
                 }
             }
 
