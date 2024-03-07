@@ -6,6 +6,8 @@ import UIKit
 /// протокол обработки событий в ячейке ProfileInfo
 protocol ProfileInfoCellDelegate: AnyObject {
     func editNameButtonTapped()
+    /// Открытие галереи
+    func openGalery()
 }
 
 /// Ячейка информации о профиле
@@ -30,6 +32,7 @@ final class ProfileInfoCell: UITableViewCell {
     private let profileImageView: UIImageView = {
         let view = UIImageView()
         view.clipsToBounds = true
+        view.isUserInteractionEnabled = true
         view.layer.cornerRadius = Constants.avatarImageCornerRadius
         view.layer.borderWidth = Constants.avatarImageBorderWidth
         view.layer.borderColor = UIColor.greenAccent.cgColor
@@ -102,6 +105,7 @@ final class ProfileInfoCell: UITableViewCell {
         contentView.addSubview(profileStackView)
 
         setupProfileStackViewConstraints()
+        addProfileImageGesture()
     }
 
     private func setupProfileStackViewConstraints() {
@@ -122,7 +126,16 @@ final class ProfileInfoCell: UITableViewCell {
         ])
     }
 
+    private func addProfileImageGesture() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(registerTupImageView))
+        profileImageView.addGestureRecognizer(gesture)
+    }
+
     @objc private func editButtonTapped() {
         delegate?.editNameButtonTapped()
+    }
+
+    @objc private func registerTupImageView() {
+        delegate?.openGalery()
     }
 }

@@ -1,6 +1,7 @@
 // ProfileViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Photos
 import UIKit
 
 /// протокол представления профиля
@@ -11,6 +12,8 @@ protocol ProfileViewProtocol: AnyObject {
     func showNameEdit(title: String, currentName: String)
     /// Анимированная презентация terms
     func animateTermsView(_ termsView: TermsView)
+    /// Открытие галереи с фото
+    func openPhotoGalery()
 }
 
 /// Профиль
@@ -67,6 +70,13 @@ final class ProfileViewController: UIViewController {
     var presenter: ProfilePresenter?
 
     // MARK: - Private Properties
+
+    private lazy var imagePicker: UIImagePickerController = {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        return imagePicker
+    }()
 
     private var termsView: TermsView?
     private let termsHeight = UIScreen.main.bounds.height - Constants.termsTopOffset
@@ -243,6 +253,11 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - ProfileViewController + ProfileViewProtocol
 
 extension ProfileViewController: ProfileViewProtocol {
+    func openPhotoGalery() {
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+
     func animateTermsView(_ termsView: TermsView) {
         self.termsView = termsView
         setupTermsView()
@@ -264,6 +279,10 @@ extension ProfileViewController: ProfileViewProtocol {
 // MARK: - ProfileViewController + ProfileInfoCellDelegate
 
 extension ProfileViewController: ProfileInfoCellDelegate {
+    func openGalery() {
+        presenter?.openGalery()
+    }
+
     func editNameButtonTapped() {
         presenter?.editNameButtonTapped()
     }
@@ -275,5 +294,31 @@ extension ProfileViewController: TermsViewDelegate {
     func hideTermsView() {
         presenter?.hideTerms()
         visualEffectView?.removeFromSuperview()
+    }
+}
+
+// MARK: - ProfileViewController + UIImagePickerControllerDelegate
+
+extension ProfileViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+    ) {
+        guard let imageUrl = info[.imageURL] as? URL else {
+            return
+        }
+        /// Тут получил название картинки и сохранил в userDefaults
+        let imageName = imageUrl.lastPathComponent
+        Originator.shared.setUserAvatar(imageName: imageName)
+        Originator.shared.saveToUserDefaults()
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - ProfileViewController + UINavigationControllerDelegate
+
+extension ProfileViewController: UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
