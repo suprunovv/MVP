@@ -62,7 +62,6 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
-
     func screenLoaded() {
         TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Profile")))
     }
