@@ -46,10 +46,10 @@ final class Originator {
     }
 
     func setUserName(userName: String) {
-        memento?.userName = userName
+        memento?.setUserName(userName: userName)
     }
 
     func setUserAvatar(imageName: String) {
-        memento?.userImageName = imageName
+        memento?.setUserImageName(imageName: imageName)
     }
 }

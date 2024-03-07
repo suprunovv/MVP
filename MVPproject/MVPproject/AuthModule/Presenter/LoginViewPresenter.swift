@@ -40,6 +40,32 @@ final class LoginPresenter {
         )
     }
 
+    private func processLoginError() {
+        view?.startActivityIndicator()
+        view?.hideTextLoginButton()
+        startTimer(timeInterval: 2) { [weak self] timer in
+            self?.view?.stopActivityIndicator()
+            self?.view?.returnTextLoginButton()
+            self?.view?.presentErrorLoginView()
+            timer.invalidate()
+            self?.startTimer(timeInterval: 1) { [weak self] timer in
+                self?.view?.hideErrorLoginView()
+                timer.invalidate()
+            }
+        }
+    }
+
+    private func processLoginValide() {
+        view?.startActivityIndicator()
+        view?.hideTextLoginButton()
+        startTimer(timeInterval: 2) { [weak self] timer in
+            self?.view?.stopActivityIndicator()
+            self?.view?.returnTextLoginButton()
+            timer.invalidate()
+            self?.authCoordinator?.didLogin()
+        }
+    }
+
     private func validatePersonData(password: String, email: String) {
         let personData = PersonData(email: email, password: password)
         Originator.shared.restoreFromUserDefaults()
@@ -47,40 +73,14 @@ final class LoginPresenter {
             guard Originator.shared.memento?.personData.getPassword() == personData.getPassword(),
                   Originator.shared.memento?.personData.getEmail() == personData.getEmail()
             else {
-                view?.startActivityIndicator()
-                view?.hideTextLoginButton()
-                startTimer(timeInterval: 2) { [weak self] timer in
-                    self?.view?.stopActivityIndicator()
-                    self?.view?.returnTextLoginButton()
-                    self?.view?.presentErrorLoginView()
-                    timer.invalidate()
-                    self?.startTimer(timeInterval: 1) { [weak self] timer in
-                        self?.view?.hideErrorLoginView()
-                        timer.invalidate()
-                    }
-                }
+                processLoginError()
                 return
             }
-            view?.startActivityIndicator()
-            view?.hideTextLoginButton()
-            startTimer(timeInterval: 2) { [weak self] timer in
-                self?.view?.stopActivityIndicator()
-                self?.view?.returnTextLoginButton()
-                timer.invalidate()
-                self?.authCoordinator?.didLogin()
-            }
-
+            processLoginValide()
         } else {
             Originator.shared.setPersonData(data: personData)
             Originator.shared.saveToUserDefaults()
-            view?.startActivityIndicator()
-            view?.hideTextLoginButton()
-            startTimer(timeInterval: 2) { [weak self] timer in
-                self?.view?.stopActivityIndicator()
-                self?.view?.returnTextLoginButton()
-                timer.invalidate()
-                self?.authCoordinator?.didLogin()
-            }
+            processLoginValide()
         }
     }
 }
