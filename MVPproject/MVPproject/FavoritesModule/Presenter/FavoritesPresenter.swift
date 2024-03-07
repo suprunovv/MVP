@@ -11,6 +11,8 @@ protocol FavoritesPresenterProtocol: AnyObject {
     func showRecipeDetails(recipe: Recipe)
     /// Обновить избранное
     func refreshFavorites()
+    /// Экран загружен
+    func screenLoaded()
 }
 
 /// Презентер избранных рецептов
@@ -29,6 +31,10 @@ final class FavoritesPresenter {
 // MARK: - FavoritesPresenter + FavoritesPresenterProtocol
 
 extension FavoritesPresenter: FavoritesPresenterProtocol {
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Favorites")))
+    }
+
     func refreshFavorites() {
         if favoriteRecipes.isEmpty {
             view?.showEmptyMessage()

@@ -50,6 +50,7 @@ final class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        presenter?.screenLoaded()
     }
 
     // MARK: - Private Methods

@@ -2,9 +2,9 @@
 // Copyright © RoadMap. All rights reserved.
 
 /// Модель категории рецептов
-struct RecipesCategory {
+struct RecipesCategory: Codable {
     /// Виды категорий
-    enum CategoryType {
+    enum CategoryType: Codable {
         /// Салат
         case salad
         /// Суп

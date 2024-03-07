@@ -83,6 +83,7 @@ final class ProfileViewController: UIViewController {
         setupNavigationItem()
         setupView()
         presenter?.refreshProfileData()
+        presenter?.screenLoaded()
     }
 
     // MARK: - Private methods

@@ -25,6 +25,8 @@ protocol ProfilePresenterProtocol: AnyObject {
     func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
     /// Загрузка данных из мементо
     func loadMemento()
+    /// Экран загружен
+    func screenLoaded()
 }
 
 /// Презентер экрана профиля
@@ -56,6 +58,10 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Profile")))
+    }
+
     func loadMemento() {
         Originator.shared.restoreFromUserDefaults()
     }

@@ -72,6 +72,10 @@
 		DA3785952B90E9A9005A190A /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785942B90E9A9005A190A /* RecipeCell.swift */; };
 		DA3785972B913B0E005A190A /* SortingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785962B913B0E005A190A /* SortingButton.swift */; };
 		DAAED4D42B98D20400FD8DCB /* RecipeShimmeredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */; };
+		DAAED4D72B9A223800FD8DCB /* LogCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D62B9A223800FD8DCB /* LogCommand.swift */; };
+		DAAED4D92B9A25C000FD8DCB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D82B9A25C000FD8DCB /* Logger.swift */; };
+		DAAED4DB2B9A261300FD8DCB /* TxtFileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4DA2B9A261300FD8DCB /* TxtFileLogger.swift */; };
+		DAAED4DD2B9A268B00FD8DCB /* LoggerInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4DC2B9A268B00FD8DCB /* LoggerInvoker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +146,10 @@
 		DA3785942B90E9A9005A190A /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		DA3785962B913B0E005A190A /* SortingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingButton.swift; sourceTree = "<group>"; };
 		DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeShimmeredCell.swift; sourceTree = "<group>"; };
+		DAAED4D62B9A223800FD8DCB /* LogCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCommand.swift; sourceTree = "<group>"; };
+		DAAED4D82B9A25C000FD8DCB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		DAAED4DA2B9A261300FD8DCB /* TxtFileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxtFileLogger.swift; sourceTree = "<group>"; };
+		DAAED4DC2B9A268B00FD8DCB /* LoggerInvoker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerInvoker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +358,7 @@
 		DA3785382B8D39EE005A190A /* AppModule */ = {
 			isa = PBXGroup;
 			children = (
+				DAAED4D52B9A221F00FD8DCB /* Logger */,
 				DA3785422B8E1104005A190A /* Model */,
 			);
 			path = AppModule;
@@ -476,6 +485,17 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		DAAED4D52B9A221F00FD8DCB /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				DAAED4D62B9A223800FD8DCB /* LogCommand.swift */,
+				DAAED4D82B9A25C000FD8DCB /* Logger.swift */,
+				DAAED4DA2B9A261300FD8DCB /* TxtFileLogger.swift */,
+				DAAED4DC2B9A268B00FD8DCB /* LoggerInvoker.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -592,12 +612,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAAED4D72B9A223800FD8DCB /* LogCommand.swift in Sources */,
 				DA3785892B8FF17C005A190A /* BonusesPresenter.swift in Sources */,
 				DA3785622B8E2392005A190A /* ProfileCoordinator.swift in Sources */,
 				DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */,
 				52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */,
 				DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
+				DAAED4D92B9A25C000FD8DCB /* Logger.swift in Sources */,
 				52990D312B90F3D9004A2A87 /* SortButtonsView.swift in Sources */,
 				DA2D5EB12B97ADE800CF339F /* ShimmerLayer.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
@@ -613,12 +635,14 @@
 				DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */,
 				52990D782B9A0888004A2A87 /* Memento.swift in Sources */,
 				52990D3E2B9404DB004A2A87 /* FullRecipeTableViewCell.swift in Sources */,
+				DAAED4DB2B9A261300FD8DCB /* TxtFileLogger.swift in Sources */,
 				DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */,
 				52990D352B93BB86004A2A87 /* DetailViewController.swift in Sources */,
 				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
 				52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */,
 				52A65F2E2B8FDE2D001EF2E0 /* RecipesPresenter.swift in Sources */,
 				DA3785932B90DEEE005A190A /* RecipesCategoriesDataSource.swift in Sources */,
+				DAAED4DD2B9A268B00FD8DCB /* LoggerInvoker.swift in Sources */,
 				52990D7A2B9A0903004A2A87 /* Originator.swift in Sources */,
 				DAAED4D42B98D20400FD8DCB /* RecipeShimmeredCell.swift in Sources */,
 				52990D2D2B90C758004A2A87 /* CategoryPresenter.swift in Sources */,
