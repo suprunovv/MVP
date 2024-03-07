@@ -19,6 +19,8 @@ protocol LoginPresenterProtocol: AnyObject {
 final class LoginPresenter {
     private weak var authCoordinator: AuthCoordinator?
     private weak var view: LoginViewProtocol?
+    private var email: String?
+    private var password: String?
 
     private var isPasswordSecured = true
     private var isValid = (password: false, login: false)
@@ -36,6 +38,50 @@ final class LoginPresenter {
             repeats: false,
             block: handler
         )
+    }
+
+    private func validatePersonData(password: String, email: String) {
+        let personData = PersonData(email: email, password: password)
+        Originator.shared.restoreFromUserDefaults()
+        if Originator.shared.memento?.isFirstLoading == false {
+            guard Originator.shared.memento?.personData.getPassword() == personData.getPassword(),
+                  Originator.shared.memento?.personData.getEmail() == personData.getEmail()
+            else {
+                view?.startActivityIndicator()
+                view?.hideTextLoginButton()
+                startTimer(timeInterval: 2) { [weak self] timer in
+                    self?.view?.stopActivityIndicator()
+                    self?.view?.returnTextLoginButton()
+                    self?.view?.presentErrorLoginView()
+                    timer.invalidate()
+                    self?.startTimer(timeInterval: 1) { [weak self] timer in
+                        self?.view?.hideErrorLoginView()
+                        timer.invalidate()
+                    }
+                }
+                return
+            }
+            view?.startActivityIndicator()
+            view?.hideTextLoginButton()
+            startTimer(timeInterval: 2) { [weak self] timer in
+                self?.view?.stopActivityIndicator()
+                self?.view?.returnTextLoginButton()
+                timer.invalidate()
+                self?.authCoordinator?.didLogin()
+            }
+
+        } else {
+            Originator.shared.setPersonData(data: personData)
+            Originator.shared.saveToUserDefaults()
+            view?.startActivityIndicator()
+            view?.hideTextLoginButton()
+            startTimer(timeInterval: 2) { [weak self] timer in
+                self?.view?.stopActivityIndicator()
+                self?.view?.returnTextLoginButton()
+                timer.invalidate()
+                self?.authCoordinator?.didLogin()
+            }
+        }
     }
 }
 
@@ -57,19 +103,9 @@ extension LoginPresenter: LoginPresenterProtocol {
         }
 
         if isValid == (true, true) {
-            view?.startActivityIndicator()
-            view?.hideTextLoginButton()
-            startTimer(timeInterval: 3) { [weak self] timer in
-                self?.view?.stopActivityIndicator()
-                self?.view?.returnTextLoginButton()
-                self?.view?.presentErrorLoginView()
-                timer.invalidate()
-                self?.startTimer(timeInterval: 2) { [weak self] timer in
-                    self?.view?.hideErrorLoginView()
-                    timer.invalidate()
-                    self?.authCoordinator?.didLogin()
-                }
-            }
+            self.password = password
+            guard let password = self.password, let email = email else { return }
+            validatePersonData(password: password, email: email)
         }
     }
 
@@ -81,6 +117,7 @@ extension LoginPresenter: LoginPresenterProtocol {
         } else {
             view?.clearEmailValidationError()
             isValid.login = true
+            self.email = email
         }
     }
 
