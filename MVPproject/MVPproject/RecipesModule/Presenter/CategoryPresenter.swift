@@ -130,10 +130,10 @@ extension CategoryPresenter: CategoryPresenterProtocol {
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             guard let self = self else { return }
-            recipes = recipesBeforeFiltering.filter { recipe in
+            self.recipes = self.recipesBeforeFiltering.filter { recipe in
                 recipe.name.range(of: search, options: [.caseInsensitive, .diacriticInsensitive]) != nil
             }
-            loadingState = .loaded
+            self.loadingState = .loaded
         }
     }
 

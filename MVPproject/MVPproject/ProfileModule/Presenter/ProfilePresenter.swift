@@ -23,6 +23,8 @@ protocol ProfilePresenterProtocol: AnyObject {
     func finishTermsPanGesture()
     /// Обработка выбора настройки
     func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
+    /// Загрузка данных из мементо
+    func loadMemento()
 }
 
 /// Презентер экрана профиля
@@ -54,6 +56,10 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+    func loadMemento() {
+        Originator.shared.restoreFromUserDefaults()
+    }
+
     func finishTermsPanGesture() {
         isTermsVisible.toggle()
     }
@@ -86,11 +92,14 @@ extension ProfilePresenter: ProfilePresenterProtocol {
     }
 
     func handleNameChanged(_ fullName: String) {
+        Originator.shared.setUserName(userName: fullName)
+        Originator.shared.saveToUserDefaults()
         profileConfiguration.updateFullName(fullName)
         view?.updateProfile(profileCells: profileConfiguration.profileTableCells)
     }
 
     func editNameButtonTapped() {
+        Originator.shared.restoreFromUserDefaults()
         view?.showNameEdit(
             title: "Change your name and surname",
             currentName: profileConfiguration.profileInfo.fullName
