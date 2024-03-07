@@ -1,6 +1,8 @@
 // ProfileConfiguration.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Foundation
+
 /// Конфигурация профиля
 final class ProfileConfiguration {
     typealias ProfileCells = [ProfileCellType]
@@ -25,7 +27,7 @@ final class ProfileConfiguration {
     static let shared = ProfileConfiguration()
 
     private static let profileInfoMock = ProfileInfo(
-        avatarImageName: Originator.shared.memento?.userImageName ?? "",
+        avatarImageData: Originator.shared.memento?.userImageData,
         fullName: Originator.shared.memento?.userName ?? "",
         bonusesCount: 105
     )
@@ -62,5 +64,9 @@ final class ProfileConfiguration {
 
     func updateBonusesCount(_ bonusesCount: Int) {
         profileInfo.bonusesCount = bonusesCount
+    }
+
+    func updateAvatarImage(data: Data) {
+        profileInfo.avatarImageData = data
     }
 }

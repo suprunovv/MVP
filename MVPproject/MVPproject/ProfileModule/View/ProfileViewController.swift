@@ -304,13 +304,12 @@ extension ProfileViewController: UIImagePickerControllerDelegate {
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
-        guard let imageUrl = info[.imageURL] as? URL else {
+        guard let image = info[.originalImage] as? UIImage,
+              let imageData = image.jpegData(compressionQuality: 0.5)
+        else {
             return
         }
-        /// Тут получил название картинки и сохранил в userDefaults
-        let imageName = imageUrl.lastPathComponent
-        Originator.shared.setUserAvatar(imageName: imageName)
-        Originator.shared.saveToUserDefaults()
+        presenter?.updateAvatar(imageData: imageData)
         picker.dismiss(animated: true, completion: nil)
     }
 }

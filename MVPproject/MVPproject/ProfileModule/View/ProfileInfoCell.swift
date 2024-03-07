@@ -23,6 +23,7 @@ final class ProfileInfoCell: UITableViewCell {
         static let fullNameToAvatarSpacing = 26.0
         static let fullNameToEditButtonSpacing = 8.0
         static let profileToViewWidthDifference = 100.0
+        static let defaultAvatarImageName = "profileAvatar"
     }
 
     static let reuseID = String(describing: ProfileInfoCell.self)
@@ -93,7 +94,12 @@ final class ProfileInfoCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configureCell(_ profileInfo: ProfileInfo) {
-        profileImageView.image = UIImage(named: profileInfo.avatarImageName)
+        if let imageData = profileInfo.avatarImageData {
+            let image = UIImage(data: imageData)
+            profileImageView.image = image
+        } else {
+            profileImageView.image = UIImage(named: Constants.defaultAvatarImageName)
+        }
         fullNameLabel.text = profileInfo.fullName
     }
 
