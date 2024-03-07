@@ -97,6 +97,7 @@ final class ProfileViewController: UIViewController {
     }
 
     private func setupView() {
+        presenter?.loadMemento()
         view.addSubview(tableView)
         setupConstraints()
     }

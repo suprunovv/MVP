@@ -25,8 +25,8 @@ final class ProfileConfiguration {
     static let shared = ProfileConfiguration()
 
     private static let profileInfoMock = ProfileInfo(
-        avatarImageName: "profileAvatar",
-        fullName: "Surname Name",
+        avatarImageName: Originator.shared.memento?.userImageName ?? "",
+        fullName: Originator.shared.memento?.userName ?? "",
         bonusesCount: 105
     )
     private static let bonusesSetting = ProfileSettingOption(
