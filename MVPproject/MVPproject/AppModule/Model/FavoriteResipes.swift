@@ -6,13 +6,13 @@ import Foundation
 /// Модель с массивом любимых рецептов
 final class FavoriteRecipes {
     private enum Constants {
-        static let recipeKay = "recipeKay"
+        static let recipeKey = "recipeKey"
     }
 
-    static var shared = FavoriteRecipes()
+    static let shared = FavoriteRecipes()
 
-    let encoder = JSONEncoder()
-    let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
 
     private(set) var recipes: [Recipe] = []
 
@@ -32,12 +32,12 @@ final class FavoriteRecipes {
 
     func encodeRecipes() {
         if let encodeResipes = try? encoder.encode(recipes) {
-            UserDefaults.standard.set(encodeResipes, forKey: Constants.recipeKay)
+            UserDefaults.standard.set(encodeResipes, forKey: Constants.recipeKey)
         }
     }
 
     func getRecipes() {
-        if let savedResipesData = UserDefaults.standard.object(forKey: Constants.recipeKay) as? Data {
+        if let savedResipesData = UserDefaults.standard.object(forKey: Constants.recipeKey) as? Data {
             if let savedRecipes = try? decoder.decode([Recipe].self, from: savedResipesData) {
                 recipes = savedRecipes
             }

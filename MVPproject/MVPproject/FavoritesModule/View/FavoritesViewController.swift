@@ -10,7 +10,7 @@ protocol FavoritesViewProtocol: AnyObject {
     /// Показать избранные рецепты
     func showFavorites()
     /// Обновить таблицу с рецептами
-    func reloadTabelRecipes()
+    func reloadRecipesTable()
 }
 
 /// Избранное
@@ -139,6 +139,7 @@ extension FavoritesViewController: UITableViewDelegate {
         if editingStyle == .delete {
             FavoriteRecipes.shared.updateFavoriteRecipe(recipe)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            FavoriteRecipes.shared.encodeRecipes()
             presenter?.refreshFavorites()
         }
     }
@@ -147,7 +148,7 @@ extension FavoritesViewController: UITableViewDelegate {
 // MARK: - FavoritesViewController + FavoritesViewProtocol
 
 extension FavoritesViewController: FavoritesViewProtocol {
-    func reloadTabelRecipes() {
+    func reloadRecipesTable() {
         tableView.reloadData()
     }
 

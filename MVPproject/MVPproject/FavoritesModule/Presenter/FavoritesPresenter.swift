@@ -5,8 +5,6 @@ import UIKit
 
 /// Протокл презентера избранных рецептов
 protocol FavoritesPresenterProtocol: AnyObject {
-    /// Избранные рецепты
-    var favoriteRecipes: [Recipe] { get }
     /// Запрос на открытие деталей о рецепте
     func showRecipeDetails(recipe: Recipe)
     /// Обновить избранное
@@ -19,12 +17,6 @@ protocol FavoritesPresenterProtocol: AnyObject {
 final class FavoritesPresenter {
     private weak var view: FavoritesViewProtocol?
     private weak var coordinator: FavoritesCoordinator?
-
-    private(set) var favoriteRecipes: [Recipe] = FavoriteRecipes.shared.recipes {
-        didSet {
-            view?.reloadTabelRecipes()
-        }
-    }
 
     init(view: FavoritesViewProtocol, coordinator: FavoritesCoordinator) {
         self.view = view
