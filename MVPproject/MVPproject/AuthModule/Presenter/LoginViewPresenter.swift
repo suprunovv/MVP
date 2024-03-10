@@ -111,6 +111,7 @@ extension LoginPresenter: LoginPresenterProtocol {
         if isValid == (true, true) {
             self.password = password
             guard let password = self.password, let email = email else { return }
+            FavoriteRecipes.shared.getRecipes()
             validatePersonData(password: password, email: email)
         }
     }

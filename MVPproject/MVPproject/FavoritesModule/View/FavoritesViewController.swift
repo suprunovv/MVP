@@ -9,6 +9,8 @@ protocol FavoritesViewProtocol: AnyObject {
     func showEmptyMessage()
     /// Показать избранные рецепты
     func showFavorites()
+    /// Обновить таблицу с рецептами
+    func reloadTabelRecipes()
 }
 
 /// Избранное
@@ -51,6 +53,11 @@ final class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         presenter?.screenLoaded()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+        presenter?.refreshFavorites()
     }
 
     // MARK: - Private Methods
@@ -103,13 +110,12 @@ final class FavoritesViewController: UIViewController {
 
 extension FavoritesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.favoriteRecipes.count ?? 0
+        FavoriteRecipes.shared.recipes.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let recipe = presenter?.favoriteRecipes[indexPath.row]
-        guard let recipe = recipe,
-              let cell = tableView.dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
+        let recipe = FavoriteRecipes.shared.recipes[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
         else { return .init() }
         cell.configure(withRecipe: recipe)
         return cell
@@ -120,14 +126,31 @@ extension FavoritesViewController: UITableViewDataSource {
 
 extension FavoritesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let recipe = presenter?.favoriteRecipes[indexPath.row] else { return }
+        let recipe = FavoriteRecipes.shared.recipes[indexPath.row]
         presenter?.showRecipeDetails(recipe: recipe)
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        let recipe = FavoriteRecipes.shared.recipes[indexPath.row]
+        if editingStyle == .delete {
+            FavoriteRecipes.shared.updateFavoriteRecipe(recipe)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            presenter?.refreshFavorites()
+        }
     }
 }
 
 // MARK: - FavoritesViewController + FavoritesViewProtocol
 
 extension FavoritesViewController: FavoritesViewProtocol {
+    func reloadTabelRecipes() {
+        tableView.reloadData()
+    }
+
     func showEmptyMessage() {
         emptyMessageView.isHidden = false
         tableView.isHidden = true

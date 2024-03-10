@@ -20,7 +20,11 @@ final class FavoritesPresenter {
     private weak var view: FavoritesViewProtocol?
     private weak var coordinator: FavoritesCoordinator?
 
-    private(set) var favoriteRecipes: [Recipe] = RecipesDataSource.recipes
+    private(set) var favoriteRecipes: [Recipe] = FavoriteRecipes.shared.recipes {
+        didSet {
+            view?.reloadTabelRecipes()
+        }
+    }
 
     init(view: FavoritesViewProtocol, coordinator: FavoritesCoordinator) {
         self.view = view
@@ -36,7 +40,7 @@ extension FavoritesPresenter: FavoritesPresenterProtocol {
     }
 
     func refreshFavorites() {
-        if favoriteRecipes.isEmpty {
+        if FavoriteRecipes.shared.recipes.isEmpty {
             view?.showEmptyMessage()
         } else {
             view?.showFavorites()
