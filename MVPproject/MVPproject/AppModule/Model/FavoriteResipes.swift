@@ -5,18 +5,25 @@ import Foundation
 
 /// Модель с массивом любимых рецептов
 final class FavoriteRecipes {
+    
+    // MARK: - Constants
     private enum Constants {
         static let recipeKey = "recipeKey"
     }
 
     static let shared = FavoriteRecipes()
 
+    // MARK: - Private properties
+    
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
-
     private(set) var recipes: [Recipe] = []
 
+    // MARK: - Initializaters
+    
     private init() {}
+    
+    // MARK: - Public methods
 
     func updateFavoriteRecipe(_ recipe: Recipe) {
         if recipes.isEmpty {
