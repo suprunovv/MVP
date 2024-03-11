@@ -13,6 +13,8 @@ protocol DetailPresenterProtocol: AnyObject {
     func screenLoaded()
     /// Пошарить рецепт
     func shareRecipe()
+    /// Добавить рецепт в избранное
+    func addFavoriteRecipe()
 }
 
 /// Перечисление возможных типов ячеек
@@ -46,6 +48,10 @@ final class DetailPresenter {
 // MARK: - DetailPresenter + DetailPresenterProtocol
 
 extension DetailPresenter: DetailPresenterProtocol {
+    func addFavoriteRecipe() {
+        FavoriteRecipes.shared.updateFavoriteRecipe(recipe)
+    }
+
     func shareRecipe() {
         TxtFileLoggerInvoker.shared.log(.shareRecipe(recipe))
     }

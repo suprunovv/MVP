@@ -93,7 +93,8 @@ final class DetailViewController: UIViewController {
     }
 
     @objc private func addFavorites() {
-        print("Добавлено в избранное")
+        presenter?.addFavoriteRecipe()
+        FavoriteRecipes.shared.encodeRecipes()
     }
 
     @objc private func shareButtonTapped() {
