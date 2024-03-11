@@ -13,12 +13,16 @@ protocol LoginPresenterProtocol: AnyObject {
     func toggleSecureButton()
     /// Метод обрабатывает нажатие на вью и вызывает у нее метод скрывающий клавиатуру
     func hideViewKeyboard()
+    /// Экран загружен
+    func screenLoaded()
 }
 
 /// Презентер для экрана логин
 final class LoginPresenter {
     private weak var authCoordinator: AuthCoordinator?
     private weak var view: LoginViewProtocol?
+    private var email: String?
+    private var password: String?
 
     private var isPasswordSecured = true
     private var isValid = (password: false, login: false)
@@ -37,11 +41,59 @@ final class LoginPresenter {
             block: handler
         )
     }
+
+    private func processLoginError() {
+        view?.startActivityIndicator()
+        view?.hideTextLoginButton()
+        startTimer(timeInterval: 2) { [weak self] timer in
+            self?.view?.stopActivityIndicator()
+            self?.view?.returnTextLoginButton()
+            self?.view?.presentErrorLoginView()
+            timer.invalidate()
+            self?.startTimer(timeInterval: 1) { [weak self] timer in
+                self?.view?.hideErrorLoginView()
+                timer.invalidate()
+            }
+        }
+    }
+
+    private func processLoginValide() {
+        view?.startActivityIndicator()
+        view?.hideTextLoginButton()
+        startTimer(timeInterval: 2) { [weak self] timer in
+            self?.view?.stopActivityIndicator()
+            self?.view?.returnTextLoginButton()
+            timer.invalidate()
+            self?.authCoordinator?.didLogin()
+        }
+    }
+
+    private func validatePersonData(password: String, email: String) {
+        let personData = PersonData(email: email, password: password)
+        Originator.shared.restoreFromUserDefaults()
+        if Originator.shared.memento?.isFirstLoading == false {
+            guard Originator.shared.memento?.personData.getPassword() == personData.getPassword(),
+                  Originator.shared.memento?.personData.getEmail() == personData.getEmail()
+            else {
+                processLoginError()
+                return
+            }
+            processLoginValide()
+        } else {
+            Originator.shared.setPersonData(data: personData)
+            Originator.shared.saveToUserDefaults()
+            processLoginValide()
+        }
+    }
 }
 
 // MARK: - LoginPresenter + LoginPresenterProtocol
 
 extension LoginPresenter: LoginPresenterProtocol {
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Login")))
+    }
+
     func hideViewKeyboard() {
         view?.hideKeyboardOnTap()
     }
@@ -57,19 +109,10 @@ extension LoginPresenter: LoginPresenterProtocol {
         }
 
         if isValid == (true, true) {
-            view?.startActivityIndicator()
-            view?.hideTextLoginButton()
-            startTimer(timeInterval: 3) { [weak self] timer in
-                self?.view?.stopActivityIndicator()
-                self?.view?.returnTextLoginButton()
-                self?.view?.presentErrorLoginView()
-                timer.invalidate()
-                self?.startTimer(timeInterval: 2) { [weak self] timer in
-                    self?.view?.hideErrorLoginView()
-                    timer.invalidate()
-                    self?.authCoordinator?.didLogin()
-                }
-            }
+            self.password = password
+            guard let password = self.password, let email = email else { return }
+            FavoriteRecipes.shared.getRecipes()
+            validatePersonData(password: password, email: email)
         }
     }
 
@@ -81,6 +124,7 @@ extension LoginPresenter: LoginPresenterProtocol {
         } else {
             view?.clearEmailValidationError()
             isValid.login = true
+            self.email = email
         }
     }
 

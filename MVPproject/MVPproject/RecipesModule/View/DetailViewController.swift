@@ -12,10 +12,11 @@ final class DetailViewController: UIViewController {
 
     private let detailsTabelView = UITableView()
 
-    private let shareButton: UIButton = {
+    private lazy var shareButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(.paperplane, for: .normal)
         button.tintColor = .black
+        button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -43,6 +44,7 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        presenter?.screenLoaded()
     }
 
     // MARK: - Private methods
@@ -91,7 +93,12 @@ final class DetailViewController: UIViewController {
     }
 
     @objc private func addFavorites() {
-        print("Добавлено в избранное")
+        presenter?.addFavoriteRecipe()
+        FavoriteRecipes.shared.encodeRecipes()
+    }
+
+    @objc private func shareButtonTapped() {
+        presenter?.shareRecipe()
     }
 }
 

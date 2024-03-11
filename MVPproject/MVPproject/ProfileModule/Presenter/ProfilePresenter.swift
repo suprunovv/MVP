@@ -23,6 +23,14 @@ protocol ProfilePresenterProtocol: AnyObject {
     func finishTermsPanGesture()
     /// Обработка выбора настройки
     func settingSelected(_ profileSetting: ProfileConfiguration.ProfileSettingType)
+    /// Загрузка данных из мементо
+    func loadMemento()
+    /// Экран загружен
+    func screenLoaded()
+    /// Открытие галереи
+    func openGalery()
+    /// Обновление аватара
+    func updateAvatar(imageData: Data)
 }
 
 /// Презентер экрана профиля
@@ -54,6 +62,25 @@ final class ProfilePresenter {
 // MARK: - ProfilePresenter + ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
+    func screenLoaded() {
+        TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Profile")))
+    }
+
+    func updateAvatar(imageData: Data) {
+        profileConfiguration.updateAvatarImage(data: imageData)
+        Originator.shared.setUserAvatar(imageData: imageData)
+        Originator.shared.saveToUserDefaults()
+        view?.updateProfile(profileCells: profileConfiguration.profileTableCells)
+    }
+
+    func openGalery() {
+        view?.openPhotoGalery()
+    }
+
+    func loadMemento() {
+        Originator.shared.restoreFromUserDefaults()
+    }
+
     func finishTermsPanGesture() {
         isTermsVisible.toggle()
     }
@@ -86,11 +113,14 @@ extension ProfilePresenter: ProfilePresenterProtocol {
     }
 
     func handleNameChanged(_ fullName: String) {
+        Originator.shared.setUserName(userName: fullName)
+        Originator.shared.saveToUserDefaults()
         profileConfiguration.updateFullName(fullName)
         view?.updateProfile(profileCells: profileConfiguration.profileTableCells)
     }
 
     func editNameButtonTapped() {
+        Originator.shared.restoreFromUserDefaults()
         view?.showNameEdit(
             title: "Change your name and surname",
             currentName: profileConfiguration.profileInfo.fullName

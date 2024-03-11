@@ -36,6 +36,7 @@ final class RecipesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setViews()
+        presenter?.screenLoaded()
     }
 
     // MARK: - Private methods
