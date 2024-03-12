@@ -22,6 +22,7 @@
 		52990D782B9A0888004A2A87 /* Memento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D772B9A0888004A2A87 /* Memento.swift */; };
 		52990D7A2B9A0903004A2A87 /* Originator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D792B9A0903004A2A87 /* Originator.swift */; };
 		52990D7C2B9D19D5004A2A87 /* FavoriteResipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D7B2B9D19D5004A2A87 /* FavoriteResipes.swift */; };
+		52990DA02BA09DFF004A2A87 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D9F2BA09DFF004A2A87 /* NetworkManager.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -95,6 +96,7 @@
 		52990D772B9A0888004A2A87 /* Memento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memento.swift; sourceTree = "<group>"; };
 		52990D792B9A0903004A2A87 /* Originator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Originator.swift; sourceTree = "<group>"; };
 		52990D7B2B9D19D5004A2A87 /* FavoriteResipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteResipes.swift; path = MVPproject/AppModule/Model/FavoriteResipes.swift; sourceTree = SOURCE_ROOT; };
+		52990D9F2BA09DFF004A2A87 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3785312B8D38DD005A190A /* PersonData.swift */,
+				52990D9F2BA09DFF004A2A87 /* NetworkManager.swift */,
 				DA3785742B8E6482005A190A /* LoginFormValidator.swift */,
 			);
 			path = Model;
@@ -659,6 +662,7 @@
 				52A65F322B8FE74F001EF2E0 /* RecipesCategoryCell.swift in Sources */,
 				52990D462B9789EB004A2A87 /* TermsView.swift in Sources */,
 				DA3785332B8D38DD005A190A /* LoginViewController.swift in Sources */,
+				52990DA02BA09DFF004A2A87 /* NetworkManager.swift in Sources */,
 				DA3785482B8E186E005A190A /* AppTabBarCoordinator.swift in Sources */,
 				DA3785442B8E1116005A190A /* AuthService.swift in Sources */,
 				DA37857C2B8E7040005A190A /* LoginViewPresenter.swift in Sources */,
