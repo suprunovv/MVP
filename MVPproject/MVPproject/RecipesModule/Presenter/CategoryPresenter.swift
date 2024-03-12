@@ -33,10 +33,11 @@ final class CategoryPresenter {
 
     // MARK: - private propertise
 
+    private let networkService = NetworkService()
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
 
-    private let recipesPlaceholder = Array(repeating: RecipesDataSource.recipePlaceholder, count: 7)
+    private let recipesPlaceholder = Array(repeating: RecipesMock.recipePlaceholder, count: 7)
     private var timeSortingState = SortingButton.SortState.unsorted {
         didSet {
             sortRecipes(by: timeSortingState, caloriesSortState: caloriesSortingState)
@@ -79,9 +80,15 @@ final class CategoryPresenter {
 
     private func loadRecipes(byCategory category: RecipesCategory) {
         loadingState = .loading
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+        networkService.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
+            switch result {
+            case let .success(data):
+                self?.recipes = data.compactMap { Recipe(dto: $0.recipe) }
+            case let .failure(error):
+                // TODO: handle error state
+                print(error)
+            }
             self?.loadingState = .loaded
-            self?.recipes = RecipesDataSource.recipesByCategories[category.type] ?? []
         }
     }
 

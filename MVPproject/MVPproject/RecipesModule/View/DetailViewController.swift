@@ -136,7 +136,7 @@ extension DetailViewController: UITableViewDataSource {
                 withIdentifier: FullRecipeTableViewCell.reuseID,
                 for: indexPath
             ) as? FullRecipeTableViewCell else { return UITableViewCell() }
-            cell.setupDescription(text: presenter?.getRecipe().description)
+            cell.setupDescription(text: presenter?.getRecipe().details?.description)
             return cell
         }
     }
