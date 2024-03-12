@@ -41,6 +41,7 @@ final class DetailPresenter {
     init(view: DetailViewProtocol, coordinator: RecipeWithDetailsCoordinatorProtocol, recipe: Recipe) {
         self.view = view
         self.coordinator = coordinator
+        // TODO: fetch recipe by uri
         self.recipe = recipe
     }
 }

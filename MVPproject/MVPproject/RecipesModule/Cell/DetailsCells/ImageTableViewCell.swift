@@ -102,9 +102,9 @@ final class ImageTableViewCell: UITableViewCell {
         guard let recipe = recipe else {
             return
         }
-        titleImageView.image = UIImage(named: recipe.imageName)
+//        titleImageView.image = UIImage(named: recipe.imageName)
         cookingTimeLabel.text = "\(Constants.cookingTime)\n \(recipe.cookingTime) \(Constants.min)"
-        portionSizeLabel.text = "\(recipe.weight) \(Constants.gram)"
+        portionSizeLabel.text = "\(recipe.details?.weight ?? 0) \(Constants.gram)"
         titleLabel.text = recipe.name
     }
 
