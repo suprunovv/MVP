@@ -7,7 +7,7 @@ import Foundation
 protocol CategoryPresenterProtocol: AnyObject {
     /// Рецепты в категории
     var recipes: [Recipe] { get }
-    ///
+    /// Состояние загрузки
     var loadingState: CategoryPresenter.LoadingState { get }
     /// Запрос на закрытие категории
     func closeCategory()
@@ -87,6 +87,7 @@ final class CategoryPresenter {
             case let .failure(error):
                 // TODO: handle error state
                 print(error)
+                self?.recipes = []
             }
             self?.loadingState = .loaded
         }
@@ -142,12 +143,18 @@ extension CategoryPresenter: CategoryPresenterProtocol {
             loadingState = .loaded
             return
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-            guard let self = self else { return }
-            self.recipes = self.recipesBeforeFiltering.filter { recipe in
-                recipe.name.range(of: search, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+        networkService.getRecipesByCategory(CategoryRequestDTO(
+            category: category,
+            searchTerm: search
+        )) { [weak self] result in
+            switch result {
+            case .failure:
+                // TODO: handle error
+                self?.recipes = []
+            case let .success(data):
+                self?.recipes = data.compactMap { Recipe(dto: $0.recipe) }
             }
-            self.loadingState = .loaded
+            self?.loadingState = .loaded
         }
     }
 
