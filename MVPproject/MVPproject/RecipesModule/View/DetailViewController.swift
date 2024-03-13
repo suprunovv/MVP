@@ -74,6 +74,7 @@ final class DetailViewController: UIViewController {
         setTabelViewConstraints()
         setupDetailsTabelView()
         setNavigationBar()
+        setupEmptyMessageConstraints()
     }
 
     private func setupEmptyMessageConstraints() {
