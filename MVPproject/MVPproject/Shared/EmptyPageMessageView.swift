@@ -72,21 +72,12 @@ final class EmptyPageMessageView: UIStackView {
 
     weak var delegate: EmptyMessageViewDelegate?
 
-    // MARK: - Private Properties
-
-    private var withReload: Bool = false
-    private var hasTitle: Bool = true
-
     // MARK: - Initializers
 
     init(icon: UIImage?, title: String? = nil, description: String, withReload: Bool = false) {
         super.init(frame: .zero)
-        iconImageView.image = icon
-        titleLabel.text = title
-        descriptionLabel.text = description
-        self.withReload = withReload
-        hasTitle = title != nil
         setupView()
+        configureUI(icon: icon, title: title, description: description, withReload: withReload)
     }
 
     required init(coder: NSCoder) {
@@ -94,21 +85,32 @@ final class EmptyPageMessageView: UIStackView {
         setupView()
     }
 
+    // MARK: - Public Methods
+
+    func updateUI(icon: UIImage?, title: String? = nil, description: String, withReload: Bool = false) {
+        configureUI(icon: icon, title: title, description: description, withReload: withReload)
+    }
+
     // MARK: - Private Methods
 
     private func setupView() {
         disableAutoresizingMask()
         addArrangedSubview(iconImageView)
-        if hasTitle {
-            addArrangedSubview(titleLabel)
-        }
+        addArrangedSubview(titleLabel)
         addArrangedSubview(descriptionLabel)
-        if withReload {
-            addArrangedSubview(reloadButton)
-        }
+
+        addArrangedSubview(reloadButton)
         axis = .vertical
         spacing = Constants.stackSpacing
         alignment = .center
+    }
+
+    private func configureUI(icon: UIImage?, title: String? = nil, description: String, withReload: Bool = false) {
+        iconImageView.image = icon
+        descriptionLabel.text = description
+        titleLabel.text = title
+        titleLabel.isHidden = title == nil
+        reloadButton.isHidden = !withReload
     }
 
     @objc private func reloadButtonTapped() {
