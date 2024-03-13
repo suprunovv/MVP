@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Recipe DTO
+/// Рецепт
 struct RecipeDTO: Codable {
     /// Имя
     var label: String

@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Recipes Response DTO
+/// Рецепты с хитами
 struct RecipesResponseDTO: Codable {
     /// Рецепты
     let hits: [HitDTO]

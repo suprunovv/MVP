@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Hit DTO
+/// Блюдо-хит
 struct HitDTO: Codable {
     // Рецепт
     var recipe: RecipeDTO

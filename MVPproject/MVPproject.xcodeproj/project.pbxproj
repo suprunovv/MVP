@@ -82,6 +82,10 @@
 		DA3891A02BA1021B002FBC08 /* RecipesMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38919F2BA1021B002FBC08 /* RecipesMock.swift */; };
 		DA3891A22BA1078A002FBC08 /* CategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A12BA1078A002FBC08 /* CategoryRequestDTO.swift */; };
 		DA3891A42BA110F4002FBC08 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A32BA110F4002FBC08 /* UIImageView+Extension.swift */; };
+		DA3891A62BA1D4C6002FBC08 /* DetailHitsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A52BA1D4C6002FBC08 /* DetailHitsDTO.swift */; };
+		DA3891A82BA1D53C002FBC08 /* QuantityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A72BA1D53C002FBC08 /* QuantityDTO.swift */; };
+		DA3891AA2BA1D564002FBC08 /* NutrientsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A92BA1D564002FBC08 /* NutrientsDTO.swift */; };
+		DA3891AC2BA1D597002FBC08 /* DetailsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891AB2BA1D597002FBC08 /* DetailsDTO.swift */; };
 		DAAED4D42B98D20400FD8DCB /* RecipeShimmeredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */; };
 		DAAED4D72B9A223800FD8DCB /* LogCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D62B9A223800FD8DCB /* LogCommand.swift */; };
 		DAAED4D92B9A25C000FD8DCB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D82B9A25C000FD8DCB /* Logger.swift */; };
@@ -167,6 +171,10 @@
 		DA38919F2BA1021B002FBC08 /* RecipesMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipesMock.swift; sourceTree = "<group>"; };
 		DA3891A12BA1078A002FBC08 /* CategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequestDTO.swift; sourceTree = "<group>"; };
 		DA3891A32BA110F4002FBC08 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		DA3891A52BA1D4C6002FBC08 /* DetailHitsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHitsDTO.swift; sourceTree = "<group>"; };
+		DA3891A72BA1D53C002FBC08 /* QuantityDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityDTO.swift; sourceTree = "<group>"; };
+		DA3891A92BA1D564002FBC08 /* NutrientsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsDTO.swift; sourceTree = "<group>"; };
+		DA3891AB2BA1D597002FBC08 /* DetailsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsDTO.swift; sourceTree = "<group>"; };
 		DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeShimmeredCell.swift; sourceTree = "<group>"; };
 		DAAED4D62B9A223800FD8DCB /* LogCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCommand.swift; sourceTree = "<group>"; };
 		DAAED4D82B9A25C000FD8DCB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -538,6 +546,10 @@
 				DA3891992BA0F84C002FBC08 /* RecipeDTO.swift */,
 				DA3891A12BA1078A002FBC08 /* CategoryRequestDTO.swift */,
 				52990DA12BA132DB004A2A87 /* DetailDTO.swift */,
+				DA3891A52BA1D4C6002FBC08 /* DetailHitsDTO.swift */,
+				DA3891A72BA1D53C002FBC08 /* QuantityDTO.swift */,
+				DA3891A92BA1D564002FBC08 /* NutrientsDTO.swift */,
+				DA3891AB2BA1D597002FBC08 /* DetailsDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -680,9 +692,11 @@
 				DAAED4D92B9A25C000FD8DCB /* Logger.swift in Sources */,
 				DA3891A02BA1021B002FBC08 /* RecipesMock.swift in Sources */,
 				52990D312B90F3D9004A2A87 /* SortButtonsView.swift in Sources */,
+				DA3891A82BA1D53C002FBC08 /* QuantityDTO.swift in Sources */,
 				DA38919A2BA0F84C002FBC08 /* RecipeDTO.swift in Sources */,
 				DA38919C2BA0F90D002FBC08 /* Endpoint.swift in Sources */,
 				52990D7C2B9D19D5004A2A87 /* FavoriteResipes.swift in Sources */,
+				DA3891AC2BA1D597002FBC08 /* DetailsDTO.swift in Sources */,
 				DA2D5EB12B97ADE800CF339F /* ShimmerLayer.swift in Sources */,
 				DA3785462B8E1285005A190A /* AuthCoordinator.swift in Sources */,
 				C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */,
@@ -697,8 +711,10 @@
 				DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */,
 				DA3785282B8D1393005A190A /* UIFont+Extension.swift in Sources */,
 				52990D782B9A0888004A2A87 /* Memento.swift in Sources */,
+				DA3891A62BA1D4C6002FBC08 /* DetailHitsDTO.swift in Sources */,
 				52990D3E2B9404DB004A2A87 /* FullRecipeTableViewCell.swift in Sources */,
 				DAAED4DB2B9A261300FD8DCB /* TxtFileLogger.swift in Sources */,
+				DA3891AA2BA1D564002FBC08 /* NutrientsDTO.swift in Sources */,
 				DA3891922BA0E014002FBC08 /* NetworkService.swift in Sources */,
 				DA37852C2B8D1EC7005A190A /* UIImage+Extension.swift in Sources */,
 				52990D352B93BB86004A2A87 /* DetailViewController.swift in Sources */,
