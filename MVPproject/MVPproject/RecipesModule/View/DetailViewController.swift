@@ -5,11 +5,23 @@ import UIKit
 
 /// Протокол для вью детального экрана
 protocol DetailViewProtocol: AnyObject {
+    /// Перезагрузка таблицы
     func reloadData()
+    /// Показать сообщение об отсутствии данных
+    func showEmptyMessage()
+    /// Скрыть сообщение об отсутствии данных
+    func hideEmptyMessage()
+    /// Показать вью с ошибкой
+    func showErrorMessage(error: String)
 }
 
 /// Вью экрана с детальным описанием рецепта
 final class DetailViewController: UIViewController {
+    private enum Constants {
+        static let emptyPageTitle = "Nothing found"
+        static let emptyPageDescription = "Try entering your query differently"
+    }
+
     // MARK: - Visual components
 
     private let detailsTabelView = UITableView()
@@ -29,6 +41,12 @@ final class DetailViewController: UIViewController {
         button.addTarget(self, action: #selector(addFavorites), for: .touchUpInside)
         return button
     }()
+
+    private let emptyMessageView = EmptyPageMessageView(
+        icon: .searchSquare,
+        title: Constants.emptyPageTitle,
+        description: Constants.emptyPageDescription
+    )
 
     private lazy var backButton = UIBarButtonItem(
         image: .arrowBack,
@@ -56,6 +74,22 @@ final class DetailViewController: UIViewController {
         setTabelViewConstraints()
         setupDetailsTabelView()
         setNavigationBar()
+        setupEmptyMessageConstraints()
+    }
+
+    private func setupEmptyMessageConstraints() {
+        view.addSubview(emptyMessageView)
+        NSLayoutConstraint.activate([
+            emptyMessageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            emptyMessageView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: 20
+            ),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(
+                equalTo: emptyMessageView.trailingAnchor,
+                constant: 20
+            )
+        ])
     }
 
     private func setNavigationBar() {
@@ -107,6 +141,18 @@ final class DetailViewController: UIViewController {
 // MARK: - DetailViewController + DetailViewProtocol
 
 extension DetailViewController: DetailViewProtocol {
+    func showErrorMessage(error: String) {
+        print(error)
+    }
+
+    func hideEmptyMessage() {
+        emptyMessageView.isHidden = true
+    }
+
+    func showEmptyMessage() {
+        emptyMessageView.isHidden = false
+    }
+
     func reloadData() {
         DispatchQueue.main.async { [weak self] in
             self?.detailsTabelView.reloadData()
