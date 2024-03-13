@@ -37,7 +37,7 @@ struct RecipelyEndpoint: Endpoint {
 
     init(queryItems: [URLQueryItem] = []) {
         self.queryItems = queryItems
-        self.path = "/"
+        path = ""
     }
 
     init(path: String, queryItems: [URLQueryItem]) {

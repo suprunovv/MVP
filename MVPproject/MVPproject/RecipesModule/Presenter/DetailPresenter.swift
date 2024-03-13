@@ -54,15 +54,19 @@ final class DetailPresenter {
     // MARK: - Private methods
 
     private func getDetails() {
-        networkService.getDish(byURI: uri) { [weak self] result in
+        networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
             switch result {
             case let .success(data):
-                self?.detailRecipe = data
+                guard let data = data else {
+                    // TODO: show empty message
+                    return
+                }
+                self?.detailRecipe = DetailRecipe(dto: data)
             case let .failure(error):
                 print(error.localizedDescription)
             }
             self?.view?.reloadData()
-        }
+        })
     }
 }
 

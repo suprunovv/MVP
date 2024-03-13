@@ -16,7 +16,6 @@ protocol NetworkServiceProtocol {
 
 /// Сервис запроса данных из сети
 final class NetworkService: NetworkServiceProtocol {
-    
     private enum QueryParameters {
         static let dishType = "dishType"
         static let health = "health"
@@ -63,15 +62,15 @@ final class NetworkService: NetworkServiceProtocol {
         let endpoint = RecipelyEndpoint(path: QueryParameters.deatailsURIPath, queryItems: [uriItem])
         makeRequest(endpoint) { result in
             switch result {
-                case .failure(let error):
+            case let .failure(error):
+                return completion(.failure(error))
+            case let .success(data):
+                do {
+                    let detailsDto = try JSONDecoder().decode(DetailDTO.self, from: data)
+                    return completion(.success(detailsDto.hits.first?.recipe))
+                } catch {
                     return completion(.failure(error))
-                case .success(let data):
-                    do {
-                        let detailsDto = try JSONDecoder().decode(DetailDTO.self, from: data)
-                        return completion(.success(detailsDto.hits.first?.recipe))
-                    } catch {
-                        return completion(.failure(error))
-                    }
+                }
             }
         }
     }
