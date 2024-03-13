@@ -5,12 +5,18 @@ import Foundation
 
 /// Детали рецепта
 struct RecipeDetails: Codable {
-    /// Категория рецепта
-    let categoryType: RecipesCategory.CategoryType
     /// Вес готового блюда
     let weight: Int
-    /// Полное описание приготовления
-    let description: String
+    /// Ингридиенты
+    let ingredientLines: [String]
+    /// Белки
+    let proteins: Int
+    /// Жиры
+    let fats: Int
+    /// Углеводы
+    let carbohydrates: Int
+    /// Калории
+    let calories: Int
 }
 
 /// Модель рецепта
@@ -26,7 +32,7 @@ struct Recipe: Codable {
     /// Детали рецепта
     let details: RecipeDetails?
     /// uri
-    let uri: String
+    let uri: String?
 
     init(
         imageURL: URL?,
@@ -53,12 +59,19 @@ struct Recipe: Codable {
         uri = dto.uri
     }
 
-    // TODO: implement when DTO is ready
-//    init?(dto: RecipeDetailsDTO) {
-//        self.name = dto.label
-//        self.calories = Int(dto.calories.rounded())
-//        self.cookingTime = Int(dto.totalTime.rounded())
-//        self.imageURL = URL(string: dto.image)
-//        self.details = RecipeDetails()
-//    }
+    init?(dto: RecipeDetailsDTO) {
+        name = dto.label
+        calories = Int(dto.totalNutrients.calories.quantity.rounded())
+        cookingTime = Int(dto.totalTime.rounded())
+        imageURL = URL(string: dto.image)
+        details = RecipeDetails(
+            weight: Int(dto.totalWeight.rounded()),
+            ingredientLines: dto.ingredientLines,
+            proteins: Int(dto.totalNutrients.proteins.quantity.rounded()),
+            fats: Int(dto.totalNutrients.fats.quantity.rounded()),
+            carbohydrates: Int(dto.totalNutrients.carbohydrates.quantity.rounded()),
+            calories: Int(dto.totalNutrients.calories.quantity.rounded())
+        )
+        uri = nil
+    }
 }

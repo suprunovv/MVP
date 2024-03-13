@@ -8,10 +8,10 @@ protocol NetworkServiceProtocol {
     /// Запрос рецептов по категории
     func getRecipesByCategory(
         _ categoryRequestDTO: CategoryRequestDTO,
-        completion: @escaping (Result<[HitDTO], Error>) -> ()
+        completion: @escaping (Result<[Recipe], Error>) -> ()
     )
     /// Запрос деталей рецепта
-    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<DetailsDTO?, Error>) -> Void)
+    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<Recipe, Error>) -> Void)
 }
 
 /// Сервис запроса данных из сети
@@ -29,7 +29,7 @@ final class NetworkService: NetworkServiceProtocol {
 
     func getRecipesByCategory(
         _ categoryRequestDTO: CategoryRequestDTO,
-        completion: @escaping (Result<[HitDTO], Error>) -> ()
+        completion: @escaping (Result<[Recipe], Error>) -> ()
     ) {
         var queryItems = [URLQueryItem(name: QueryParameters.dishType, value: categoryRequestDTO.dishTypeValue)]
         if let healthValue = categoryRequestDTO.healthValue {
@@ -48,7 +48,7 @@ final class NetworkService: NetworkServiceProtocol {
                 case let .success(data):
                     do {
                         let recipesDto = try self.decoder.decode(RecipesResponseDTO.self, from: data)
-                        completion(.success(recipesDto.hits))
+                        completion(.success(recipesDto.hits.compactMap { Recipe(dto: $0.recipe) }))
                     } catch {
                         completion(.failure(NetworkError.parsing))
                     }
@@ -57,7 +57,7 @@ final class NetworkService: NetworkServiceProtocol {
         }
     }
 
-    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<DetailsDTO?, Error>) -> Void) {
+    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<Recipe, Error>) -> Void) {
         let uriItem = URLQueryItem(name: QueryParameters.uri, value: uri)
         let endpoint = RecipelyEndpoint(path: QueryParameters.deatailsURIPath, queryItems: [uriItem])
         makeRequest(endpoint) { result in
@@ -66,8 +66,13 @@ final class NetworkService: NetworkServiceProtocol {
                 return completion(.failure(error))
             case let .success(data):
                 do {
-                    let detailsDto = try JSONDecoder().decode(DetailDTO.self, from: data)
-                    return completion(.success(detailsDto.hits.first?.recipe))
+                    let detailsDto = try JSONDecoder().decode(ReecipeDetailsResponseDTO.self, from: data)
+                    guard let recipeDetailsDto = detailsDto.hits.first?.recipe,
+                          let recipe = Recipe(dto: recipeDetailsDto)
+                    else {
+                        return completion(.failure(NetworkError.emptyData))
+                    }
+                    return completion(.success(recipe))
                 } catch {
                     return completion(.failure(error))
                 }

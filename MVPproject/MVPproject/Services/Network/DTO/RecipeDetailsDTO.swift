@@ -1,10 +1,10 @@
-// DetailsDTO.swift
+// RecipeDetailsDTO.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
 /// Детальное описание рецепта
-struct DetailsDTO: Codable {
+struct RecipeDetailsDTO: Codable {
     /// название редепта
     let label: String
     /// картинка

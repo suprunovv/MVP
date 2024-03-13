@@ -84,7 +84,7 @@ final class CategoryPresenter {
         networkService.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
             switch result {
             case let .success(data):
-                self?.recipes = data.compactMap { Recipe(dto: $0.recipe) }
+                self?.recipes = data
             case let .failure(error):
                 // TODO: handle error state
                 print(error)
@@ -153,7 +153,7 @@ extension CategoryPresenter: CategoryPresenterProtocol {
                 // TODO: handle error
                 self?.recipes = []
             case let .success(data):
-                self?.recipes = data.compactMap { Recipe(dto: $0.recipe) }
+                self?.recipes = data
             }
             self?.loadingState = .loaded
         }
@@ -172,6 +172,7 @@ extension CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func showRecipeDetails(recipe: Recipe) {
-        coordinator?.showDetails(recipe: recipe, uri: recipe.uri)
+        guard let uri = recipe.uri else { return }
+        coordinator?.showDetails(recipe: recipe, uri: uri)
     }
 }
