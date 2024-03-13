@@ -5,6 +5,6 @@ import Foundation
 
 /// Детали рецепта
 struct ReecipeDetailsResponseDTO: Codable {
-    /// хиты
+    /// Хиты
     let hits: [DetailHitsDTO]
 }

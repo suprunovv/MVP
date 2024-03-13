@@ -5,6 +5,6 @@ import Foundation
 
 /// Блюдо-хит с деталями
 struct DetailHitsDTO: Codable {
-    /// рецепт
+    /// Рецепт
     let recipe: RecipeDetailsDTO
 }

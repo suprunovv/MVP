@@ -5,16 +5,16 @@ import Foundation
 
 /// Детальное описание рецепта
 struct RecipeDetailsDTO: Codable {
-    /// название редепта
+    /// Название редепта
     let label: String
-    /// картинка
+    /// Картинка
     let image: String
-    /// вес блюда
+    /// Вес блюда
     let totalWeight: Double
-    /// время приготовления
+    /// Время приготовления
     let totalTime: Double
-    /// ингридиенты
+    /// Ингридиенты
     let ingredientLines: [String]
-    /// структура КБЖУ
+    /// Структура КБЖУ
     let totalNutrients: NutrientsDTO
 }

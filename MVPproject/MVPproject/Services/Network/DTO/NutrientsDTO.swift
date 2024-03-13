@@ -5,13 +5,13 @@ import Foundation
 
 /// Структура КБЖУ
 struct NutrientsDTO: Codable {
-    /// белки
+    /// Белки
     let proteins: QuantityDTO
-    /// жиры
+    /// Жиры
     let fats: QuantityDTO
-    /// углеводы
+    /// Углеводы
     let carbohydrates: QuantityDTO
-    /// калории
+    /// Калории
     let calories: QuantityDTO
 
     enum CodingKeys: String, CodingKey {
