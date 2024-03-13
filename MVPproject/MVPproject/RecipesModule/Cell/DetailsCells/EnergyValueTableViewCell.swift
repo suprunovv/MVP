@@ -19,6 +19,7 @@ final class EnergyValueTableViewCell: UITableViewCell {
     private lazy var viewsStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [caloriesView, carbohydratesView, fatsView, proteinsView])
         stack.distribution = .fillEqually
+        stack.alignment = .fill
         stack.spacing = 5
         stack.disableAutoresizingMask()
         return stack
@@ -48,10 +49,13 @@ final class EnergyValueTableViewCell: UITableViewCell {
     // MARK: - Private methods
 
     private func setStackViewConstraint() {
-        addSubview(viewsStackView)
-        viewsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40).activate()
-        viewsStackView.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
-        viewsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 20).activate()
-        viewsStackView.heightAnchor.constraint(equalToConstant: 53).activate()
+        contentView.addSubview(viewsStackView)
+        NSLayoutConstraint.activate([
+            viewsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
+            contentView.trailingAnchor.constraint(equalTo: viewsStackView.trailingAnchor, constant: 40),
+            viewsStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            viewsStackView.heightAnchor.constraint(equalToConstant: 53),
+            contentView.bottomAnchor.constraint(equalTo: viewsStackView.bottomAnchor, constant: 20)
+        ])
     }
 }

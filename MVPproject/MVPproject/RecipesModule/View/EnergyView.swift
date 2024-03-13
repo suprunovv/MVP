@@ -86,6 +86,7 @@ final class EnergyView: UIView {
     private func setView() {
         backgroundColor = .greenAccent
         layer.cornerRadius = 16
+        heightAnchor.constraint(equalToConstant: 53).activate()
         setTitleLabelConstraint()
         setBottomViewConstraint()
         setValueLabelConstraint()
@@ -102,8 +103,8 @@ final class EnergyView: UIView {
     private func setBottomViewConstraint() {
         addSubview(bottomView)
         bottomView.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
-        bottomView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.37).activate()
-        bottomView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.95).activate()
+        bottomView.heightAnchor.constraint(equalToConstant: 20).activate()
+        bottomView.widthAnchor.constraint(equalTo: widthAnchor, constant: -4).activate()
         bottomView.topAnchor.constraint(equalTo: titelLabel.bottomAnchor, constant: 8).activate()
     }
 

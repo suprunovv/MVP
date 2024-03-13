@@ -13,6 +13,7 @@ final class ImageTableViewCell: UITableViewCell {
         static let cookingTime = "Cooking time"
         static let min = "min"
         static let gram = "g"
+        static let imageSize = 300.0
     }
 
     // MARK: - Visual components
@@ -21,7 +22,7 @@ final class ImageTableViewCell: UITableViewCell {
         let label = UILabel()
         label.disableAutoresizingMask()
         label.font = .verdanaBold(ofSize: 20)
-        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .black
         return label
@@ -120,11 +121,14 @@ final class ImageTableViewCell: UITableViewCell {
     }
 
     private func setImageViewConstraints() {
-        addSubview(titleImageView)
-        titleImageView.widthAnchor.constraint(equalToConstant: 300).activate()
-        titleImageView.heightAnchor.constraint(equalToConstant: 300).activate()
-        titleImageView.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
-        titleImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).activate()
+        contentView.addSubview(titleImageView)
+        NSLayoutConstraint.activate([
+            titleImageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
+            titleImageView.heightAnchor.constraint(equalTo: titleImageView.widthAnchor),
+            titleImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            titleImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            titleImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
 
     private func setRightViewConstraint() {
@@ -136,11 +140,12 @@ final class ImageTableViewCell: UITableViewCell {
     }
 
     private func setTitleLabelConstraint() {
-        addSubview(titleLabel)
-        titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
-        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).activate()
-        titleLabel.topAnchor.constraint(equalTo: topAnchor).activate()
-        titleLabel.heightAnchor.constraint(equalToConstant: 16).activate()
+        contentView.addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            contentView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 20)
+        ])
     }
 
     private func setRightImageViewConstraint() {
