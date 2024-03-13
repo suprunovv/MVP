@@ -71,10 +71,11 @@ final class ModuleBuilder {
 
     static func makeDetailModule(
         coordinator: RecipeWithDetailsCoordinatorProtocol,
-        recipe: Recipe
+        recipe: Recipe,
+        uri: String
     ) -> UIViewController {
         let viewController = DetailViewController()
-        let presenter = DetailPresenter(view: viewController, coordinator: coordinator, recipe: recipe)
+        let presenter = DetailPresenter(view: viewController, coordinator: coordinator, recipe: recipe, uri: uri)
         viewController.presenter = presenter
         return viewController
     }

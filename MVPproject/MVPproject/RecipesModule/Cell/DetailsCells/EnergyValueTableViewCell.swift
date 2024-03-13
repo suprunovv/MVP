@@ -37,14 +37,14 @@ final class EnergyValueTableViewCell: UITableViewCell {
 
     // MARK: - Public methods
 
-    func setupCell(recipe: Recipe?) {
+    func setupCell(recipe: DetailRecipe?) {
         guard let recipe = recipe else {
             return
         }
         caloriesView.setupView(type: .enerckcal, value: recipe.calories)
-        carbohydratesView.setupView(type: .carbohydrates, value: 200)
-        fatsView.setupView(type: .fats, value: 238)
-        proteinsView.setupView(type: .proteins, value: 34)
+        carbohydratesView.setupView(type: .carbohydrates, value: recipe.carbohydrates)
+        fatsView.setupView(type: .fats, value: recipe.fats)
+        proteinsView.setupView(type: .proteins, value: recipe.proteins)
     }
 
     // MARK: - Private methods

@@ -7,6 +7,7 @@ struct RecipesMock {
         imageURL: nil,
         name: "",
         cookingTime: 0,
-        calories: 0
+        calories: 0,
+        uri: ""
     )
 }

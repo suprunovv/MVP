@@ -13,4 +13,6 @@ struct RecipeDTO: Codable {
     var calories: Double
     /// Время готовки
     var totalTime: Double
+    /// Uri
+    var uri: String
 }

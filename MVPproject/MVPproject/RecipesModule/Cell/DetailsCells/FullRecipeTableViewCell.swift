@@ -34,11 +34,13 @@ final class FullRecipeTableViewCell: UITableViewCell {
 
     // MARK: - Public methods
 
-    func setupDescription(text: String?) {
+    func setupDescription(text: [String]?) {
         guard let text = text else {
             return
         }
-        descriptionLabel.text = text
+        print(text.count)
+        let string = text.joined(separator: "\n")
+        descriptionLabel.text = string
     }
 
     // MARK: - Private methods
@@ -51,7 +53,7 @@ final class FullRecipeTableViewCell: UITableViewCell {
     }
 
     private func setCell() {
-        heightAnchor.constraint(equalTo: descriptionLabel.heightAnchor, constant: 20).activate()
+        heightAnchor.constraint(equalTo: descriptionLabel.heightAnchor, constant: 40).activate()
         backgroundColor = .blueRecipeBg
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         layer.cornerRadius = 24

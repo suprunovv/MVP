@@ -4,7 +4,9 @@
 import UIKit
 
 /// Протокол для вью детального экрана
-protocol DetailViewProtocol: AnyObject {}
+protocol DetailViewProtocol: AnyObject {
+    func reloadData()
+}
 
 /// Вью экрана с детальным описанием рецепта
 final class DetailViewController: UIViewController {
@@ -104,7 +106,13 @@ final class DetailViewController: UIViewController {
 
 // MARK: - DetailViewController + DetailViewProtocol
 
-extension DetailViewController: DetailViewProtocol {}
+extension DetailViewController: DetailViewProtocol {
+    func reloadData() {
+        DispatchQueue.main.async { [weak self] in
+            self?.detailsTabelView.reloadData()
+        }
+    }
+}
 
 // MARK: - DetailViewController + UITableViewDataSource
 
@@ -122,21 +130,21 @@ extension DetailViewController: UITableViewDataSource {
                 withIdentifier: ImageTableViewCell.reuseID,
                 for: indexPath
             ) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.configureCell(recipe: presenter?.getRecipe())
+            cell.configureCell(recipe: presenter?.getDetailsRecipe())
             return cell
         case .energy:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: EnergyValueTableViewCell.reuseID,
                 for: indexPath
             ) as? EnergyValueTableViewCell else { return UITableViewCell() }
-            cell.setupCell(recipe: presenter?.getRecipe())
+            cell.setupCell(recipe: presenter?.getDetailsRecipe())
             return cell
         case .description:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: FullRecipeTableViewCell.reuseID,
                 for: indexPath
             ) as? FullRecipeTableViewCell else { return UITableViewCell() }
-            cell.setupDescription(text: presenter?.getRecipe().details?.description)
+            cell.setupDescription(text: presenter?.getDetailsRecipe()?.ingredientLines)
             return cell
         }
     }

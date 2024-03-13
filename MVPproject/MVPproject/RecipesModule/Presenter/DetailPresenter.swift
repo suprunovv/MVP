@@ -15,6 +15,8 @@ protocol DetailPresenterProtocol: AnyObject {
     func shareRecipe()
     /// Добавить рецепт в избранное
     func addFavoriteRecipe()
+    /// Метод возвращает модель детального рецепта
+    func getDetailsRecipe() -> DetailRecipe?
 }
 
 /// Перечисление возможных типов ячеек
@@ -35,20 +37,42 @@ final class DetailPresenter {
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
     private var recipe: Recipe
+    private var uri: String
+    private var detailRecipe: DetailRecipe?
+    private let networkService = NetworkService()
 
     // MARK: - Initializators
 
-    init(view: DetailViewProtocol, coordinator: RecipeWithDetailsCoordinatorProtocol, recipe: Recipe) {
+    init(view: DetailViewProtocol, coordinator: RecipeWithDetailsCoordinatorProtocol, recipe: Recipe, uri: String) {
         self.view = view
         self.coordinator = coordinator
-        // TODO: fetch recipe by uri
         self.recipe = recipe
+        self.uri = uri
+        getDetails()
+    }
+
+    // MARK: - Private methods
+
+    private func getDetails() {
+        networkService.getDish(byURI: uri) { [weak self] result in
+            switch result {
+            case let .success(data):
+                self?.detailRecipe = data
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+            self?.view?.reloadData()
+        }
     }
 }
 
 // MARK: - DetailPresenter + DetailPresenterProtocol
 
 extension DetailPresenter: DetailPresenterProtocol {
+    func getDetailsRecipe() -> DetailRecipe? {
+        detailRecipe
+    }
+
     func addFavoriteRecipe() {
         FavoriteRecipes.shared.updateFavoriteRecipe(recipe)
     }
