@@ -271,7 +271,6 @@
 				DA3785962B913B0E005A190A /* SortingButton.swift */,
 				52990D342B93BB86004A2A87 /* DetailViewController.swift */,
 				52990D3B2B93F1B0004A2A87 /* EnergyView.swift */,
-				DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */,
 				52990D3F2B969ADD004A2A87 /* ShimmerView.swift */,
 			);
 			path = View;
@@ -326,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */,
+				DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";

@@ -42,4 +42,5 @@ extension UIImage {
     static let bookmarkSquare = UIImage(named: "bookmarkSquare")
     static let searchSquare = UIImage(named: "searchSquare")
     static let xMark = UIImage(systemName: "xmark")
+    static let reload = UIImage(named: "reload")
 }

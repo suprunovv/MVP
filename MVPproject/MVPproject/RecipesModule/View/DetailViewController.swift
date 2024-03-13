@@ -120,7 +120,6 @@ final class DetailViewController: UIViewController {
         detailsTabelView.rowHeight = UITableView.automaticDimension
         detailsTabelView.allowsSelection = false
         detailsTabelView.separatorStyle = .none
-        detailsTabelView.delegate = self
         detailsTabelView.dataSource = self
     }
 
@@ -192,23 +191,6 @@ extension DetailViewController: UITableViewDataSource {
             ) as? FullRecipeTableViewCell else { return UITableViewCell() }
             cell.setupDescription(text: presenter?.getDetailsRecipe().details?.ingredientLines)
             return cell
-        }
-    }
-}
-
-// MARK: - DetailViewController + UITableViewDelegate
-
-extension DetailViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cell = presenter?.cellTypes[indexPath.row]
-        guard let cell = cell else { return 0 }
-        switch cell {
-        case .image:
-            return 336
-        case .energy:
-            return 93
-        case .description:
-            return UITableView.automaticDimension
         }
     }
 }
