@@ -18,8 +18,8 @@ protocol DetailViewProtocol: AnyObject {
 /// Вью экрана с детальным описанием рецепта
 final class DetailViewController: UIViewController {
     private enum Constants {
-        static let emptyPageTitle = "sddvsdlkvs"
-        static let emptyPageDescription = "sdvsdvopopopoppokobdcv skldvmsldvs"
+        static let emptyPageTitle = "Nothing found"
+        static let emptyPageDescription = "Try entering your query differently"
     }
 
     // MARK: - Visual components
@@ -78,6 +78,7 @@ final class DetailViewController: UIViewController {
     }
 
     private func setupEmptyMessageConstraints() {
+        view.addSubview(emptyMessageView)
         NSLayoutConstraint.activate([
             emptyMessageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
             emptyMessageView.leadingAnchor.constraint(
