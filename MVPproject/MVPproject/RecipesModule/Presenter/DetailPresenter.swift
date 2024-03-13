@@ -17,6 +17,8 @@ protocol DetailPresenterProtocol: AnyObject {
     func addFavoriteRecipe()
     /// Метод возвращает модель детального рецепта
     func getDetailsRecipe() -> Recipe
+    /// Вью стейт
+    var viewState: ViewState<Recipe> { get }
 }
 
 /// Перечисление возможных типов ячеек
@@ -38,6 +40,11 @@ final class DetailPresenter {
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
     private var recipe: Recipe
+    private(set) var viewState: ViewState<Recipe> = .loading {
+        didSet {
+            updateDetailView()
+        }
+    }
 
     // MARK: - Initializators
 
@@ -57,17 +64,36 @@ final class DetailPresenter {
     // MARK: - Private methods
 
     private func getDetails() {
+        viewState = .loading
         guard let uri = recipe.uri else { return }
         networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
             switch result {
             case let .success(data):
-                self?.recipe = data
+                if data.details == nil {
+                    self?.viewState = .noData
+                } else {
+                    self?.viewState = .data(data)
+                }
             case let .failure(error):
-                // TODO: implement handling error state
-                print(error.localizedDescription)
+                self?.viewState = .error(error)
             }
             self?.view?.reloadData()
         })
+    }
+
+    private func updateDetailView() {
+        view?.hideEmptyMessage()
+        switch viewState {
+        case .loading:
+            view?.reloadData()
+        case let .data(recipe):
+            self.recipe = recipe
+            view?.reloadData()
+        case .noData:
+            view?.showEmptyMessage()
+        case let .error(error):
+            view?.showErrorMessage(error: error.localizedDescription)
+        }
     }
 }
 
