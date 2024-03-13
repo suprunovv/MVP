@@ -98,14 +98,14 @@ final class ImageTableViewCell: UITableViewCell {
 
     // MARK: - Public methods
 
-    func configureCell(recipe: Recipe?) {
+    func configureCell(recipe: DetailRecipe?) {
         guard let recipe = recipe else {
             return
         }
-//        titleImageView.image = UIImage(named: recipe.imageName)
-        cookingTimeLabel.text = "\(Constants.cookingTime)\n \(recipe.cookingTime) \(Constants.min)"
-        portionSizeLabel.text = "\(recipe.details?.weight ?? 0) \(Constants.gram)"
-        titleLabel.text = recipe.name
+        titleImageView.loadFromURL(recipe.image)
+        cookingTimeLabel.text = "\(Constants.cookingTime)\n \(recipe.totalTime) \(Constants.min)"
+        portionSizeLabel.text = "\(Int(recipe.totalWeight)) \(Constants.gram)"
+        titleLabel.text = recipe.label
     }
 
     // MARK: - Private methods

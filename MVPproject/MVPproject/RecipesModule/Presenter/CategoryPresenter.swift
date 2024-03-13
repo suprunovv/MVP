@@ -36,6 +36,7 @@ final class CategoryPresenter {
     private let networkService = NetworkService()
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
+    private var uri: String?
 
     private let recipesPlaceholder = Array(repeating: RecipesMock.recipePlaceholder, count: 7)
     private var timeSortingState = SortingButton.SortState.unsorted {
@@ -164,6 +165,6 @@ extension CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func showRecipeDetails(recipe: Recipe) {
-        coordinator?.showDetails(recipe: recipe)
+        coordinator?.showDetails(recipe: recipe, uri: recipe.uri)
     }
 }

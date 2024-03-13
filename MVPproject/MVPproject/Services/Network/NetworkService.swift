@@ -70,4 +70,39 @@ final class NetworkService: NetworkServiceProtocol {
 
         task.resume()
     }
+
+    func getDish(byURI uri: String, completion: @escaping (Result<DetailRecipe, Error>) -> Void) {
+        let uriItem = URLQueryItem(name: "uri", value: uri)
+        let baseUrlComponents = RecipelyEndpoint(queryItems: [uriItem])
+        guard var url = baseUrlComponents.url else { return }
+        url.appendPathComponent("by-uri")
+        makeURLRequest(using: url) { (networkResult: Result<DetailDTO, Error>) in
+            switch networkResult {
+            case let .success(result):
+                guard let dishDto = result.hits.first?.recipe else { return }
+                completion(.success(DetailRecipe(dto: dishDto)))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    private func makeURLRequest(
+        using request: URL,
+        completion: @escaping (Result<DetailDTO, Error>) -> Void
+    ) {
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let data = data else { return }
+            do {
+                let result = try JSONDecoder().decode(DetailDTO.self, from: data)
+                completion(.success(result))
+            } catch {
+                print(error.localizedDescription)
+            }
+        }.resume()
+    }
 }

@@ -40,6 +40,6 @@ extension FavoritesPresenter: FavoritesPresenterProtocol {
     }
 
     func showRecipeDetails(recipe: Recipe) {
-        coordinator?.showDetails(recipe: recipe)
+        coordinator?.showDetails(recipe: recipe, uri: recipe.uri)
     }
 }
