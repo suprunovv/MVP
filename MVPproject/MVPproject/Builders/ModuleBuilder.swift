@@ -56,7 +56,13 @@ final class ModuleBuilder {
 
     static func makeCategoryModule(coordinator: RecipesCoordinator, category: RecipesCategory) -> UIViewController {
         let viewController = CategoryViewController()
-        let presenter = CategoryPresenter(view: viewController, coordinator: coordinator, category: category)
+        let networkService = NetworkService()
+        let presenter = CategoryPresenter(
+            view: viewController,
+            coordinator: coordinator,
+            networkService: networkService,
+            category: category
+        )
         viewController.presenter = presenter
         return viewController
     }
@@ -74,7 +80,13 @@ final class ModuleBuilder {
         recipe: Recipe
     ) -> UIViewController {
         let viewController = DetailViewController()
-        let presenter = DetailPresenter(view: viewController, coordinator: coordinator, recipe: recipe)
+        let networkService = NetworkService()
+        let presenter = DetailPresenter(
+            view: viewController,
+            coordinator: coordinator,
+            networkService: networkService,
+            recipe: recipe
+        )
         viewController.presenter = presenter
         return viewController
     }

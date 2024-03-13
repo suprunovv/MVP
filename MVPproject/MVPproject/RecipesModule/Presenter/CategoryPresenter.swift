@@ -7,7 +7,7 @@ import Foundation
 protocol CategoryPresenterProtocol: AnyObject {
     /// Рецепты в категории
     var recipes: [Recipe] { get }
-    ///
+    /// Состояние загрузки
     var loadingState: CategoryPresenter.LoadingState { get }
     /// Запрос на закрытие категории
     func closeCategory()
@@ -33,10 +33,12 @@ final class CategoryPresenter {
 
     // MARK: - private propertise
 
+    private let networkService: NetworkServiceProtocol
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
+    private var uri: String?
 
-    private let recipesPlaceholder = Array(repeating: RecipesDataSource.recipePlaceholder, count: 7)
+    private let recipesPlaceholder = Array(repeating: RecipesMock.recipePlaceholder, count: 7)
     private var timeSortingState = SortingButton.SortState.unsorted {
         didSet {
             sortRecipes(by: timeSortingState, caloriesSortState: caloriesSortingState)
@@ -69,19 +71,32 @@ final class CategoryPresenter {
 
     // MARK: - initializators
 
-    init(view: CategoryViewProtocol, coordinator: RecipesCoordinator, category: RecipesCategory) {
+    init(
+        view: CategoryViewProtocol,
+        coordinator: RecipesCoordinator,
+        networkService: NetworkServiceProtocol,
+        category: RecipesCategory
+    ) {
         self.view = view
         self.coordinator = coordinator
         self.category = category
+        self.networkService = networkService
         view.setScreenTitle(category.name)
         loadRecipes(byCategory: category)
     }
 
     private func loadRecipes(byCategory category: RecipesCategory) {
         loadingState = .loading
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+        networkService.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
+            switch result {
+            case let .success(data):
+                self?.recipes = data
+            case let .failure(error):
+                // TODO: handle error state
+                print(error)
+                self?.recipes = []
+            }
             self?.loadingState = .loaded
-            self?.recipes = RecipesDataSource.recipesByCategories[category.type] ?? []
         }
     }
 
@@ -135,12 +150,18 @@ extension CategoryPresenter: CategoryPresenterProtocol {
             loadingState = .loaded
             return
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-            guard let self = self else { return }
-            self.recipes = self.recipesBeforeFiltering.filter { recipe in
-                recipe.name.range(of: search, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+        networkService.getRecipesByCategory(CategoryRequestDTO(
+            category: category,
+            searchTerm: search
+        )) { [weak self] result in
+            switch result {
+            case .failure:
+                // TODO: handle error
+                self?.recipes = []
+            case let .success(data):
+                self?.recipes = data
             }
-            self.loadingState = .loaded
+            self?.loadingState = .loaded
         }
     }
 
