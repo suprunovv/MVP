@@ -189,19 +189,18 @@ extension CategoryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch presenter?.loadingState {
-        case .initial, .loading:
+        switch presenter?.viewState {
+        case .loading:
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: RecipeShimmeredCell.reuseID) as? RecipeShimmeredCell
             else { return .init() }
             tableView.isScrollEnabled = false
             tableView.allowsSelection = false
             return cell
-        case .loaded:
-            let recipe = presenter?.recipes[indexPath.row]
-            guard let recipe = recipe,
-                  let cell = tableView
-                  .dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
+        case let .data(recipes):
+            let recipe = recipes[indexPath.row]
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
             else { return .init() }
             tableView.isScrollEnabled = true
             tableView.allowsSelection = true

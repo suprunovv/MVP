@@ -21,6 +21,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     func updateSearchTerm(_ search: String)
     /// Экран загружен
     func screenLoaded()
+    /// // MARK: - Public Properties
+    var viewState: ViewState<[Recipe]> { get }
 }
 
 /// Презентер экрана категории
@@ -30,6 +32,8 @@ final class CategoryPresenter {
         case loading
         case loaded
     }
+
+    //  var updateViewState: ((ViewState) -> ())?
 
     // MARK: - private propertise
 
@@ -51,11 +55,15 @@ final class CategoryPresenter {
         }
     }
 
+    private(set) var viewState: ViewState<[Recipe]> = .loading {
+        didSet {
+            updateRecipesView()
+        }
+    }
+
     private(set) var loadingState: LoadingState = .initial {
         didSet {
-            if loadingState == .loading {
-                recipes = recipesPlaceholder
-            }
+            if loadingState == .loading {}
         }
     }
 
@@ -63,11 +71,7 @@ final class CategoryPresenter {
 
     private var recipesBeforeFiltering: [Recipe] = []
 
-    private(set) var recipes: [Recipe] = [] {
-        didSet {
-            updateRecipesView()
-        }
-    }
+    private(set) var recipes: [Recipe] = []
 
     // MARK: - initializators
 
@@ -86,31 +90,40 @@ final class CategoryPresenter {
     }
 
     private func loadRecipes(byCategory category: RecipesCategory) {
-        loadingState = .loading
+        viewState = .loading
         networkService.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
             switch result {
             case let .success(data):
-                self?.recipes = data
+                if data.isEmpty {
+                    self?.viewState = .noData
+                } else {
+                    self?.viewState = .data(data)
+                }
             case let .failure(error):
+                self?.viewState = .error(error)
                 // TODO: handle error state
-                print(error)
-                self?.recipes = []
             }
-            self?.loadingState = .loaded
         }
     }
 
     private func updateRecipesView() {
-        view?.reloadRecipeTable()
-        if recipes.isEmpty {
+        view?.hideEmptyMessage()
+        switch viewState {
+        case .loading:
+            recipes = recipesPlaceholder
+            view?.reloadRecipeTable()
+        case let .data(recipes):
+            self.recipes = recipes
+            view?.reloadRecipeTable()
+        case .noData:
             view?.showEmptyMessage()
-        } else {
-            view?.hideEmptyMessage()
+        case .error:
+            view?.showEmptyMessage()
         }
     }
 
     private func sortRecipes(by timeSortState: SortingButton.SortState, caloriesSortState: SortingButton.SortState) {
-        recipes.sort { recipe1, recipe2 in
+        let sortedRecipes = recipes.sorted { recipe1, recipe2 in
             if timeSortState == .ascending, recipe1.cookingTime != recipe2.cookingTime {
                 return recipe1.cookingTime > recipe2.cookingTime
             }
@@ -125,6 +138,7 @@ final class CategoryPresenter {
             }
             return true
         }
+        viewState = .data(sortedRecipes)
     }
 }
 
@@ -141,7 +155,7 @@ extension CategoryPresenter: CategoryPresenterProtocol {
             recipesBeforeFiltering = recipes
         }
 
-        loadingState = .loading
+        viewState = .loading
         if search.count < 3 {
             if recipes.count != recipesBeforeFiltering.count {
                 recipes = recipesBeforeFiltering
