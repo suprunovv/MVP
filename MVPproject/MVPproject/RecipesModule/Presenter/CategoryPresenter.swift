@@ -8,7 +8,7 @@ protocol CategoryPresenterProtocol: AnyObject {
     /// Рецепты в категории
     var recipes: [Recipe] { get }
     /// Состояние загрузки
-    var loadingState: CategoryPresenter.LoadingState { get }
+    var viewState: ViewState<[Recipe]> { get }
     /// Запрос на закрытие категории
     func closeCategory()
     /// Переход на экран с детальным описанием рецепта
@@ -21,21 +21,11 @@ protocol CategoryPresenterProtocol: AnyObject {
     func updateSearchTerm(_ search: String)
     /// Экран загружен
     func screenLoaded()
-    /// // MARK: - Public Properties
-    var viewState: ViewState<[Recipe]> { get }
 }
 
 /// Презентер экрана категории
 final class CategoryPresenter {
-    enum LoadingState {
-        case initial
-        case loading
-        case loaded
-    }
-
-    //  var updateViewState: ((ViewState) -> ())?
-
-    // MARK: - private propertise
+    // MARK: - Private Properties
 
     private let networkService: NetworkServiceProtocol
     private weak var view: CategoryViewProtocol?
@@ -61,16 +51,15 @@ final class CategoryPresenter {
         }
     }
 
-    private(set) var loadingState: LoadingState = .initial {
+    private var searchTerm: String = "" {
         didSet {
-            if loadingState == .loading {}
+            if oldValue != searchTerm {
+                searchRecipes(searchTerm)
+            }
         }
     }
 
     private var category: RecipesCategory
-
-    private var recipesBeforeFiltering: [Recipe] = []
-
     private(set) var recipes: [Recipe] = []
 
     // MARK: - initializators
@@ -101,7 +90,6 @@ final class CategoryPresenter {
                 }
             case let .failure(error):
                 self?.viewState = .error(error)
-                // TODO: handle error state
             }
         }
     }
@@ -151,31 +139,25 @@ extension CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func updateSearchTerm(_ search: String) {
-        if recipesBeforeFiltering.isEmpty {
-            recipesBeforeFiltering = recipes
-        }
-
-        viewState = .loading
         if search.count < 3 {
-            if recipes.count != recipesBeforeFiltering.count {
-                recipes = recipesBeforeFiltering
-                recipesBeforeFiltering = []
-            }
-            loadingState = .loaded
-            return
+            searchTerm = ""
+        } else {
+            searchTerm = search
         }
+    }
+
+    private func searchRecipes(_ search: String) {
+        viewState = .loading
         networkService.getRecipesByCategory(CategoryRequestDTO(
             category: category,
             searchTerm: search
         )) { [weak self] result in
             switch result {
-            case .failure:
-                // TODO: handle error
-                self?.recipes = []
+            case let .failure(error):
+                self?.viewState = .error(error)
             case let .success(data):
-                self?.recipes = data
+                self?.viewState = .data(data)
             }
-            self?.loadingState = .loaded
         }
     }
 
