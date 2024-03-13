@@ -5,11 +5,11 @@ import Foundation
 
 /// Главная структура запроса
 struct DetailDTO: Codable {
-    let hits: [Hits]
+    let hits: [DeatilHitsDTO]
 }
 
 /// Промежуточная структура
-struct Hits: Codable {
+struct DeatilHitsDTO: Codable {
     let recipe: DetailsDTO
 }
 
@@ -25,10 +25,10 @@ struct DetailsDTO: Codable {
 
 /// Структура КБЖУ
 struct NutrientsDTO: Codable {
-    let proteins: Quantity
-    let fats: Quantity
-    let carbohydrates: Quantity
-    let calories: Quantity
+    let proteins: QuantityDTO
+    let fats: QuantityDTO
+    let carbohydrates: QuantityDTO
+    let calories: QuantityDTO
 
     enum CodingKeys: String, CodingKey {
         case proteins = "PROCNT"
@@ -39,6 +39,6 @@ struct NutrientsDTO: Codable {
 }
 
 /// Структура для значений КБЖУ
-struct Quantity: Codable {
+struct QuantityDTO: Codable {
     let quantity: Double
 }

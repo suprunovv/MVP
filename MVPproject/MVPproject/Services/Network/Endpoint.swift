@@ -7,6 +7,8 @@ import Foundation
 protocol Endpoint {
     /// Создание удаленного ресурса с параметрами
     init(queryItems: [URLQueryItem])
+    /// Создание удаленного ресурса с параметрами и дополнительным путем
+    init(path: String, queryItems: [URLQueryItem])
     /// URL удаленного ресурса
     var url: URL? { get }
 }
@@ -16,10 +18,15 @@ struct RecipelyEndpoint: Endpoint {
     var url: URL? {
         var urlComponents = makeBaseURLComponents()
         urlComponents.queryItems = authQueryItems + requiredQueryItems + queryItems
-        return urlComponents.url
+        if #available(iOS 16.0, *) {
+            return urlComponents.url?.appending(path: path)
+        } else {
+            return urlComponents.url?.appendingPathComponent(path)
+        }
     }
 
     private let queryItems: [URLQueryItem]
+    private let path: String
     private let authQueryItems: [URLQueryItem] = [
         URLQueryItem(name: "app_id", value: "cea69cbe"),
         URLQueryItem(name: "app_key", value: "f0dbdf0e1de381a3491ca0757b29bdf6")
@@ -30,6 +37,12 @@ struct RecipelyEndpoint: Endpoint {
 
     init(queryItems: [URLQueryItem] = []) {
         self.queryItems = queryItems
+        self.path = "/"
+    }
+
+    init(path: String, queryItems: [URLQueryItem]) {
+        self.queryItems = queryItems
+        self.path = path
     }
 
     private func makeBaseURLComponents() -> URLComponents {

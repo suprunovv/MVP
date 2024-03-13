@@ -10,14 +10,19 @@ protocol NetworkServiceProtocol {
         _ categoryRequestDTO: CategoryRequestDTO,
         completion: @escaping (Result<[HitDTO], Error>) -> ()
     )
+    /// Запрос деталей рецепта
+    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<DetailsDTO?, Error>) -> Void)
 }
 
 /// Сервис запроса данных из сети
 final class NetworkService: NetworkServiceProtocol {
+    
     private enum QueryParameters {
         static let dishType = "dishType"
         static let health = "health"
         static let query = "q"
+        static let uri = "uri"
+        static let deatailsURIPath = "by-uri"
     }
 
     private let session = URLSession.shared
@@ -53,6 +58,24 @@ final class NetworkService: NetworkServiceProtocol {
         }
     }
 
+    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<DetailsDTO?, Error>) -> Void) {
+        let uriItem = URLQueryItem(name: QueryParameters.uri, value: uri)
+        let endpoint = RecipelyEndpoint(path: QueryParameters.deatailsURIPath, queryItems: [uriItem])
+        makeRequest(endpoint) { result in
+            switch result {
+                case .failure(let error):
+                    return completion(.failure(error))
+                case .success(let data):
+                    do {
+                        let detailsDto = try JSONDecoder().decode(DetailDTO.self, from: data)
+                        return completion(.success(detailsDto.hits.first?.recipe))
+                    } catch {
+                        return completion(.failure(error))
+                    }
+            }
+        }
+    }
+
     private func makeRequest(_ endpoint: Endpoint, then handler: @escaping (Result<Data, Error>) -> Void) {
         guard let url = endpoint.url else {
             return handler(.failure(NetworkError.invalidURL))
@@ -69,40 +92,5 @@ final class NetworkService: NetworkServiceProtocol {
         }
 
         task.resume()
-    }
-
-    func getDish(byURI uri: String, completion: @escaping (Result<DetailRecipe, Error>) -> Void) {
-        let uriItem = URLQueryItem(name: "uri", value: uri)
-        let baseUrlComponents = RecipelyEndpoint(queryItems: [uriItem])
-        guard var url = baseUrlComponents.url else { return }
-        url.appendPathComponent("by-uri")
-        makeURLRequest(using: url) { (networkResult: Result<DetailDTO, Error>) in
-            switch networkResult {
-            case let .success(result):
-                guard let dishDto = result.hits.first?.recipe else { return }
-                completion(.success(DetailRecipe(dto: dishDto)))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    private func makeURLRequest(
-        using request: URL,
-        completion: @escaping (Result<DetailDTO, Error>) -> Void
-    ) {
-        URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let data = data else { return }
-            do {
-                let result = try JSONDecoder().decode(DetailDTO.self, from: data)
-                completion(.success(result))
-            } catch {
-                print(error.localizedDescription)
-            }
-        }.resume()
     }
 }
