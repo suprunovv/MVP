@@ -33,7 +33,7 @@ final class CategoryPresenter {
 
     // MARK: - private propertise
 
-    private let networkService = NetworkService()
+    private let networkService: NetworkServiceProtocol
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
     private var uri: String?
@@ -71,10 +71,16 @@ final class CategoryPresenter {
 
     // MARK: - initializators
 
-    init(view: CategoryViewProtocol, coordinator: RecipesCoordinator, category: RecipesCategory) {
+    init(
+        view: CategoryViewProtocol,
+        coordinator: RecipesCoordinator,
+        networkService: NetworkServiceProtocol,
+        category: RecipesCategory
+    ) {
         self.view = view
         self.coordinator = coordinator
         self.category = category
+        self.networkService = networkService
         view.setScreenTitle(category.name)
         loadRecipes(byCategory: category)
     }

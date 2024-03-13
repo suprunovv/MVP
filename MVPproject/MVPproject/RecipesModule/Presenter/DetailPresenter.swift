@@ -33,20 +33,27 @@ enum DetailCellType {
 final class DetailPresenter {
     // MARK: - Private properties
 
+    private let networkService: NetworkServiceProtocol
     private(set) var cellTypes: [DetailCellType] = [.image, .energy, .description]
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
     private var recipe: Recipe
     private var uri: String
-    private let networkService = NetworkService()
 
     // MARK: - Initializators
 
-    init(view: DetailViewProtocol, coordinator: RecipeWithDetailsCoordinatorProtocol, recipe: Recipe, uri: String) {
+    init(
+        view: DetailViewProtocol,
+        coordinator: RecipeWithDetailsCoordinatorProtocol,
+        networkService: NetworkServiceProtocol,
+        recipe: Recipe,
+        uri: String
+    ) {
         self.view = view
         self.coordinator = coordinator
         self.recipe = recipe
         self.uri = uri
+        self.networkService = networkService
         getDetails()
     }
 
