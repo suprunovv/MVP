@@ -77,8 +77,7 @@ final class ModuleBuilder {
 
     static func makeDetailModule(
         coordinator: RecipeWithDetailsCoordinatorProtocol,
-        recipe: Recipe,
-        uri: String
+        recipe: Recipe
     ) -> UIViewController {
         let viewController = DetailViewController()
         let networkService = NetworkService()
@@ -86,8 +85,7 @@ final class ModuleBuilder {
             view: viewController,
             coordinator: coordinator,
             networkService: networkService,
-            recipe: recipe,
-            uri: uri
+            recipe: recipe
         )
         viewController.presenter = presenter
         return viewController

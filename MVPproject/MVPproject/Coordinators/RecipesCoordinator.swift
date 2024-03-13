@@ -8,7 +8,7 @@ protocol RecipeWithDetailsCoordinatorProtocol: AnyObject {
     /// Навигация  координаторе
     var navigationController: UINavigationController? { get }
     /// Открыть детали о рецепте
-    func showDetails(recipe: Recipe, uri: String)
+    func showDetails(recipe: Recipe)
     /// Закрыть детали о рецепте
     func closeDetails()
 }
@@ -22,9 +22,9 @@ extension RecipeWithDetailsCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
 
-    func showDetails(recipe: Recipe, uri: String) {
+    func showDetails(recipe: Recipe) {
         guard let detailModule = ModuleBuilder
-            .makeDetailModule(coordinator: self, recipe: recipe, uri: uri) as? DetailViewController else { return }
+            .makeDetailModule(coordinator: self, recipe: recipe) as? DetailViewController else { return }
         navigationController?.pushViewController(detailModule, animated: true)
     }
 }

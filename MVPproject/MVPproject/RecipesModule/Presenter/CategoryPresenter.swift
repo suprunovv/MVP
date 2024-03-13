@@ -178,7 +178,6 @@ extension CategoryPresenter: CategoryPresenterProtocol {
     }
 
     func showRecipeDetails(recipe: Recipe) {
-        guard let uri = recipe.uri else { return }
-        coordinator?.showDetails(recipe: recipe, uri: uri)
+        coordinator?.showDetails(recipe: recipe)
     }
 }

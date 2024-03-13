@@ -38,7 +38,6 @@ final class DetailPresenter {
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
     private var recipe: Recipe
-    private var uri: String
 
     // MARK: - Initializators
 
@@ -46,13 +45,11 @@ final class DetailPresenter {
         view: DetailViewProtocol,
         coordinator: RecipeWithDetailsCoordinatorProtocol,
         networkService: NetworkServiceProtocol,
-        recipe: Recipe,
-        uri: String
+        recipe: Recipe
     ) {
         self.view = view
         self.coordinator = coordinator
         self.recipe = recipe
-        self.uri = uri
         self.networkService = networkService
         getDetails()
     }
@@ -60,6 +57,7 @@ final class DetailPresenter {
     // MARK: - Private methods
 
     private func getDetails() {
+        guard let uri = recipe.uri else { return }
         networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
             switch result {
             case let .success(data):
