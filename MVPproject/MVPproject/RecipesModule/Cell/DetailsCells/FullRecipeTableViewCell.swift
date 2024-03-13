@@ -38,7 +38,6 @@ final class FullRecipeTableViewCell: UITableViewCell {
         guard let text = text else {
             return
         }
-        print(text.count)
         let string = text.joined(separator: "\n")
         descriptionLabel.text = string
     }
@@ -46,14 +45,16 @@ final class FullRecipeTableViewCell: UITableViewCell {
     // MARK: - Private methods
 
     private func setLabelConstraints() {
-        addSubview(descriptionLabel)
-        descriptionLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27).activate()
-        descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 27).activate()
-        descriptionLabel.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
+        contentView.addSubview(descriptionLabel)
+        NSLayoutConstraint.activate([
+            descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 27),
+            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 27),
+            contentView.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: 27),
+            contentView.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 27)
+        ])
     }
 
     private func setCell() {
-        heightAnchor.constraint(equalTo: descriptionLabel.heightAnchor, constant: 40).activate()
         backgroundColor = .blueRecipeBg
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         layer.cornerRadius = 24
