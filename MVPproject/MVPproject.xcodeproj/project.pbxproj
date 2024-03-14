@@ -86,6 +86,7 @@
 		DA3891A82BA1D53C002FBC08 /* QuantityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A72BA1D53C002FBC08 /* QuantityDTO.swift */; };
 		DA3891AA2BA1D564002FBC08 /* NutrientsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A92BA1D564002FBC08 /* NutrientsDTO.swift */; };
 		DA3891AC2BA1D597002FBC08 /* RecipeDetailsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891AB2BA1D597002FBC08 /* RecipeDetailsDTO.swift */; };
+		DA3891AE2BA3138F002FBC08 /* DetailsShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891AD2BA3138F002FBC08 /* DetailsShimmerView.swift */; };
 		DAAED4D42B98D20400FD8DCB /* RecipeShimmeredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */; };
 		DAAED4D72B9A223800FD8DCB /* LogCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D62B9A223800FD8DCB /* LogCommand.swift */; };
 		DAAED4D92B9A25C000FD8DCB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D82B9A25C000FD8DCB /* Logger.swift */; };
@@ -175,6 +176,7 @@
 		DA3891A72BA1D53C002FBC08 /* QuantityDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityDTO.swift; sourceTree = "<group>"; };
 		DA3891A92BA1D564002FBC08 /* NutrientsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsDTO.swift; sourceTree = "<group>"; };
 		DA3891AB2BA1D597002FBC08 /* RecipeDetailsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsDTO.swift; sourceTree = "<group>"; };
+		DA3891AD2BA3138F002FBC08 /* DetailsShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsShimmerView.swift; sourceTree = "<group>"; };
 		DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeShimmeredCell.swift; sourceTree = "<group>"; };
 		DAAED4D62B9A223800FD8DCB /* LogCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCommand.swift; sourceTree = "<group>"; };
 		DAAED4D82B9A25C000FD8DCB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				52990D372B93C86B004A2A87 /* ImageTableViewCell.swift */,
 				52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */,
 				52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */,
+				DA3891AD2BA3138F002FBC08 /* DetailsShimmerView.swift */,
 			);
 			path = DetailsCells;
 			sourceTree = "<group>";
@@ -721,6 +724,7 @@
 				52990D352B93BB86004A2A87 /* DetailViewController.swift in Sources */,
 				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
 				52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */,
+				DA3891AE2BA3138F002FBC08 /* DetailsShimmerView.swift in Sources */,
 				52A65F2E2B8FDE2D001EF2E0 /* RecipesPresenter.swift in Sources */,
 				DA3785932B90DEEE005A190A /* RecipesCategoriesDataSource.swift in Sources */,
 				DAAED4DD2B9A268B00FD8DCB /* LoggerInvoker.swift in Sources */,
