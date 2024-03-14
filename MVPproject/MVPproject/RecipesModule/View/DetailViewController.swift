@@ -13,6 +13,8 @@ protocol DetailViewProtocol: AnyObject {
     func hideEmptyMessage()
     /// Показать вью с ошибкой
     func showErrorMessage(error: String)
+    /// Завершить pull to refresh
+    func endingRefresh()
 }
 
 /// Вью экрана с детальным описанием рецепта
@@ -55,6 +57,12 @@ final class DetailViewController: UIViewController {
         action: #selector(closeDetail)
     )
 
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refreshControl
+    }()
+
     // MARK: - Public properties
 
     var presenter: DetailPresenterProtocol?
@@ -75,6 +83,7 @@ final class DetailViewController: UIViewController {
         setupDetailsTabelView()
         setNavigationBar()
         setupEmptyMessageConstraints()
+        detailsTabelView.refreshControl = refreshControl
     }
 
     private func setupEmptyMessageConstraints() {
@@ -135,17 +144,29 @@ final class DetailViewController: UIViewController {
     @objc private func shareButtonTapped() {
         presenter?.shareRecipe()
     }
+
+    @objc private func refreshData() {
+        presenter?.reloadData()
+    }
 }
 
 // MARK: - DetailViewController + DetailViewProtocol
 
 extension DetailViewController: DetailViewProtocol {
+    func endingRefresh() {
+        DispatchQueue.main.async { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
+    }
+
     func showErrorMessage(error: String) {
         print(error)
     }
 
     func hideEmptyMessage() {
-        emptyMessageView.isHidden = true
+        DispatchQueue.main.async { [weak self] in
+            self?.emptyMessageView.isHidden = true
+        }
     }
 
     func showEmptyMessage() {

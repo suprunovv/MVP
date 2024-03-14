@@ -21,6 +21,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     func updateSearchTerm(_ search: String)
     /// Экран загружен
     func screenLoaded()
+    /// Перезагрузка данных из сети
+    func reloadData()
 }
 
 /// Презентер экрана категории
@@ -103,6 +105,7 @@ final class CategoryPresenter {
         case let .data(recipes):
             self.recipes = recipes
             view?.reloadRecipeTable()
+            view?.endingRefresh()
         case .noData:
             view?.showEmptyMessage()
         case .error:
@@ -133,6 +136,10 @@ final class CategoryPresenter {
 // MARK: - CategoryPresenter + CategoryPresenterProtocol
 
 extension CategoryPresenter: CategoryPresenterProtocol {
+    func reloadData() {
+        loadRecipes(byCategory: category)
+    }
+
     func screenLoaded() {
         TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Category")))
         TxtFileLoggerInvoker.shared.log(.openCategory(category))

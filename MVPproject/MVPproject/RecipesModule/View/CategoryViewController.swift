@@ -13,6 +13,8 @@ protocol CategoryViewProtocol: AnyObject {
     func showEmptyMessage()
     /// Скрыть сообщение пустой страницы
     func hideEmptyMessage()
+    /// завершение pull to refresh
+    func endingRefresh()
 }
 
 /// Вью экрана выбранной категории рецепта
@@ -103,6 +105,12 @@ final class CategoryViewController: UIViewController {
         action: #selector(closeCategory)
     )
 
+    private lazy var refreshControl: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        return refresh
+    }()
+
     // MARK: - Public properties
 
     var presenter: CategoryPresenterProtocol?
@@ -123,6 +131,7 @@ final class CategoryViewController: UIViewController {
         view.addSubviews(tableView, searchBar, emptyMessageView)
         setupConstraints()
         setupEmptyMessageConstraints()
+        tableView.refreshControl = refreshControl
     }
 
     private func setupConstraints() {
@@ -157,11 +166,19 @@ final class CategoryViewController: UIViewController {
     @objc private func closeCategory() {
         presenter?.closeCategory()
     }
+
+    @objc private func refreshData(_ sender: UIRefreshControl) {
+        presenter?.reloadData()
+    }
 }
 
 // MARK: - CategoryViewController + CategoryViewProtocol
 
 extension CategoryViewController: CategoryViewProtocol {
+    func endingRefresh() {
+        refreshControl.endRefreshing()
+    }
+
     func showEmptyMessage() {
         emptyMessageView.isHidden = false
     }
