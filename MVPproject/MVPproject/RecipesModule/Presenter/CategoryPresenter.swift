@@ -32,7 +32,6 @@ final class CategoryPresenter {
     private let networkService: NetworkServiceProtocol
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
-    private var uri: String?
 
     private let recipesPlaceholder = Array(repeating: RecipesMock.recipePlaceholder, count: 7)
     private var timeSortingState = SortingButton.SortState.unsorted {
@@ -85,19 +84,34 @@ final class CategoryPresenter {
         networkService.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
             switch result {
             case let .success(data):
-                if data.isEmpty {
-                    self?.viewState = .noData
-                } else {
-                    self?.viewState = .data(data)
-                }
+                self?.viewState = .data(data)
+            case .failure(.emptyData):
+                self?.viewState = .noData
             case let .failure(error):
                 self?.viewState = .error(error)
             }
         }
     }
 
+    private func searchRecipes(_ search: String) {
+        viewState = .loading
+        networkService.getRecipesByCategory(CategoryRequestDTO(
+            category: category,
+            searchTerm: search
+        )) { [weak self] result in
+            switch result {
+            case .failure(.emptyData):
+                self?.viewState = .noData
+            case let .failure(error):
+                self?.viewState = .error(error)
+            case let .success(data):
+                self?.viewState = .data(data)
+            }
+        }
+    }
+
     private func updateRecipesView() {
-        view?.hideEmptyMessage()
+        view?.hideMessage()
         switch viewState {
         case .loading:
             recipes = recipesPlaceholder
@@ -107,9 +121,15 @@ final class CategoryPresenter {
             view?.reloadRecipeTable()
             view?.endRefresh()
         case .noData:
-            view?.showEmptyMessage()
+            if searchTerm.isEmpty {
+                view?.showEmptyMessage()
+            } else {
+                view?.showNotFoundMessage()
+            }
+            view?.endRefresh()
         case .error:
-            view?.showEmptyMessage()
+            view?.showErrorMessage()
+            view?.endRefresh()
         }
     }
 
@@ -150,21 +170,6 @@ extension CategoryPresenter: CategoryPresenterProtocol {
             searchTerm = ""
         } else {
             searchTerm = search
-        }
-    }
-
-    private func searchRecipes(_ search: String) {
-        viewState = .loading
-        networkService.getRecipesByCategory(CategoryRequestDTO(
-            category: category,
-            searchTerm: search
-        )) { [weak self] result in
-            switch result {
-            case let .failure(error):
-                self?.viewState = .error(error)
-            case let .success(data):
-                self?.viewState = .data(data)
-            }
         }
     }
 

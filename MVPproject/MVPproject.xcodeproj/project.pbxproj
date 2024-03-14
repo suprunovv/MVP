@@ -36,7 +36,7 @@
 		C92F5B672B8F2D330099E2A6 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92F5B662B8F2D330099E2A6 /* ProfilePresenter.swift */; };
 		DA2D5EA62B94D35900CF339F /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA52B94D35900CF339F /* FavoritesViewController.swift */; };
 		DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */; };
-		DA2D5EAC2B94DF7D00CF339F /* EmptyPageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */; };
+		DA2D5EAC2B94DF7D00CF339F /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EAB2B94DF7D00CF339F /* MessageView.swift */; };
 		DA2D5EB12B97ADE800CF339F /* ShimmerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */; };
 		DA2D5EB32B97E34700CF339F /* TermsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */; };
 		DA3785252B8D1186005A190A /* RecipelyAppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */; };
@@ -86,6 +86,8 @@
 		DA3891A82BA1D53C002FBC08 /* QuantityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A72BA1D53C002FBC08 /* QuantityDTO.swift */; };
 		DA3891AA2BA1D564002FBC08 /* NutrientsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891A92BA1D564002FBC08 /* NutrientsDTO.swift */; };
 		DA3891AC2BA1D597002FBC08 /* RecipeDetailsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891AB2BA1D597002FBC08 /* RecipeDetailsDTO.swift */; };
+		DA3891AE2BA3138F002FBC08 /* DetailsShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891AD2BA3138F002FBC08 /* DetailsShimmerView.swift */; };
+		DA3891B02BA33F70002FBC08 /* ErrorDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3891AF2BA33F70002FBC08 /* ErrorDTO.swift */; };
 		DAAED4D42B98D20400FD8DCB /* RecipeShimmeredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */; };
 		DAAED4D72B9A223800FD8DCB /* LogCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D62B9A223800FD8DCB /* LogCommand.swift */; };
 		DAAED4D92B9A25C000FD8DCB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAED4D82B9A25C000FD8DCB /* Logger.swift */; };
@@ -125,7 +127,7 @@
 		C92F5B662B8F2D330099E2A6 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		DA2D5EA52B94D35900CF339F /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		DA2D5EA92B94D3FA00CF339F /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
-		DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageMessageView.swift; sourceTree = "<group>"; };
+		DA2D5EAB2B94DF7D00CF339F /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerLayer.swift; sourceTree = "<group>"; };
 		DA2D5EB22B97E34700CF339F /* TermsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsDataSource.swift; sourceTree = "<group>"; };
 		DA3785242B8D1186005A190A /* RecipelyAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipelyAppTabBarController.swift; sourceTree = "<group>"; };
@@ -175,6 +177,8 @@
 		DA3891A72BA1D53C002FBC08 /* QuantityDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityDTO.swift; sourceTree = "<group>"; };
 		DA3891A92BA1D564002FBC08 /* NutrientsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsDTO.swift; sourceTree = "<group>"; };
 		DA3891AB2BA1D597002FBC08 /* RecipeDetailsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsDTO.swift; sourceTree = "<group>"; };
+		DA3891AD2BA3138F002FBC08 /* DetailsShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsShimmerView.swift; sourceTree = "<group>"; };
+		DA3891AF2BA33F70002FBC08 /* ErrorDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDTO.swift; sourceTree = "<group>"; };
 		DAAED4D32B98D20400FD8DCB /* RecipeShimmeredCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeShimmeredCell.swift; sourceTree = "<group>"; };
 		DAAED4D62B9A223800FD8DCB /* LogCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCommand.swift; sourceTree = "<group>"; };
 		DAAED4D82B9A25C000FD8DCB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -199,6 +203,7 @@
 				52990D372B93C86B004A2A87 /* ImageTableViewCell.swift */,
 				52990D392B93EFEE004A2A87 /* EnergyValueTableViewCell.swift */,
 				52990D3D2B9404DB004A2A87 /* FullRecipeTableViewCell.swift */,
+				DA3891AD2BA3138F002FBC08 /* DetailsShimmerView.swift */,
 			);
 			path = DetailsCells;
 			sourceTree = "<group>";
@@ -325,7 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				DA2D5EB02B97ADE800CF339F /* ShimmerLayer.swift */,
-				DA2D5EAB2B94DF7D00CF339F /* EmptyPageMessageView.swift */,
+				DA2D5EAB2B94DF7D00CF339F /* MessageView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -550,6 +555,7 @@
 				DA3891A72BA1D53C002FBC08 /* QuantityDTO.swift */,
 				DA3891A92BA1D564002FBC08 /* NutrientsDTO.swift */,
 				DA3891AB2BA1D597002FBC08 /* RecipeDetailsDTO.swift */,
+				DA3891AF2BA33F70002FBC08 /* ErrorDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -721,6 +727,7 @@
 				52990D352B93BB86004A2A87 /* DetailViewController.swift in Sources */,
 				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
 				52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */,
+				DA3891AE2BA3138F002FBC08 /* DetailsShimmerView.swift in Sources */,
 				52A65F2E2B8FDE2D001EF2E0 /* RecipesPresenter.swift in Sources */,
 				DA3785932B90DEEE005A190A /* RecipesCategoriesDataSource.swift in Sources */,
 				DAAED4DD2B9A268B00FD8DCB /* LoggerInvoker.swift in Sources */,
@@ -755,12 +762,13 @@
 				DA3785342B8D38DD005A190A /* PersonData.swift in Sources */,
 				DA37856D2B8E32E9005A190A /* ProfileInfo.swift in Sources */,
 				52990D332B93BAE3004A2A87 /* DetailPresenter.swift in Sources */,
-				DA2D5EAC2B94DF7D00CF339F /* EmptyPageMessageView.swift in Sources */,
+				DA2D5EAC2B94DF7D00CF339F /* MessageView.swift in Sources */,
 				DA3785712B8E342B005A190A /* ProfileConfiguration.swift in Sources */,
 				DA3785662B8E30A9005A190A /* UIView+Extension.swift in Sources */,
 				DA3785972B913B0E005A190A /* SortingButton.swift in Sources */,
 				DA37858D2B90DA33005A190A /* Recipe.swift in Sources */,
 				DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */,
+				DA3891B02BA33F70002FBC08 /* ErrorDTO.swift in Sources */,
 				52A65F302B8FDEF5001EF2E0 /* RecipesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
