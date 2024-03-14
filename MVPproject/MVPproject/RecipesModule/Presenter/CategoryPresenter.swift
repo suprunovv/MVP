@@ -105,7 +105,7 @@ final class CategoryPresenter {
         case let .data(recipes):
             self.recipes = recipes
             view?.reloadRecipeTable()
-            view?.endingRefresh()
+            view?.endRefresh()
         case .noData:
             view?.showEmptyMessage()
         case .error:

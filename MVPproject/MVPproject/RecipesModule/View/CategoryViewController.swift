@@ -14,7 +14,7 @@ protocol CategoryViewProtocol: AnyObject {
     /// Скрыть сообщение пустой страницы
     func hideEmptyMessage()
     /// завершение pull to refresh
-    func endingRefresh()
+    func endRefresh()
 }
 
 /// Вью экрана выбранной категории рецепта
@@ -175,7 +175,7 @@ final class CategoryViewController: UIViewController {
 // MARK: - CategoryViewController + CategoryViewProtocol
 
 extension CategoryViewController: CategoryViewProtocol {
-    func endingRefresh() {
+    func endRefresh() {
         refreshControl.endRefreshing()
     }
 

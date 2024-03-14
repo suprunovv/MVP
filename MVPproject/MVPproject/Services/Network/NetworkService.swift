@@ -61,20 +61,22 @@ final class NetworkService: NetworkServiceProtocol {
         let uriItem = URLQueryItem(name: QueryParameters.uri, value: uri)
         let endpoint = RecipelyEndpoint(path: QueryParameters.deatailsURIPath, queryItems: [uriItem])
         makeRequest(endpoint) { result in
-            switch result {
-            case let .failure(error):
-                return completion(.failure(error))
-            case let .success(data):
-                do {
-                    let detailsDto = try JSONDecoder().decode(ReecipeDetailsResponseDTO.self, from: data)
-                    guard let recipeDetailsDto = detailsDto.hits.first?.recipe,
-                          let recipe = Recipe(dto: recipeDetailsDto)
-                    else {
-                        return completion(.failure(NetworkError.emptyData))
-                    }
-                    return completion(.success(recipe))
-                } catch {
+            DispatchQueue.main.async {
+                switch result {
+                case let .failure(error):
                     return completion(.failure(error))
+                case let .success(data):
+                    do {
+                        let detailsDto = try JSONDecoder().decode(ReecipeDetailsResponseDTO.self, from: data)
+                        guard let recipeDetailsDto = detailsDto.hits.first?.recipe,
+                              let recipe = Recipe(dto: recipeDetailsDto)
+                        else {
+                            return completion(.failure(NetworkError.emptyData))
+                        }
+                        return completion(.success(recipe))
+                    } catch {
+                        return completion(.failure(error))
+                    }
                 }
             }
         }

@@ -14,7 +14,7 @@ protocol DetailViewProtocol: AnyObject {
     /// Показать вью с ошибкой
     func showErrorMessage(error: String)
     /// Завершить pull to refresh
-    func endingRefresh()
+    func endRefresh()
 }
 
 /// Вью экрана с детальным описанием рецепта
@@ -153,10 +153,8 @@ final class DetailViewController: UIViewController {
 // MARK: - DetailViewController + DetailViewProtocol
 
 extension DetailViewController: DetailViewProtocol {
-    func endingRefresh() {
-        DispatchQueue.main.async { [weak self] in
-            self?.refreshControl.endRefreshing()
-        }
+    func endRefresh() {
+        refreshControl.endRefreshing()
     }
 
     func showErrorMessage(error: String) {
@@ -164,9 +162,7 @@ extension DetailViewController: DetailViewProtocol {
     }
 
     func hideEmptyMessage() {
-        DispatchQueue.main.async { [weak self] in
-            self?.emptyMessageView.isHidden = true
-        }
+        emptyMessageView.isHidden = true
     }
 
     func showEmptyMessage() {
@@ -174,9 +170,7 @@ extension DetailViewController: DetailViewProtocol {
     }
 
     func reloadData() {
-        DispatchQueue.main.async { [weak self] in
-            self?.detailsTabelView.reloadData()
-        }
+        detailsTabelView.reloadData()
     }
 }
 

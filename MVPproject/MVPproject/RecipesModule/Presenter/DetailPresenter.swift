@@ -93,7 +93,7 @@ final class DetailPresenter {
         case let .data(recipe):
             self.recipe = recipe
             view?.reloadData()
-            view?.endingRefresh()
+            view?.endRefresh()
         case .noData:
             view?.showEmptyMessage()
         case let .error(error):
