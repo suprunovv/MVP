@@ -35,7 +35,7 @@ final class CategoryViewController: UIViewController {
 
     // MARK: - Visual Components
 
-    private let emptyMessageView = EmptyPageMessageView(
+    private let emptyMessageView = MessageView(
         icon: .searchSquare,
         title: Constants.emptyPageTitle,
         description: Constants.emptyPageDescription

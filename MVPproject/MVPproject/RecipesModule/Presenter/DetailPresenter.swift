@@ -3,10 +3,10 @@
 
 /// Протокол для презентера детального экрана
 protocol DetailPresenterProtocol: AnyObject {
-    /// Метод получает модель рецепта
-    func getRecipe() -> Recipe
     /// Mассив типов ячеек
     var cellTypes: [DetailCellType] { get }
+    /// Рецепт
+    var recipe: Recipe? { get set }
     /// Метод закрывает экран деталей
     func closeDetails()
     /// Экран загружен
@@ -15,8 +15,6 @@ protocol DetailPresenterProtocol: AnyObject {
     func shareRecipe()
     /// Добавить рецепт в избранное
     func addFavoriteRecipe()
-    /// Метод возвращает модель детального рецепта
-    func getDetailsRecipe() -> Recipe
     /// Вью стейт
     var viewState: ViewState<Recipe> { get }
     /// Перезагрузка данных из сети
@@ -37,17 +35,18 @@ enum DetailCellType {
 final class DetailPresenter {
     // MARK: - Private properties
 
-    private let networkService: NetworkServiceProtocol
+    var recipe: Recipe?
     private(set) var cellTypes: [DetailCellType] = [.image, .energy, .description]
-    private weak var view: DetailViewProtocol?
-    private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
-    private var recipe: Recipe
-    private var uri: String?
+    private let networkService: NetworkServiceProtocol
     private(set) var viewState: ViewState<Recipe> = .loading {
         didSet {
             updateDetailView()
         }
     }
+
+    private weak var view: DetailViewProtocol?
+    private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
+    private var uri: String?
 
     // MARK: - Initializators
 
@@ -59,7 +58,6 @@ final class DetailPresenter {
     ) {
         self.view = view
         self.coordinator = coordinator
-        self.recipe = recipe
         uri = recipe.uri
         self.networkService = networkService
         getDetails()
@@ -73,11 +71,9 @@ final class DetailPresenter {
         networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
             switch result {
             case let .success(data):
-                if data.details == nil {
-                    self?.viewState = .noData
-                } else {
-                    self?.viewState = .data(data)
-                }
+                self?.viewState = .data(data)
+            case .failure(.emptyData):
+                self?.viewState = .noData
             case let .failure(error):
                 self?.viewState = .error(error)
             }
@@ -86,18 +82,21 @@ final class DetailPresenter {
     }
 
     private func updateDetailView() {
-        view?.hideEmptyMessage()
+        view?.hideMessage()
+        view?.hideLoadingShimmer()
         switch viewState {
         case .loading:
-            view?.reloadData()
+            view?.showLoadingShimmer()
         case let .data(recipe):
             self.recipe = recipe
             view?.reloadData()
             view?.endRefresh()
         case .noData:
             view?.showEmptyMessage()
-        case let .error(error):
-            view?.showErrorMessage(error: error.localizedDescription)
+            view?.endRefresh()
+        case .error:
+            view?.showErrorMessage()
+            view?.endRefresh()
         }
     }
 }
@@ -109,28 +108,23 @@ extension DetailPresenter: DetailPresenterProtocol {
         getDetails()
     }
 
-    func getDetailsRecipe() -> Recipe {
-        recipe
-    }
-
     func addFavoriteRecipe() {
+        guard let recipe = recipe else { return }
         FavoriteRecipes.shared.updateFavoriteRecipe(recipe)
     }
 
     func shareRecipe() {
+        guard let recipe = recipe else { return }
         TxtFileLoggerInvoker.shared.log(.shareRecipe(recipe))
     }
 
     func screenLoaded() {
+        guard let recipe = recipe else { return }
         TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Recipe details")))
         TxtFileLoggerInvoker.shared.log(.openDetails(recipe))
     }
 
     func closeDetails() {
         coordinator?.closeDetails()
-    }
-
-    func getRecipe() -> Recipe {
-        recipe
     }
 }

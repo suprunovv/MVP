@@ -9,24 +9,34 @@ protocol DetailViewProtocol: AnyObject {
     func reloadData()
     /// Показать сообщение об отсутствии данных
     func showEmptyMessage()
-    /// Скрыть сообщение об отсутствии данных
-    func hideEmptyMessage()
+    /// Скрыть плашку-сообщени
+    func hideMessage()
     /// Показать вью с ошибкой
-    func showErrorMessage(error: String)
+    func showErrorMessage()
     /// Завершить pull to refresh
     func endRefresh()
+    /// Показать индикатор загрузки
+    func showLoadingShimmer()
+    /// Спрятать индикатор загрузки
+    func hideLoadingShimmer()
 }
 
 /// Вью экрана с детальным описанием рецепта
 final class DetailViewController: UIViewController {
     private enum Constants {
-        static let emptyPageTitle = "Nothing found"
-        static let emptyPageDescription = "Try entering your query differently"
+        static let emptyDataTitle = "Nothing found"
+        static let emptyDataDescription = "Try reloading the page"
+        static let errorMessageDescription = "Failed to load data"
     }
 
     // MARK: - Visual components
 
-    private let detailsTabelView = UITableView()
+    private let detailsTableView = UITableView()
+    private let detailsShimmerView: DetailsShimmerView = {
+        let shimmerView = DetailsShimmerView()
+        shimmerView.isHidden = true
+        return shimmerView
+    }()
 
     private lazy var shareButton: UIButton = {
         let button = UIButton(type: .system)
@@ -44,11 +54,7 @@ final class DetailViewController: UIViewController {
         return button
     }()
 
-    private let emptyMessageView = EmptyPageMessageView(
-        icon: .searchSquare,
-        title: Constants.emptyPageTitle,
-        description: Constants.emptyPageDescription
-    )
+    private let messageView = MessageView()
 
     private lazy var backButton = UIBarButtonItem(
         image: .arrowBack,
@@ -79,24 +85,38 @@ final class DetailViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .white
-        setTabelViewConstraints()
+        setTableViewConstraints()
         setupDetailsTabelView()
         setNavigationBar()
         setupEmptyMessageConstraints()
-        detailsTabelView.refreshControl = refreshControl
+        setupShimmerViewConstraints()
+        detailsTableView.refreshControl = refreshControl
+    }
+
+    private func setupShimmerViewConstraints() {
+        view.addSubview(detailsShimmerView)
+        NSLayoutConstraint.activate([
+            detailsShimmerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailsShimmerView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor
+            ),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(
+                equalTo: detailsShimmerView.trailingAnchor
+            ),
+            detailsShimmerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
     private func setupEmptyMessageConstraints() {
-        view.addSubview(emptyMessageView)
+        view.addSubview(messageView)
         NSLayoutConstraint.activate([
-            emptyMessageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            emptyMessageView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                constant: 20
+            messageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            messageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            messageView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor
             ),
             view.safeAreaLayoutGuide.trailingAnchor.constraint(
-                equalTo: emptyMessageView.trailingAnchor,
-                constant: 20
+                equalTo: messageView.trailingAnchor
             )
         ])
     }
@@ -108,28 +128,28 @@ final class DetailViewController: UIViewController {
         navigationItem.rightBarButtonItems = [favoriteItem, shareItem]
     }
 
-    private func setTabelViewConstraints() {
-        view.addSubview(detailsTabelView)
-        detailsTabelView.disableAutoresizingMask()
+    private func setTableViewConstraints() {
+        view.addSubview(detailsTableView)
+        detailsTableView.disableAutoresizingMask()
         NSLayoutConstraint.activate([
-            detailsTabelView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            detailsTabelView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            detailsTabelView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            detailsTabelView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            detailsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            detailsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            detailsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
     private func setupDetailsTabelView() {
-        detailsTabelView.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.reuseID)
-        detailsTabelView.register(
+        detailsTableView.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.reuseID)
+        detailsTableView.register(
             EnergyValueTableViewCell.self,
             forCellReuseIdentifier: EnergyValueTableViewCell.reuseID
         )
-        detailsTabelView.register(FullRecipeTableViewCell.self, forCellReuseIdentifier: FullRecipeTableViewCell.reuseID)
-        detailsTabelView.rowHeight = UITableView.automaticDimension
-        detailsTabelView.allowsSelection = false
-        detailsTabelView.separatorStyle = .none
-        detailsTabelView.dataSource = self
+        detailsTableView.register(FullRecipeTableViewCell.self, forCellReuseIdentifier: FullRecipeTableViewCell.reuseID)
+        detailsTableView.rowHeight = UITableView.automaticDimension
+        detailsTableView.allowsSelection = false
+        detailsTableView.separatorStyle = .none
+        detailsTableView.dataSource = self
     }
 
     @objc private func closeDetail() {
@@ -153,24 +173,46 @@ final class DetailViewController: UIViewController {
 // MARK: - DetailViewController + DetailViewProtocol
 
 extension DetailViewController: DetailViewProtocol {
+    func showLoadingShimmer() {
+        detailsShimmerView.isHidden = false
+        detailsTableView.isHidden = true
+    }
+
+    func hideLoadingShimmer() {
+        detailsShimmerView.isHidden = true
+        detailsTableView.isHidden = false
+    }
+
     func endRefresh() {
         refreshControl.endRefreshing()
     }
 
-    func showErrorMessage(error: String) {
-        print(error)
+    func showErrorMessage() {
+        messageView.updateUI(
+            icon: .boltSquare,
+            title: nil,
+            description: Constants.errorMessageDescription,
+            withReload: true
+        )
+        messageView.isHidden = false
     }
 
-    func hideEmptyMessage() {
-        emptyMessageView.isHidden = true
+    func hideMessage() {
+        messageView.isHidden = true
     }
 
     func showEmptyMessage() {
-        emptyMessageView.isHidden = false
+        messageView.updateUI(
+            icon: .searchSquare,
+            title: Constants.emptyDataTitle,
+            description: Constants.emptyDataDescription,
+            withReload: true
+        )
+        messageView.isHidden = false
     }
 
     func reloadData() {
-        detailsTabelView.reloadData()
+        detailsTableView.reloadData()
     }
 }
 
@@ -190,21 +232,21 @@ extension DetailViewController: UITableViewDataSource {
                 withIdentifier: ImageTableViewCell.reuseID,
                 for: indexPath
             ) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.configureCell(recipe: presenter?.getDetailsRecipe())
+            cell.configureCell(recipe: presenter?.recipe)
             return cell
         case .energy:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: EnergyValueTableViewCell.reuseID,
                 for: indexPath
             ) as? EnergyValueTableViewCell else { return UITableViewCell() }
-            cell.setupCell(recipe: presenter?.getDetailsRecipe())
+            cell.setupCell(recipe: presenter?.recipe)
             return cell
         case .description:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: FullRecipeTableViewCell.reuseID,
                 for: indexPath
             ) as? FullRecipeTableViewCell else { return UITableViewCell() }
-            cell.setupDescription(text: presenter?.getDetailsRecipe().details?.ingredientLines)
+            cell.setupDescription(text: presenter?.recipe?.details?.ingredientLines)
             return cell
         }
     }

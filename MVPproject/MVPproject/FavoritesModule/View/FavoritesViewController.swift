@@ -26,7 +26,7 @@ final class FavoritesViewController: UIViewController {
 
     // MARK: - Visual Components
 
-    private let emptyMessageView = EmptyPageMessageView(
+    private let emptyMessageView = MessageView(
         icon: .bookmarkSquare,
         title: Constants.emptyPageTitle,
         description: Constants.emptyPageDescription
