@@ -64,7 +64,7 @@ final class ModuleBuilder {
             coordinator: coordinator,
             networkService: networkService,
             category: category,
-            loadImgaeProxy: loadImageProxy
+            loadImageService: loadImageProxy
         )
         viewController.presenter = presenter
         return viewController

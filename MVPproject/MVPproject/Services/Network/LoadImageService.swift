@@ -2,10 +2,10 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
-import UIKit
 
 /// Протокол для сервиса загрузки изображений
 protocol LoadImageServiceProtocol {
+    /// Метод для получения Data по URL
     func loadImage(url: URL?, completion: @escaping (Data?, URLResponse?, Error?) -> ())
 }
 

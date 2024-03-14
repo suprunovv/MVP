@@ -34,7 +34,7 @@ final class CategoryPresenter {
     private let networkService: NetworkServiceProtocol
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
-    private var loadImageProxy: LoadImageServiceProtocol
+    private var loadImageService: LoadImageServiceProtocol
     private var uri: String?
 
     private let recipesPlaceholder = Array(repeating: RecipesMock.recipePlaceholder, count: 7)
@@ -74,13 +74,13 @@ final class CategoryPresenter {
         coordinator: RecipesCoordinator,
         networkService: NetworkServiceProtocol,
         category: RecipesCategory,
-        loadImgaeProxy: LoadImageServiceProtocol
+        loadImageService: LoadImageServiceProtocol
     ) {
         self.view = view
         self.coordinator = coordinator
         self.category = category
         self.networkService = networkService
-        loadImageProxy = loadImgaeProxy
+        self.loadImageService = loadImageService
         view.setScreenTitle(category.name)
         loadRecipes(byCategory: category)
     }
@@ -163,7 +163,7 @@ final class CategoryPresenter {
 
 extension CategoryPresenter: CategoryPresenterProtocol {
     func loadImage(url: URL?, completion: @escaping (Data) -> ()) {
-        loadImageProxy.loadImage(url: url) { data, _, _ in
+        loadImageService.loadImage(url: url) { data, _, _ in
             guard let data = data else {
                 return
             }
