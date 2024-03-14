@@ -9,14 +9,6 @@ protocol CategoryViewProtocol: AnyObject {
     func setScreenTitle(_ title: String)
     /// Метод обновляющий таблицу с рецептами
     func reloadRecipeTable()
-    /// Показать сообщение пустой страницы
-    func showEmptyMessage()
-    /// Показать сообщение об ошибке
-    func showErrorMessage()
-    /// Показать сообщение, что ничего не найдено
-    func showNotFoundMessage()
-    /// Скрыть плашку-сообщение
-    func hideMessage()
     /// завершение pull to refresh
     func endRefresh()
 }
@@ -37,11 +29,26 @@ final class CategoryViewController: UIViewController {
         static let errorMessageDescription = "Failed to load data"
         static let emptyPageDescription = "Start typing text"
         static let emptyMessageToViewSpacing = 20.0
+        static let mockRecipesCount = 7
+        static let noDataMessageConfig = MessageViewConfig(
+            icon: .searchSquare,
+            title: nil,
+            description: emptyPageDescription
+        )
+        static let notFoundMessageConfig = MessageViewConfig(
+            icon: .searchSquare,
+            title: notFoundTitle,
+            description: notFoundDescription
+        )
+        static let errorMessageConfig = MessageViewConfig(
+            icon: .boltSquare,
+            title: nil,
+            description: errorMessageDescription,
+            withReload: true
+        )
     }
 
     // MARK: - Visual Components
-
-    private let messageView = MessageView()
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -56,6 +63,7 @@ final class CategoryViewController: UIViewController {
         tableView.delegate = self
         tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.reuseID)
         tableView.register(RecipeShimmeredCell.self, forCellReuseIdentifier: RecipeShimmeredCell.reuseID)
+        tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: MessageTableViewCell.reuseID)
         tableView.separatorStyle = .none
         tableView.disableAutoresizingMask()
         return tableView
@@ -77,7 +85,7 @@ final class CategoryViewController: UIViewController {
         return searchBar
     }()
 
-    private lazy var sortButtonsView: UIView = SortButtonsView()
+    private lazy var sortButtonsView = SortButtonsView()
 
     private lazy var backButton = UIBarButtonItem(
         image: .arrowBack,
@@ -107,11 +115,10 @@ final class CategoryViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
-        messageView.isHidden = true
         view.backgroundColor = .white
-        view.addSubviews(tableView, searchBar, messageView, sortButtonsView)
+        view.addSubviews(tableView, searchBar, sortButtonsView)
+        sortButtonsView.delegate = self
         setupConstraints()
-        setupEmptyMessageConstraints()
         tableView.refreshControl = refreshControl
     }
 
@@ -138,21 +145,6 @@ final class CategoryViewController: UIViewController {
         ])
     }
 
-    private func setupEmptyMessageConstraints() {
-        NSLayoutConstraint.activate([
-            messageView.topAnchor.constraint(equalTo: sortButtonsView.bottomAnchor),
-            messageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            messageView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                constant: Constants.emptyMessageToViewSpacing
-            ),
-            view.safeAreaLayoutGuide.trailingAnchor.constraint(
-                equalTo: messageView.trailingAnchor,
-                constant: Constants.emptyMessageToViewSpacing
-            )
-        ])
-    }
-
     @objc private func closeCategory() {
         presenter?.closeCategory()
     }
@@ -167,38 +159,6 @@ final class CategoryViewController: UIViewController {
 extension CategoryViewController: CategoryViewProtocol {
     func endRefresh() {
         refreshControl.endRefreshing()
-    }
-
-    func showErrorMessage() {
-        messageView.updateUI(
-            icon: .boltSquare,
-            title: nil,
-            description: Constants.errorMessageDescription,
-            withReload: true
-        )
-        messageView.isHidden = false
-    }
-
-    func showNotFoundMessage() {
-        messageView.updateUI(
-            icon: .searchSquare,
-            title: Constants.notFoundTitle,
-            description: Constants.notFoundDescription
-        )
-        messageView.isHidden = false
-    }
-
-    func showEmptyMessage() {
-        messageView.updateUI(
-            icon: .searchSquare,
-            title: nil,
-            description: Constants.emptyPageDescription
-        )
-        messageView.isHidden = false
-    }
-
-    func hideMessage() {
-        messageView.isHidden = true
     }
 
     func reloadRecipeTable() {
@@ -216,7 +176,16 @@ extension CategoryViewController: CategoryViewProtocol {
 
 extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.recipes.count ?? 0
+        switch presenter?.viewState {
+        case .loading:
+            Constants.mockRecipesCount
+        case let .data(recipes):
+            recipes.count
+        case .noData, .error:
+            1
+        default:
+            0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -240,6 +209,22 @@ extension CategoryViewController: UITableViewDataSource {
             })
             cell.configure(withRecipe: recipe)
             return cell
+        case .noData:
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
+            else { return .init() }
+            if let search = searchBar.text, !search.isEmpty {
+                cell.configureCell(messageViewConfig: Constants.notFoundMessageConfig)
+            } else {
+                cell.configureCell(messageViewConfig: Constants.noDataMessageConfig)
+            }
+            return cell
+        case .error:
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
+            else { return .init() }
+            cell.configureCell(messageViewConfig: Constants.errorMessageConfig)
+            return cell
         default:
             return .init()
         }
@@ -249,6 +234,17 @@ extension CategoryViewController: UITableViewDataSource {
 // MARK: - CategoryViewController + UITableViewDelegate
 
 extension CategoryViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch presenter?.viewState {
+        case .noData, .error:
+            tableView.bounds.height
+        case .loading, .data:
+            UITableView.automaticDimension
+        default:
+            0
+        }
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let recipe = presenter?.recipes[indexPath.row] else { return }
         presenter?.showRecipeDetails(recipe: recipe)

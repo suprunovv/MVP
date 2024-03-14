@@ -88,10 +88,10 @@ final class MessageView: UIView {
         setupView()
     }
 
-    init(icon: UIImage?, title: String? = nil, description: String, withReload: Bool = false) {
+    init(config: MessageViewConfig) {
         super.init(frame: .zero)
         setupView()
-        configureUI(icon: icon, title: title, description: description, withReload: withReload)
+        configureUI(config: config)
     }
 
     required init?(coder: NSCoder) {
@@ -101,8 +101,8 @@ final class MessageView: UIView {
 
     // MARK: - Public Methods
 
-    func updateUI(icon: UIImage?, title: String? = nil, description: String, withReload: Bool = false) {
-        configureUI(icon: icon, title: title, description: description, withReload: withReload)
+    func updateUI(config: MessageViewConfig) {
+        configureUI(config: config)
     }
 
     // MARK: - Private Methods
@@ -132,12 +132,12 @@ final class MessageView: UIView {
         ])
     }
 
-    private func configureUI(icon: UIImage?, title: String? = nil, description: String, withReload: Bool = false) {
-        iconImageView.image = icon
-        descriptionLabel.text = description
-        titleLabel.text = title
-        titleLabel.isHidden = title == nil
-        reloadButton.isHidden = !withReload
+    private func configureUI(config: MessageViewConfig) {
+        iconImageView.image = config.icon
+        descriptionLabel.text = config.description
+        titleLabel.text = config.title
+        titleLabel.isHidden = config.title == nil
+        reloadButton.isHidden = !config.withReload
     }
 
     @objc private func reloadButtonTapped() {

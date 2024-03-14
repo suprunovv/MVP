@@ -26,11 +26,11 @@ final class FavoritesViewController: UIViewController {
 
     // MARK: - Visual Components
 
-    private let emptyMessageView = MessageView(
+    private let emptyMessageView = MessageView(config: MessageViewConfig(
         icon: .bookmarkSquare,
         title: Constants.emptyPageTitle,
         description: Constants.emptyPageDescription
-    )
+    ))
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
