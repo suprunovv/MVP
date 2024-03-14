@@ -29,6 +29,7 @@ final class CategoryViewController: UIViewController {
         static let errorMessageDescription = "Failed to load data"
         static let emptyPageDescription = "Start typing text"
         static let emptyMessageToViewSpacing = 20.0
+        static let mockRecipesCount = 7
         static let noDataMessageConfig = MessageViewConfig(
             icon: .searchSquare,
             title: nil,
@@ -177,7 +178,7 @@ extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch presenter?.viewState {
         case .loading:
-            7
+            Constants.mockRecipesCount
         case let .data(recipes):
             recipes.count
         case .noData, .error:
