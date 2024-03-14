@@ -58,7 +58,7 @@ final class DetailPresenter {
     ) {
         self.view = view
         self.coordinator = coordinator
-        uri = "http://www.edamam.com/ontologies/edamam.owl#recipe_833ee491056c9684f7eea9cb3f92ae72"
+        uri = recipe.uri
         self.networkService = networkService
     }
 
