@@ -96,7 +96,7 @@ class RecipeCell: UITableViewCell {
         stack.disableAutoresizingMask()
         return stack
     }()
-    
+
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

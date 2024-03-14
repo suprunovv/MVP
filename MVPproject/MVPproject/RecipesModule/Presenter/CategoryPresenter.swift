@@ -156,7 +156,9 @@ extension CategoryPresenter: CategoryPresenterProtocol {
             guard let data = data else {
                 return
             }
-            completion(data)
+            DispatchQueue.main.async {
+                completion(data)
+            }
         }
     }
 
