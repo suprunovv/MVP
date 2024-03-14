@@ -19,6 +19,8 @@ protocol DetailPresenterProtocol: AnyObject {
     func getDetailsRecipe() -> Recipe
     /// Вью стейт
     var viewState: ViewState<Recipe> { get }
+    /// Перезагрузка данных из сети
+    func reloadData()
 }
 
 /// Перечисление возможных типов ячеек
@@ -40,6 +42,7 @@ final class DetailPresenter {
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
     private var recipe: Recipe
+    private var uri: String?
     private(set) var viewState: ViewState<Recipe> = .loading {
         didSet {
             updateDetailView()
@@ -57,6 +60,7 @@ final class DetailPresenter {
         self.view = view
         self.coordinator = coordinator
         self.recipe = recipe
+        uri = recipe.uri
         self.networkService = networkService
         getDetails()
     }
@@ -65,7 +69,7 @@ final class DetailPresenter {
 
     private func getDetails() {
         viewState = .loading
-        guard let uri = recipe.uri else { return }
+        guard let uri = uri else { return }
         networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
             switch result {
             case let .success(data):
@@ -89,6 +93,7 @@ final class DetailPresenter {
         case let .data(recipe):
             self.recipe = recipe
             view?.reloadData()
+            view?.endRefresh()
         case .noData:
             view?.showEmptyMessage()
         case let .error(error):
@@ -100,6 +105,10 @@ final class DetailPresenter {
 // MARK: - DetailPresenter + DetailPresenterProtocol
 
 extension DetailPresenter: DetailPresenterProtocol {
+    func reloadData() {
+        getDetails()
+    }
+
     func getDetailsRecipe() -> Recipe {
         recipe
     }
