@@ -96,10 +96,7 @@ class RecipeCell: UITableViewCell {
         stack.disableAutoresizingMask()
         return stack
     }()
-
-    private let loadImageService = LoadImageService()
-    private lazy var proxyLoader = LoadImageProxy(service: self.loadImageService)
-
+    
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
