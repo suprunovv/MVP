@@ -8,7 +8,7 @@ protocol NetworkServiceProtocol {
     /// Запрос рецептов по категории
     func getRecipesByCategory(
         _ categoryRequestDTO: CategoryRequestDTO,
-        completion: @escaping (Result<[Recipe], Error>) -> ()
+        completion: @escaping (Result<[Recipe], NetworkError>) -> ()
     )
     /// Запрос деталей рецепта
     func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<Recipe, NetworkError>) -> Void)
@@ -29,7 +29,7 @@ final class NetworkService: NetworkServiceProtocol {
 
     func getRecipesByCategory(
         _ categoryRequestDTO: CategoryRequestDTO,
-        completion: @escaping (Result<[Recipe], Error>) -> ()
+        completion: @escaping (Result<[Recipe], NetworkError>) -> ()
     ) {
         var queryItems = [URLQueryItem(name: QueryParameters.dishType, value: categoryRequestDTO.dishTypeValue)]
         if let healthValue = categoryRequestDTO.healthValue {
@@ -44,13 +44,18 @@ final class NetworkService: NetworkServiceProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case let .failure(error):
-                    return completion(.failure(error))
+                    return completion(.failure(.network(error.localizedDescription)))
                 case let .success(data):
                     do {
                         let recipesDto = try self.decoder.decode(RecipesResponseDTO.self, from: data)
-                        completion(.success(recipesDto.hits.compactMap { Recipe(dto: $0.recipe) }))
+                        let recipes = recipesDto.hits.compactMap { Recipe(dto: $0.recipe) }
+                        if recipes.isEmpty {
+                            completion(.failure(.emptyData))
+                        } else {
+                            completion(.success(recipes))
+                        }
                     } catch {
-                        completion(.failure(NetworkError.parsing))
+                        completion(.failure(.parsing))
                     }
                 }
             }
