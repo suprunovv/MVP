@@ -1,16 +1,16 @@
-// EmptyPageMessageView.swift
+// MessageView.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
-/// Протокол делегата пустой страницы
-protocol EmptyMessageViewDelegate: AnyObject {
+/// Протокол делегата сообщения
+protocol MessageViewDelegate: AnyObject {
     /// Метод перезагрузки
     func reload()
 }
 
-/// Сообщение о том, что страница пуста
-final class EmptyPageMessageView: UIStackView {
+/// Плашка-сообщение
+final class MessageView: UIView {
     // MARK: - Constants
 
     private enum Constants {
@@ -68,11 +68,25 @@ final class EmptyPageMessageView: UIStackView {
         return button
     }()
 
+    private let messageStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.disableAutoresizingMask()
+        stack.axis = .vertical
+        stack.spacing = Constants.stackSpacing
+        stack.alignment = .center
+        return stack
+    }()
+
     // MARK: - Public Properties
 
-    weak var delegate: EmptyMessageViewDelegate?
+    weak var delegate: MessageViewDelegate?
 
     // MARK: - Initializers
+
+    init() {
+        super.init(frame: .zero)
+        setupView()
+    }
 
     init(icon: UIImage?, title: String? = nil, description: String, withReload: Bool = false) {
         super.init(frame: .zero)
@@ -80,7 +94,7 @@ final class EmptyPageMessageView: UIStackView {
         configureUI(icon: icon, title: title, description: description, withReload: withReload)
     }
 
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
     }
@@ -94,15 +108,28 @@ final class EmptyPageMessageView: UIStackView {
     // MARK: - Private Methods
 
     private func setupView() {
+        backgroundColor = .white
         disableAutoresizingMask()
-        addArrangedSubview(iconImageView)
-        addArrangedSubview(titleLabel)
-        addArrangedSubview(descriptionLabel)
+        addSubview(messageStackView)
+        messageStackView.addArrangedSubview(iconImageView)
+        messageStackView.addArrangedSubview(titleLabel)
+        messageStackView.addArrangedSubview(descriptionLabel)
+        messageStackView.addArrangedSubview(reloadButton)
+        setupConstraints()
+    }
 
-        addArrangedSubview(reloadButton)
-        axis = .vertical
-        spacing = Constants.stackSpacing
-        alignment = .center
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            messageStackView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
+            messageStackView.leadingAnchor.constraint(
+                equalTo: safeAreaLayoutGuide.leadingAnchor,
+                constant: 20
+            ),
+            safeAreaLayoutGuide.trailingAnchor.constraint(
+                equalTo: messageStackView.trailingAnchor,
+                constant: 20
+            )
+        ])
     }
 
     private func configureUI(icon: UIImage?, title: String? = nil, description: String, withReload: Bool = false) {
