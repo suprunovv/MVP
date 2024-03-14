@@ -13,6 +13,8 @@ protocol DetailViewProtocol: AnyObject {
 
 /// Вью экрана с детальным описанием рецепта
 final class DetailViewController: UIViewController {
+    // MARK: - Constants
+
     private enum Constants {
         static let emptyDataTitle = "Nothing found"
         static let emptyDataDescription = "Try reloading the page"
@@ -83,24 +85,9 @@ final class DetailViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = .white
         setTableViewConstraints()
-        setupDetailsTabelView()
+        setupDetailsTableView()
         setNavigationBar()
-//        setupEmptyMessageConstraints()
         detailsTableView.refreshControl = refreshControl
-    }
-
-    private func setupEmptyMessageConstraints() {
-        view.addSubview(messageView)
-        NSLayoutConstraint.activate([
-            messageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            messageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            messageView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor
-            ),
-            view.safeAreaLayoutGuide.trailingAnchor.constraint(
-                equalTo: messageView.trailingAnchor
-            )
-        ])
     }
 
     private func setNavigationBar() {
@@ -121,7 +108,7 @@ final class DetailViewController: UIViewController {
         ])
     }
 
-    private func setupDetailsTabelView() {
+    private func setupDetailsTableView() {
         detailsTableView.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.reuseID)
         detailsTableView.register(
             EnergyValueTableViewCell.self,
