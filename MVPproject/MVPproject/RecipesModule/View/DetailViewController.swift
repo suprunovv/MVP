@@ -163,11 +163,11 @@ extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch presenter?.viewState {
         case .loading, .noData, .error:
-            1
+            return 1
         case .data:
-            presenter?.cellTypes.count ?? 0
+            return presenter?.cellTypes.count ?? 0
         default:
-            0
+            return 0
         }
     }
 
@@ -208,6 +208,9 @@ extension DetailViewController: UITableViewDataSource {
                 withIdentifier: ImageTableViewCell.reuseID,
                 for: indexPath
             ) as? ImageTableViewCell else { return .init() }
+            presenter?.loadImage(url: recipe.imageURL, completion: { data in
+                cell.setImage(data)
+            })
             cell.configureCell(recipe: recipe)
             return cell
         case .energy:
@@ -234,11 +237,11 @@ extension DetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch presenter?.viewState {
         case .loading, .noData, .error:
-            tableView.bounds.height
+            return tableView.bounds.height
         case .data:
-            UITableView.automaticDimension
+            return UITableView.automaticDimension
         default:
-            0
+            return 0
         }
     }
 }

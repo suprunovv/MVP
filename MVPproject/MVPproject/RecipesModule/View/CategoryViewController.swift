@@ -178,13 +178,13 @@ extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch presenter?.viewState {
         case .loading:
-            Constants.mockRecipesCount
+            return Constants.mockRecipesCount
         case let .data(recipes):
-            recipes.count
+            return recipes.count
         case .noData, .error:
-            1
+            return 1
         default:
-            0
+            return 0
         }
     }
 
@@ -237,11 +237,11 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch presenter?.viewState {
         case .noData, .error:
-            tableView.bounds.height
+            return tableView.bounds.height
         case .loading, .data:
-            UITableView.automaticDimension
+            return UITableView.automaticDimension
         default:
-            0
+            return 0
         }
     }
 
