@@ -7,12 +7,6 @@ import UIKit
 protocol DetailViewProtocol: AnyObject {
     /// Перезагрузка таблицы
     func reloadData()
-    /// Показать сообщение об отсутствии данных
-    func showEmptyMessage()
-    /// Скрыть плашку-сообщени
-    func hideMessage()
-    /// Показать вью с ошибкой
-    func showErrorMessage()
     /// Завершить pull to refresh
     func endRefresh()
 }
@@ -23,6 +17,18 @@ final class DetailViewController: UIViewController {
         static let emptyDataTitle = "Nothing found"
         static let emptyDataDescription = "Try reloading the page"
         static let errorMessageDescription = "Failed to load data"
+        static let noDataMessageConfig = MessageViewConfig(
+            icon: .searchSquare,
+            title: emptyDataTitle,
+            description: emptyDataDescription,
+            withReload: true
+        )
+        static let errorMessageConfig = MessageViewConfig(
+            icon: .boltSquare,
+            title: nil,
+            description: errorMessageDescription,
+            withReload: true
+        )
     }
 
     // MARK: - Visual components
@@ -126,6 +132,7 @@ final class DetailViewController: UIViewController {
             DetailsShimmerTableViewCell.self,
             forCellReuseIdentifier: DetailsShimmerTableViewCell.reuseID
         )
+        detailsTableView.register(MessageTableViewCell.self, forCellReuseIdentifier: MessageTableViewCell.reuseID)
         detailsTableView.rowHeight = UITableView.automaticDimension
         detailsTableView.allowsSelection = false
         detailsTableView.separatorStyle = .none
@@ -156,30 +163,6 @@ final class DetailViewController: UIViewController {
 extension DetailViewController: DetailViewProtocol {
     func endRefresh() {
         refreshControl.endRefreshing()
-    }
-
-    func showErrorMessage() {
-        messageView.updateUI(
-            icon: .boltSquare,
-            title: nil,
-            description: Constants.errorMessageDescription,
-            withReload: true
-        )
-        messageView.isHidden = false
-    }
-
-    func hideMessage() {
-        messageView.isHidden = true
-    }
-
-    func showEmptyMessage() {
-        messageView.updateUI(
-            icon: .searchSquare,
-            title: Constants.emptyDataTitle,
-            description: Constants.emptyDataDescription,
-            withReload: true
-        )
-        messageView.isHidden = false
     }
 
     func reloadData() {
@@ -213,11 +196,17 @@ extension DetailViewController: UITableViewDataSource {
         case let .data(recipe):
             return dequeDataCell(tableView, indexPath: indexPath, recipe: recipe)
         case .noData:
-            // deque messageCell, setMessage
-            return .init()
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
+            else { return .init() }
+            cell.configureCell(messageViewConfig: Constants.noDataMessageConfig)
+            return cell
         case .error:
-            // deque messageCell, setMessage
-            return .init()
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
+            else { return .init() }
+            cell.configureCell(messageViewConfig: Constants.errorMessageConfig)
+            return cell
         default:
             return .init()
         }
@@ -258,7 +247,7 @@ extension DetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch presenter?.viewState {
         case .loading, .noData, .error:
-            view.bounds.height
+            tableView.bounds.height
         case .data:
             UITableView.automaticDimension
         default:

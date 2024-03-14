@@ -58,16 +58,15 @@ final class DetailPresenter {
     ) {
         self.view = view
         self.coordinator = coordinator
-        uri = recipe.uri
+        uri = "http://www.edamam.com/ontologies/edamam.owl#recipe_833ee491056c9684f7eea9cb3f92ae72"
         self.networkService = networkService
-        getDetails()
     }
 
     // MARK: - Private methods
 
     private func getDetails() {
+        guard let uri = uri, !uri.isEmpty else { return }
         viewState = .loading
-        guard let uri = uri else { return }
         networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
             switch result {
             case let .success(data):
@@ -77,27 +76,20 @@ final class DetailPresenter {
             case let .failure(error):
                 self?.viewState = .error(error)
             }
-            self?.view?.reloadData()
         })
     }
 
     private func updateDetailView() {
-        view?.hideMessage()
-        view?.hideLoadingShimmer()
         switch viewState {
-        case .loading:
-            view?.showLoadingShimmer()
         case let .data(recipe):
             self.recipe = recipe
-            view?.reloadData()
             view?.endRefresh()
-        case .noData:
-            view?.showEmptyMessage()
+        case .error, .noData:
             view?.endRefresh()
-        case .error:
-            view?.showErrorMessage()
-            view?.endRefresh()
+        default:
+            break
         }
+        view?.reloadData()
     }
 }
 
@@ -119,6 +111,7 @@ extension DetailPresenter: DetailPresenterProtocol {
     }
 
     func screenLoaded() {
+        getDetails()
         guard let recipe = recipe else { return }
         TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Recipe details")))
         TxtFileLoggerInvoker.shared.log(.openDetails(recipe))
