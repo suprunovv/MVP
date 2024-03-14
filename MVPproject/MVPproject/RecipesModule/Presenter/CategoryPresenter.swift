@@ -33,7 +33,6 @@ final class CategoryPresenter {
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
 
-    private let recipesPlaceholder = Array(repeating: RecipesMock.recipePlaceholder, count: 7)
     private var timeSortingState = SortingButton.SortState.unsorted {
         didSet {
             sortRecipes(by: timeSortingState, caloriesSortState: caloriesSortingState)
@@ -111,26 +110,16 @@ final class CategoryPresenter {
     }
 
     private func updateRecipesView() {
-        view?.hideMessage()
         switch viewState {
-        case .loading:
-            recipes = recipesPlaceholder
-            view?.reloadRecipeTable()
         case let .data(recipes):
             self.recipes = recipes
-            view?.reloadRecipeTable()
             view?.endRefresh()
-        case .noData:
-            if searchTerm.isEmpty {
-                view?.showEmptyMessage()
-            } else {
-                view?.showNotFoundMessage()
-            }
+        case .noData, .error:
             view?.endRefresh()
-        case .error:
-            view?.showErrorMessage()
-            view?.endRefresh()
+        default:
+            break
         }
+        view?.reloadRecipeTable()
     }
 
     private func sortRecipes(by timeSortState: SortingButton.SortState, caloriesSortState: SortingButton.SortState) {
