@@ -101,10 +101,13 @@ final class ImageTableViewCell: UITableViewCell {
 
     func configureCell(recipe: Recipe?) {
         guard let recipe = recipe else { return }
-        titleImageView.loadFromURL(recipe.imageURL)
         cookingTimeLabel.text = "\(Constants.cookingTime)\n \(recipe.cookingTime) \(Constants.min)"
         portionSizeLabel.text = "\(recipe.details?.weight ?? 0) \(Constants.gram)"
         titleLabel.text = recipe.name
+    }
+
+    func setImage(_ imageData: Data) {
+        titleImageView.image = UIImage(data: imageData)
     }
 
     // MARK: - Private methods

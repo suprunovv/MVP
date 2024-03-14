@@ -1,6 +1,8 @@
 // DetailPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Foundation
+
 /// Протокол для презентера детального экрана
 protocol DetailPresenterProtocol: AnyObject {
     /// Mассив типов ячеек
@@ -19,6 +21,8 @@ protocol DetailPresenterProtocol: AnyObject {
     var viewState: ViewState<Recipe> { get }
     /// Перезагрузка данных из сети
     func reloadData()
+    /// Получение изобраения
+    func loadImage(url: URL?, completion: @escaping (Data) -> ())
 }
 
 /// Перечисление возможных типов ячеек
@@ -47,6 +51,7 @@ final class DetailPresenter {
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
     private var uri: String?
+    private var loadImageService: LoadImageServiceProtocol
 
     // MARK: - Initializators
 
@@ -54,12 +59,14 @@ final class DetailPresenter {
         view: DetailViewProtocol,
         coordinator: RecipeWithDetailsCoordinatorProtocol,
         networkService: NetworkServiceProtocol,
-        recipe: Recipe
+        recipe: Recipe,
+        loadImageService: LoadImageServiceProtocol
     ) {
         self.view = view
         self.coordinator = coordinator
         uri = recipe.uri
         self.networkService = networkService
+        self.loadImageService = loadImageService
     }
 
     // MARK: - Private methods
@@ -96,6 +103,17 @@ final class DetailPresenter {
 // MARK: - DetailPresenter + DetailPresenterProtocol
 
 extension DetailPresenter: DetailPresenterProtocol {
+    func loadImage(url: URL?, completion: @escaping (Data) -> ()) {
+        loadImageService.loadImage(url: url) { data, _, _ in
+            guard let data = data else {
+                return
+            }
+            DispatchQueue.main.async {
+                completion(data)
+            }
+        }
+    }
+
     func reloadData() {
         getDetails()
     }
