@@ -11,7 +11,7 @@ protocol NetworkServiceProtocol {
         completion: @escaping (Result<[Recipe], Error>) -> ()
     )
     /// Запрос деталей рецепта
-    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<Recipe, Error>) -> Void)
+    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<Recipe, NetworkError>) -> Void)
 }
 
 /// Сервис запроса данных из сети
@@ -57,7 +57,7 @@ final class NetworkService: NetworkServiceProtocol {
         }
     }
 
-    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<Recipe, Error>) -> Void) {
+    func getRecipesDetailsByURI(_ uri: String, completion: @escaping (Result<Recipe, NetworkError>) -> Void) {
         let uriItem = URLQueryItem(name: QueryParameters.uri, value: uri)
         let endpoint = RecipelyEndpoint(path: QueryParameters.deatailsURIPath, queryItems: [uriItem])
         makeRequest(endpoint) { result in
@@ -71,29 +71,38 @@ final class NetworkService: NetworkServiceProtocol {
                         guard let recipeDetailsDto = detailsDto.hits.first?.recipe,
                               let recipe = Recipe(dto: recipeDetailsDto)
                         else {
-                            return completion(.failure(NetworkError.emptyData))
+                            return completion(.failure(.emptyData))
                         }
                         return completion(.success(recipe))
                     } catch {
-                        return completion(.failure(error))
+                        return completion(.failure(.network(error.localizedDescription)))
                     }
                 }
             }
         }
     }
 
-    private func makeRequest(_ endpoint: Endpoint, then handler: @escaping (Result<Data, Error>) -> Void) {
+    private func makeRequest(_ endpoint: Endpoint, then handler: @escaping (Result<Data, NetworkError>) -> Void) {
         guard let url = endpoint.url else {
-            return handler(.failure(NetworkError.invalidURL))
+            return handler(.failure(.invalidURL))
         }
 
-        let task = session.dataTask(with: url) { data, _, error in
+        let task = session.dataTask(with: url) { [weak self] data, response, error in
             if let error = error {
-                return handler(.failure(NetworkError.network(error)))
+                return handler(.failure(.network(error.localizedDescription)))
             }
             guard let data = data else {
-                return handler(.failure(NetworkError.emptyData))
+                return handler(.failure(.emptyData))
             }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                do {
+                    let errorMessage = try self?.decoder.decode([ErrorDTO].self, from: data).first?.message
+                    return handler(.failure(.network(errorMessage)))
+                } catch {
+                    return handler(.failure(.network(nil)))
+                }
+            }
+
             handler(.success(data))
         }
 

@@ -8,7 +8,7 @@ enum NetworkError: Error {
     /// Невалидный URL
     case invalidURL
     /// Ошибки выполнения запроса
-    case network(Error)
+    case network(String?)
     /// Пустая дата
     case emptyData
     /// Ошибки парсинга
