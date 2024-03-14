@@ -24,6 +24,7 @@
 		52990D7C2B9D19D5004A2A87 /* FavoriteResipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D7B2B9D19D5004A2A87 /* FavoriteResipes.swift */; };
 		52990DA22BA132DC004A2A87 /* ReecipeDetailsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DA12BA132DB004A2A87 /* ReecipeDetailsResponseDTO.swift */; };
 		52990DA62BA214E8004A2A87 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DA52BA214E8004A2A87 /* ViewState.swift */; };
+		52990DA82BA356A7004A2A87 /* LoadImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DA72BA356A7004A2A87 /* LoadImageService.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -113,6 +114,7 @@
 		52990D7B2B9D19D5004A2A87 /* FavoriteResipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteResipes.swift; path = MVPproject/AppModule/Model/FavoriteResipes.swift; sourceTree = SOURCE_ROOT; };
 		52990DA12BA132DB004A2A87 /* ReecipeDetailsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReecipeDetailsResponseDTO.swift; sourceTree = "<group>"; };
 		52990DA52BA214E8004A2A87 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		52990DA72BA356A7004A2A87 /* LoadImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageService.swift; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -539,6 +541,7 @@
 				DA3891912BA0E014002FBC08 /* NetworkService.swift */,
 				DA38919B2BA0F90D002FBC08 /* Endpoint.swift */,
 				DA38919D2BA0F9BE002FBC08 /* NetworkError.swift */,
+				52990DA72BA356A7004A2A87 /* LoadImageService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */,
 				DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
+				52990DA82BA356A7004A2A87 /* LoadImageService.swift in Sources */,
 				DA38919E2BA0F9BE002FBC08 /* NetworkError.swift in Sources */,
 				DAAED4D92B9A25C000FD8DCB /* Logger.swift in Sources */,
 				DA3891A02BA1021B002FBC08 /* RecipesMock.swift in Sources */,

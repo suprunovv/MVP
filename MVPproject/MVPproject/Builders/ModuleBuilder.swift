@@ -57,11 +57,14 @@ final class ModuleBuilder {
     static func makeCategoryModule(coordinator: RecipesCoordinator, category: RecipesCategory) -> UIViewController {
         let viewController = CategoryViewController()
         let networkService = NetworkService()
+        let loadImageService = LoadImageService()
+        let loadImageProxy = LoadImageProxy(service: loadImageService)
         let presenter = CategoryPresenter(
             view: viewController,
             coordinator: coordinator,
             networkService: networkService,
-            category: category
+            category: category,
+            loadImageService: loadImageProxy
         )
         viewController.presenter = presenter
         return viewController
