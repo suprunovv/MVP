@@ -187,12 +187,14 @@ extension DetailViewController: UITableViewDataSource {
                 .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
             else { return .init() }
             cell.configureCell(messageViewConfig: Constants.noDataMessageConfig)
+            cell.delegate = self
             return cell
         case .error:
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
             else { return .init() }
             cell.configureCell(messageViewConfig: Constants.errorMessageConfig)
+            cell.delegate = self
             return cell
         default:
             return .init()
@@ -243,5 +245,13 @@ extension DetailViewController: UITableViewDelegate {
         default:
             return 0
         }
+    }
+}
+
+// MARK: - DetailViewController + MessageViewDelegate
+
+extension DetailViewController: MessageViewDelegate {
+    func reload() {
+        presenter?.reloadData()
     }
 }

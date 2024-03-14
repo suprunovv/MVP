@@ -13,6 +13,14 @@ final class MessageTableViewCell: UITableViewCell {
 
     private let messageView = MessageView()
 
+    // MARK: - Public Properties
+
+    weak var delegate: MessageViewDelegate? {
+        didSet {
+            messageView.delegate = delegate
+        }
+    }
+
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

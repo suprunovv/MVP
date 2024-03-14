@@ -218,12 +218,14 @@ extension CategoryViewController: UITableViewDataSource {
             } else {
                 cell.configureCell(messageViewConfig: Constants.noDataMessageConfig)
             }
+            cell.delegate = self
             return cell
         case .error:
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
             else { return .init() }
             cell.configureCell(messageViewConfig: Constants.errorMessageConfig)
+            cell.delegate = self
             return cell
         default:
             return .init()
@@ -272,5 +274,13 @@ extension CategoryViewController: SortButtonViewDelegate {
 extension CategoryViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         presenter?.updateSearchTerm(searchText)
+    }
+}
+
+// MARK: - CategoryViewController + MessageViewDelegate
+
+extension CategoryViewController: MessageViewDelegate {
+    func reload() {
+        presenter?.reloadData()
     }
 }
