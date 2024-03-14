@@ -203,6 +203,9 @@ extension CategoryViewController: UITableViewDataSource {
             else { return .init() }
             tableView.isScrollEnabled = true
             tableView.allowsSelection = true
+            presenter?.loadImage(url: recipe.imageURL, completion: { imageData in
+                cell.setImage(imageData)
+            })
             cell.configure(withRecipe: recipe)
             return cell
         case .noData:

@@ -23,6 +23,8 @@ protocol CategoryPresenterProtocol: AnyObject {
     func screenLoaded()
     /// Перезагрузка данных из сети
     func reloadData()
+    /// Загрузка изображений
+    func loadImage(url: URL?, completion: @escaping (Data) -> ())
 }
 
 /// Презентер экрана категории
@@ -32,6 +34,8 @@ final class CategoryPresenter {
     private let networkService: NetworkServiceProtocol
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
+    private var loadImageService: LoadImageServiceProtocol
+    private var uri: String?
 
     private var timeSortingState = SortingButton.SortState.unsorted {
         didSet {
@@ -68,12 +72,14 @@ final class CategoryPresenter {
         view: CategoryViewProtocol,
         coordinator: RecipesCoordinator,
         networkService: NetworkServiceProtocol,
-        category: RecipesCategory
+        category: RecipesCategory,
+        loadImageService: LoadImageServiceProtocol
     ) {
         self.view = view
         self.coordinator = coordinator
         self.category = category
         self.networkService = networkService
+        self.loadImageService = loadImageService
         view.setScreenTitle(category.name)
         loadRecipes(byCategory: category)
     }
@@ -145,6 +151,15 @@ final class CategoryPresenter {
 // MARK: - CategoryPresenter + CategoryPresenterProtocol
 
 extension CategoryPresenter: CategoryPresenterProtocol {
+    func loadImage(url: URL?, completion: @escaping (Data) -> ()) {
+        loadImageService.loadImage(url: url) { data, _, _ in
+            guard let data = data else {
+                return
+            }
+            completion(data)
+        }
+    }
+
     func reloadData() {
         loadRecipes(byCategory: category)
     }
