@@ -15,10 +15,6 @@ protocol DetailViewProtocol: AnyObject {
     func showErrorMessage()
     /// Завершить pull to refresh
     func endRefresh()
-    /// Показать индикатор загрузки
-    func showLoadingShimmer()
-    /// Спрятать индикатор загрузки
-    func hideLoadingShimmer()
 }
 
 /// Вью экрана с детальным описанием рецепта
@@ -32,11 +28,6 @@ final class DetailViewController: UIViewController {
     // MARK: - Visual components
 
     private let detailsTableView = UITableView()
-    private let detailsShimmerView: DetailsShimmerView = {
-        let shimmerView = DetailsShimmerView()
-        shimmerView.isHidden = true
-        return shimmerView
-    }()
 
     private lazy var shareButton: UIButton = {
         let button = UIButton(type: .system)
@@ -88,23 +79,8 @@ final class DetailViewController: UIViewController {
         setTableViewConstraints()
         setupDetailsTabelView()
         setNavigationBar()
-        setupEmptyMessageConstraints()
-        setupShimmerViewConstraints()
+//        setupEmptyMessageConstraints()
         detailsTableView.refreshControl = refreshControl
-    }
-
-    private func setupShimmerViewConstraints() {
-        view.addSubview(detailsShimmerView)
-        NSLayoutConstraint.activate([
-            detailsShimmerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            detailsShimmerView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor
-            ),
-            view.safeAreaLayoutGuide.trailingAnchor.constraint(
-                equalTo: detailsShimmerView.trailingAnchor
-            ),
-            detailsShimmerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
     }
 
     private func setupEmptyMessageConstraints() {
@@ -146,10 +122,15 @@ final class DetailViewController: UIViewController {
             forCellReuseIdentifier: EnergyValueTableViewCell.reuseID
         )
         detailsTableView.register(FullRecipeTableViewCell.self, forCellReuseIdentifier: FullRecipeTableViewCell.reuseID)
+        detailsTableView.register(
+            DetailsShimmerTableViewCell.self,
+            forCellReuseIdentifier: DetailsShimmerTableViewCell.reuseID
+        )
         detailsTableView.rowHeight = UITableView.automaticDimension
         detailsTableView.allowsSelection = false
         detailsTableView.separatorStyle = .none
         detailsTableView.dataSource = self
+        detailsTableView.delegate = self
     }
 
     @objc private func closeDetail() {
@@ -173,16 +154,6 @@ final class DetailViewController: UIViewController {
 // MARK: - DetailViewController + DetailViewProtocol
 
 extension DetailViewController: DetailViewProtocol {
-    func showLoadingShimmer() {
-        detailsShimmerView.isHidden = false
-        detailsTableView.isHidden = true
-    }
-
-    func hideLoadingShimmer() {
-        detailsShimmerView.isHidden = true
-        detailsTableView.isHidden = false
-    }
-
     func endRefresh() {
         refreshControl.endRefreshing()
     }
@@ -220,34 +191,78 @@ extension DetailViewController: DetailViewProtocol {
 
 extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.cellTypes.count ?? 0
+        switch presenter?.viewState {
+        case .loading, .noData, .error:
+            1
+        case .data:
+            presenter?.cellTypes.count ?? 0
+        default:
+            0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch presenter?.viewState {
+        case .loading:
+            guard let cell = tableView
+                .dequeueReusableCell(
+                    withIdentifier: DetailsShimmerTableViewCell
+                        .reuseID
+                ) as? DetailsShimmerTableViewCell else { return .init() }
+            return cell
+        case let .data(recipe):
+            return dequeDataCell(tableView, indexPath: indexPath, recipe: recipe)
+        case .noData:
+            // deque messageCell, setMessage
+            return .init()
+        case .error:
+            // deque messageCell, setMessage
+            return .init()
+        default:
+            return .init()
+        }
+    }
+
+    private func dequeDataCell(_ tableView: UITableView, indexPath: IndexPath, recipe: Recipe) -> UITableViewCell {
         let cells = presenter?.cellTypes
-        guard let cells = cells else { return UITableViewCell() }
+        guard let cells = cells else { return .init() }
         switch cells[indexPath.row] {
         case .image:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: ImageTableViewCell.reuseID,
                 for: indexPath
-            ) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.configureCell(recipe: presenter?.recipe)
+            ) as? ImageTableViewCell else { return .init() }
+            cell.configureCell(recipe: recipe)
             return cell
         case .energy:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: EnergyValueTableViewCell.reuseID,
                 for: indexPath
-            ) as? EnergyValueTableViewCell else { return UITableViewCell() }
-            cell.setupCell(recipe: presenter?.recipe)
+            ) as? EnergyValueTableViewCell else { return .init() }
+            cell.setupCell(recipe: recipe)
             return cell
         case .description:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: FullRecipeTableViewCell.reuseID,
                 for: indexPath
             ) as? FullRecipeTableViewCell else { return UITableViewCell() }
-            cell.setupDescription(text: presenter?.recipe?.details?.ingredientLines)
+            cell.setupDescription(text: recipe.details?.ingredientLines)
             return cell
+        }
+    }
+}
+
+// MARK: - DetailViewController + UITableViewDelegate
+
+extension DetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch presenter?.viewState {
+        case .loading, .noData, .error:
+            view.bounds.height
+        case .data:
+            UITableView.automaticDimension
+        default:
+            0
         }
     }
 }

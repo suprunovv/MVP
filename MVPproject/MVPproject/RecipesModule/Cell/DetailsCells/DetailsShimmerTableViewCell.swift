@@ -1,10 +1,10 @@
-// DetailsShimmerView.swift
+// DetailsShimmerTableViewCell.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
-/// Вью заглушка для индикатора загрузки деталей рецепта
-final class DetailsShimmerView: UIView {
+/// Ячейка заглушка для индикатора загрузки деталей рецепта
+final class DetailsShimmerTableViewCell: UITableViewCell {
     // MARK: - Constants
 
     private enum Constants {
@@ -18,6 +18,8 @@ final class DetailsShimmerView: UIView {
         static let recipeStepToStepSpacing = 20.0
         static let recipeStepsSpacing = 27.0
     }
+
+    static let reuseID = String(describing: DetailsShimmerTableViewCell.self)
 
     // MARK: - Visual Components
 
@@ -71,8 +73,8 @@ final class DetailsShimmerView: UIView {
 
     // MARK: - Initializers
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
     }
 
@@ -101,7 +103,12 @@ final class DetailsShimmerView: UIView {
     private func setupView() {
         backgroundColor = .white
         disableAutoresizingMask()
-        addSubviews(recipeNamePlaceholderView, imagePlaceholderView, recipeStepsPlaceholderView, nutrientsStackView)
+        contentView.addSubviews(
+            recipeNamePlaceholderView,
+            imagePlaceholderView,
+            recipeStepsPlaceholderView,
+            nutrientsStackView
+        )
         recipeStepsPlaceholderView.addSubview(recipeStepsStackView)
         setupNamePlaceholderViewConstraints()
         setupImagePlaceholderViewConstraints()
@@ -111,22 +118,23 @@ final class DetailsShimmerView: UIView {
 
     private func setupNamePlaceholderViewConstraints() {
         NSLayoutConstraint.activate([
-            recipeNamePlaceholderView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            recipeNamePlaceholderView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
-            trailingAnchor.constraint(equalTo: recipeNamePlaceholderView.trailingAnchor, constant: 20.0)
+            recipeNamePlaceholderView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            recipeNamePlaceholderView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20.0),
+            contentView.trailingAnchor.constraint(equalTo: recipeNamePlaceholderView.trailingAnchor, constant: 20.0)
         ])
     }
 
     private func setupImagePlaceholderViewConstraints() {
+        imagePlaceholderView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         NSLayoutConstraint.activate([
             imagePlaceholderView.topAnchor.constraint(equalTo: recipeNamePlaceholderView.bottomAnchor, constant: 20.0),
-            imagePlaceholderView.centerXAnchor.constraint(equalTo: centerXAnchor)
+            imagePlaceholderView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
     }
 
     private func setupNutrientsStackConstraints() {
         NSLayoutConstraint.activate([
-            nutrientsStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            nutrientsStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             nutrientsStackView.topAnchor.constraint(equalTo: imagePlaceholderView.bottomAnchor, constant: 20.0)
         ])
     }
@@ -136,9 +144,9 @@ final class DetailsShimmerView: UIView {
         recipeStepsStackView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         NSLayoutConstraint.activate([
             recipeStepsPlaceholderView.topAnchor.constraint(equalTo: nutrientsStackView.bottomAnchor, constant: 20.0),
-            recipeStepsPlaceholderView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            recipeStepsPlaceholderView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            recipeStepsPlaceholderView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            recipeStepsPlaceholderView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            recipeStepsPlaceholderView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            recipeStepsPlaceholderView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             recipeStepsStackView.topAnchor.constraint(
                 equalTo: recipeStepsPlaceholderView.topAnchor,
