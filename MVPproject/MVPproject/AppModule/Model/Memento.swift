@@ -8,7 +8,7 @@ final class Memento: Codable {
     // MARK: - Constants
 
     private enum Constants {
-        static let defaultUserName = "Surname Name"
+        static let defaultUserName = "Surname Name "
     }
 
     // MARK: - Public properties
