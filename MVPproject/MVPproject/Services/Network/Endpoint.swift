@@ -19,7 +19,7 @@ struct RecipelyEndpoint: Endpoint {
         var urlComponents = makeBaseURLComponents()
         urlComponents.queryItems = authQueryItems + requiredQueryItems + queryItems
         if #available(iOS 16.0, *) {
-            return urlComponents.url?.appending(path: path)
+            return urlComponents.url?.appendingPathComponent(path)
         } else {
             return urlComponents.url?.appendingPathComponent(path)
         }

@@ -9,10 +9,8 @@ protocol CategoryViewProtocol: AnyObject {
     func setScreenTitle(_ title: String)
     /// Метод обновляющий таблицу с рецептами
     func reloadRecipeTable()
-    /// Показать сообщение пустой страницы
-    func showEmptyMessage()
-    /// Скрыть сообщение пустой страницы
-    func hideEmptyMessage()
+    /// завершение pull to refresh
+    func endRefresh()
 }
 
 /// Вью экрана выбранной категории рецепта
@@ -26,18 +24,31 @@ final class CategoryViewController: UIViewController {
         static let sortingToViewSpacing = 20.0
         static let searchBarInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         static let sortingHeaderHeight = 20.0
-        static let emptyPageTitle = "Nothing found"
-        static let emptyPageDescription = "Try entering your query differently"
+        static let notFoundTitle = "Nothing found"
+        static let notFoundDescription = "Try entering your query differently"
+        static let errorMessageDescription = "Failed to load data"
+        static let emptyPageDescription = "Start typing text"
         static let emptyMessageToViewSpacing = 20.0
+        static let mockRecipesCount = 7
+        static let noDataMessageConfig = MessageViewConfig(
+            icon: .searchSquare,
+            title: nil,
+            description: emptyPageDescription
+        )
+        static let notFoundMessageConfig = MessageViewConfig(
+            icon: .searchSquare,
+            title: notFoundTitle,
+            description: notFoundDescription
+        )
+        static let errorMessageConfig = MessageViewConfig(
+            icon: .boltSquare,
+            title: nil,
+            description: errorMessageDescription,
+            withReload: true
+        )
     }
 
     // MARK: - Visual Components
-
-    private let emptyMessageView = EmptyPageMessageView(
-        icon: .searchSquare,
-        title: Constants.emptyPageTitle,
-        description: Constants.emptyPageDescription
-    )
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -52,6 +63,7 @@ final class CategoryViewController: UIViewController {
         tableView.delegate = self
         tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.reuseID)
         tableView.register(RecipeShimmeredCell.self, forCellReuseIdentifier: RecipeShimmeredCell.reuseID)
+        tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: MessageTableViewCell.reuseID)
         tableView.separatorStyle = .none
         tableView.disableAutoresizingMask()
         return tableView
@@ -73,28 +85,7 @@ final class CategoryViewController: UIViewController {
         return searchBar
     }()
 
-    private lazy var sortButtonsView: UIView = {
-        let containerView = UIView()
-        let view = SortButtonsView()
-        view.delegate = self
-        containerView.disableAutoresizingMask()
-        view.disableAutoresizingMask()
-        containerView.addSubview(view)
-        NSLayoutConstraint.activate([
-            containerView.heightAnchor.constraint(equalToConstant: Constants.sortingHeight),
-            view.topAnchor.constraint(equalTo: containerView.topAnchor),
-            view.leadingAnchor.constraint(
-                equalTo: containerView.leadingAnchor,
-                constant: Constants.sortingToViewSpacing
-            ),
-            containerView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: Constants.sortingToViewSpacing
-            ),
-            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        return containerView
-    }()
+    private lazy var sortButtonsView = SortButtonsView()
 
     private lazy var backButton = UIBarButtonItem(
         image: .arrowBack,
@@ -102,6 +93,12 @@ final class CategoryViewController: UIViewController {
         target: self,
         action: #selector(closeCategory)
     )
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        return refresh
+    }()
 
     // MARK: - Public properties
 
@@ -118,20 +115,28 @@ final class CategoryViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
-        emptyMessageView.isHidden = true
         view.backgroundColor = .white
-        view.addSubviews(tableView, searchBar, emptyMessageView)
+        view.addSubviews(tableView, searchBar, sortButtonsView)
+        sortButtonsView.delegate = self
         setupConstraints()
-        setupEmptyMessageConstraints()
+        tableView.refreshControl = refreshControl
     }
 
     private func setupConstraints() {
+        tableView.setContentHuggingPriority(.defaultLow, for: .vertical)
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(
+            sortButtonsView.topAnchor.constraint(
                 equalTo: searchBar.bottomAnchor,
+                constant: Constants.searchBarToTableSpacing
+            ),
+            sortButtonsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            sortButtonsView.heightAnchor.constraint(equalToConstant: 36),
+
+            tableView.topAnchor.constraint(
+                equalTo: sortButtonsView.bottomAnchor,
                 constant: Constants.searchBarToTableSpacing
             ),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -140,34 +145,20 @@ final class CategoryViewController: UIViewController {
         ])
     }
 
-    private func setupEmptyMessageConstraints() {
-        NSLayoutConstraint.activate([
-            emptyMessageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            emptyMessageView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                constant: Constants.emptyMessageToViewSpacing
-            ),
-            view.safeAreaLayoutGuide.trailingAnchor.constraint(
-                equalTo: emptyMessageView.trailingAnchor,
-                constant: Constants.emptyMessageToViewSpacing
-            )
-        ])
-    }
-
     @objc private func closeCategory() {
         presenter?.closeCategory()
+    }
+
+    @objc private func refreshData(_ sender: UIRefreshControl) {
+        presenter?.reloadData()
     }
 }
 
 // MARK: - CategoryViewController + CategoryViewProtocol
 
 extension CategoryViewController: CategoryViewProtocol {
-    func showEmptyMessage() {
-        emptyMessageView.isHidden = false
-    }
-
-    func hideEmptyMessage() {
-        emptyMessageView.isHidden = true
+    func endRefresh() {
+        refreshControl.endRefreshing()
     }
 
     func reloadRecipeTable() {
@@ -185,27 +176,56 @@ extension CategoryViewController: CategoryViewProtocol {
 
 extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.recipes.count ?? 0
+        switch presenter?.viewState {
+        case .loading:
+            return Constants.mockRecipesCount
+        case let .data(recipes):
+            return recipes.count
+        case .noData, .error:
+            return 1
+        default:
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch presenter?.loadingState {
-        case .initial, .loading:
+        switch presenter?.viewState {
+        case .loading:
             guard let cell = tableView
                 .dequeueReusableCell(withIdentifier: RecipeShimmeredCell.reuseID) as? RecipeShimmeredCell
             else { return .init() }
             tableView.isScrollEnabled = false
             tableView.allowsSelection = false
             return cell
-        case .loaded:
-            let recipe = presenter?.recipes[indexPath.row]
-            guard let recipe = recipe,
-                  let cell = tableView
-                  .dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
+        case let .data(recipes):
+            let recipe = recipes[indexPath.row]
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: RecipeCell.reuseID) as? RecipeCell
             else { return .init() }
             tableView.isScrollEnabled = true
             tableView.allowsSelection = true
+            presenter?.loadImage(url: recipe.imageURL, completion: { imageData in
+                cell.setImage(imageData)
+            })
             cell.configure(withRecipe: recipe)
+            return cell
+        case .noData:
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
+            else { return .init() }
+            if let search = searchBar.text, !search.isEmpty {
+                cell.configureCell(messageViewConfig: Constants.notFoundMessageConfig)
+            } else {
+                cell.configureCell(messageViewConfig: Constants.noDataMessageConfig)
+            }
+            cell.delegate = self
+            return cell
+        case .error:
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
+            else { return .init() }
+            cell.configureCell(messageViewConfig: Constants.errorMessageConfig)
+            cell.delegate = self
             return cell
         default:
             return .init()
@@ -216,12 +236,15 @@ extension CategoryViewController: UITableViewDataSource {
 // MARK: - CategoryViewController + UITableViewDelegate
 
 extension CategoryViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        Constants.sortingHeaderHeight
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        sortButtonsView
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch presenter?.viewState {
+        case .noData, .error:
+            return tableView.bounds.height
+        case .loading, .data:
+            return UITableView.automaticDimension
+        default:
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -251,5 +274,13 @@ extension CategoryViewController: SortButtonViewDelegate {
 extension CategoryViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         presenter?.updateSearchTerm(searchText)
+    }
+}
+
+// MARK: - CategoryViewController + MessageViewDelegate
+
+extension CategoryViewController: MessageViewDelegate {
+    func reload() {
+        presenter?.reloadData()
     }
 }

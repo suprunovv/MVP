@@ -112,10 +112,13 @@ class RecipeCell: UITableViewCell {
     // MARK: - Public Methods
 
     func configure(withRecipe recipe: Recipe) {
-        recipeImageView.loadFromURL(recipe.imageURL)
         recipeNameLabel.text = recipe.name
         cookingTimeLabel.text = "\(recipe.cookingTime) \(Constants.timeInfoText)"
         caloriesLabel.text = "\(recipe.calories) \(Constants.caloriesInfoText)"
+    }
+
+    func setImage(_ imageData: Data) {
+        recipeImageView.image = UIImage(data: imageData)
     }
 
     // MARK: - Private Methods

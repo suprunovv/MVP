@@ -1,12 +1,14 @@
 // DetailPresenter.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Foundation
+
 /// Протокол для презентера детального экрана
 protocol DetailPresenterProtocol: AnyObject {
-    /// Метод получает модель рецепта
-    func getRecipe() -> Recipe
     /// Mассив типов ячеек
     var cellTypes: [DetailCellType] { get }
+    /// Рецепт
+    var recipe: Recipe? { get set }
     /// Метод закрывает экран деталей
     func closeDetails()
     /// Экран загружен
@@ -15,8 +17,12 @@ protocol DetailPresenterProtocol: AnyObject {
     func shareRecipe()
     /// Добавить рецепт в избранное
     func addFavoriteRecipe()
-    /// Метод возвращает модель детального рецепта
-    func getDetailsRecipe() -> Recipe
+    /// Вью стейт
+    var viewState: ViewState<Recipe> { get }
+    /// Перезагрузка данных из сети
+    func reloadData()
+    /// Получение изобраения
+    func loadImage(url: URL?, completion: @escaping (Data) -> ())
 }
 
 /// Перечисление возможных типов ячеек
@@ -33,11 +39,19 @@ enum DetailCellType {
 final class DetailPresenter {
     // MARK: - Private properties
 
-    private let networkService: NetworkServiceProtocol
+    var recipe: Recipe?
     private(set) var cellTypes: [DetailCellType] = [.image, .energy, .description]
+    private let networkService: NetworkServiceProtocol
+    private(set) var viewState: ViewState<Recipe> = .loading {
+        didSet {
+            updateDetailView()
+        }
+    }
+
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
-    private var recipe: Recipe
+    private var uri: String?
+    private var loadImageService: LoadImageServiceProtocol
 
     // MARK: - Initializators
 
@@ -45,57 +59,83 @@ final class DetailPresenter {
         view: DetailViewProtocol,
         coordinator: RecipeWithDetailsCoordinatorProtocol,
         networkService: NetworkServiceProtocol,
-        recipe: Recipe
+        recipe: Recipe,
+        loadImageService: LoadImageServiceProtocol
     ) {
         self.view = view
         self.coordinator = coordinator
-        self.recipe = recipe
+        uri = recipe.uri
         self.networkService = networkService
-        getDetails()
+        self.loadImageService = loadImageService
     }
 
     // MARK: - Private methods
 
     private func getDetails() {
-        guard let uri = recipe.uri else { return }
+        guard let uri = uri, !uri.isEmpty else { return }
+        viewState = .loading
         networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
             switch result {
             case let .success(data):
-                self?.recipe = data
+                self?.viewState = .data(data)
+            case .failure(.emptyData):
+                self?.viewState = .noData
             case let .failure(error):
-                // TODO: implement handling error state
-                print(error.localizedDescription)
+                self?.viewState = .error(error)
             }
-            self?.view?.reloadData()
         })
+    }
+
+    private func updateDetailView() {
+        switch viewState {
+        case let .data(recipe):
+            self.recipe = recipe
+            view?.endRefresh()
+        case .error, .noData:
+            view?.endRefresh()
+        default:
+            break
+        }
+        view?.reloadData()
     }
 }
 
 // MARK: - DetailPresenter + DetailPresenterProtocol
 
 extension DetailPresenter: DetailPresenterProtocol {
-    func getDetailsRecipe() -> Recipe {
-        recipe
+    func loadImage(url: URL?, completion: @escaping (Data) -> ()) {
+        loadImageService.loadImage(url: url) { data, _, _ in
+            guard let data = data else {
+                return
+            }
+            DispatchQueue.main.async {
+                completion(data)
+            }
+        }
+    }
+
+    func reloadData() {
+        getDetails()
     }
 
     func addFavoriteRecipe() {
+        guard let recipe = recipe else { return }
         FavoriteRecipes.shared.updateFavoriteRecipe(recipe)
     }
 
     func shareRecipe() {
+        guard let recipe = recipe else { return }
         TxtFileLoggerInvoker.shared.log(.shareRecipe(recipe))
     }
 
     func screenLoaded() {
+        getDetails()
+        guard let recipe = recipe else { return }
         TxtFileLoggerInvoker.shared.log(.viewScreen(ScreenInfo(title: "Recipe details")))
         TxtFileLoggerInvoker.shared.log(.openDetails(recipe))
     }
 
     func closeDetails() {
         coordinator?.closeDetails()
-    }
-
-    func getRecipe() -> Recipe {
-        recipe
     }
 }

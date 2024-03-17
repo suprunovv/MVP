@@ -5,14 +5,37 @@ import UIKit
 
 /// Протокол для вью детального экрана
 protocol DetailViewProtocol: AnyObject {
+    /// Перезагрузка таблицы
     func reloadData()
+    /// Завершить pull to refresh
+    func endRefresh()
 }
 
 /// Вью экрана с детальным описанием рецепта
 final class DetailViewController: UIViewController {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let emptyDataTitle = "Nothing found"
+        static let emptyDataDescription = "Try reloading the page"
+        static let errorMessageDescription = "Failed to load data"
+        static let noDataMessageConfig = MessageViewConfig(
+            icon: .searchSquare,
+            title: emptyDataTitle,
+            description: emptyDataDescription,
+            withReload: true
+        )
+        static let errorMessageConfig = MessageViewConfig(
+            icon: .boltSquare,
+            title: nil,
+            description: errorMessageDescription,
+            withReload: true
+        )
+    }
+
     // MARK: - Visual components
 
-    private let detailsTabelView = UITableView()
+    private let detailsTableView = UITableView()
 
     private lazy var shareButton: UIButton = {
         let button = UIButton(type: .system)
@@ -30,12 +53,20 @@ final class DetailViewController: UIViewController {
         return button
     }()
 
+    private let messageView = MessageView()
+
     private lazy var backButton = UIBarButtonItem(
         image: .arrowBack,
         style: .plain,
         target: self,
         action: #selector(closeDetail)
     )
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refreshControl
+    }()
 
     // MARK: - Public properties
 
@@ -53,9 +84,10 @@ final class DetailViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .white
-        setTabelViewConstraints()
-        setupDetailsTabelView()
+        setTableViewConstraints()
+        setupDetailsTableView()
         setNavigationBar()
+        detailsTableView.refreshControl = refreshControl
     }
 
     private func setNavigationBar() {
@@ -65,29 +97,34 @@ final class DetailViewController: UIViewController {
         navigationItem.rightBarButtonItems = [favoriteItem, shareItem]
     }
 
-    private func setTabelViewConstraints() {
-        view.addSubview(detailsTabelView)
-        detailsTabelView.disableAutoresizingMask()
+    private func setTableViewConstraints() {
+        view.addSubview(detailsTableView)
+        detailsTableView.disableAutoresizingMask()
         NSLayoutConstraint.activate([
-            detailsTabelView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            detailsTabelView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            detailsTabelView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            detailsTabelView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            detailsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            detailsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            detailsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
-    private func setupDetailsTabelView() {
-        detailsTabelView.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.reuseID)
-        detailsTabelView.register(
+    private func setupDetailsTableView() {
+        detailsTableView.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.reuseID)
+        detailsTableView.register(
             EnergyValueTableViewCell.self,
             forCellReuseIdentifier: EnergyValueTableViewCell.reuseID
         )
-        detailsTabelView.register(FullRecipeTableViewCell.self, forCellReuseIdentifier: FullRecipeTableViewCell.reuseID)
-        detailsTabelView.rowHeight = UITableView.automaticDimension
-        detailsTabelView.allowsSelection = false
-        detailsTabelView.separatorStyle = .none
-        detailsTabelView.delegate = self
-        detailsTabelView.dataSource = self
+        detailsTableView.register(FullRecipeTableViewCell.self, forCellReuseIdentifier: FullRecipeTableViewCell.reuseID)
+        detailsTableView.register(
+            DetailsShimmerTableViewCell.self,
+            forCellReuseIdentifier: DetailsShimmerTableViewCell.reuseID
+        )
+        detailsTableView.register(MessageTableViewCell.self, forCellReuseIdentifier: MessageTableViewCell.reuseID)
+        detailsTableView.rowHeight = UITableView.automaticDimension
+        detailsTableView.allowsSelection = false
+        detailsTableView.separatorStyle = .none
+        detailsTableView.dataSource = self
+        detailsTableView.delegate = self
     }
 
     @objc private func closeDetail() {
@@ -102,15 +139,21 @@ final class DetailViewController: UIViewController {
     @objc private func shareButtonTapped() {
         presenter?.shareRecipe()
     }
+
+    @objc private func refreshData() {
+        presenter?.reloadData()
+    }
 }
 
 // MARK: - DetailViewController + DetailViewProtocol
 
 extension DetailViewController: DetailViewProtocol {
+    func endRefresh() {
+        refreshControl.endRefreshing()
+    }
+
     func reloadData() {
-        DispatchQueue.main.async { [weak self] in
-            self?.detailsTabelView.reloadData()
-        }
+        detailsTableView.reloadData()
     }
 }
 
@@ -118,33 +161,73 @@ extension DetailViewController: DetailViewProtocol {
 
 extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.cellTypes.count ?? 0
+        switch presenter?.viewState {
+        case .loading, .noData, .error:
+            return 1
+        case .data:
+            return presenter?.cellTypes.count ?? 0
+        default:
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch presenter?.viewState {
+        case .loading:
+            guard let cell = tableView
+                .dequeueReusableCell(
+                    withIdentifier: DetailsShimmerTableViewCell
+                        .reuseID
+                ) as? DetailsShimmerTableViewCell else { return .init() }
+            return cell
+        case let .data(recipe):
+            return dequeDataCell(tableView, indexPath: indexPath, recipe: recipe)
+        case .noData:
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
+            else { return .init() }
+            cell.configureCell(messageViewConfig: Constants.noDataMessageConfig)
+            cell.delegate = self
+            return cell
+        case .error:
+            guard let cell = tableView
+                .dequeueReusableCell(withIdentifier: MessageTableViewCell.reuseID) as? MessageTableViewCell
+            else { return .init() }
+            cell.configureCell(messageViewConfig: Constants.errorMessageConfig)
+            cell.delegate = self
+            return cell
+        default:
+            return .init()
+        }
+    }
+
+    private func dequeDataCell(_ tableView: UITableView, indexPath: IndexPath, recipe: Recipe) -> UITableViewCell {
         let cells = presenter?.cellTypes
-        guard let cells = cells else { return UITableViewCell() }
+        guard let cells = cells else { return .init() }
         switch cells[indexPath.row] {
         case .image:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: ImageTableViewCell.reuseID,
                 for: indexPath
-            ) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.configureCell(recipe: presenter?.getDetailsRecipe())
+            ) as? ImageTableViewCell else { return .init() }
+            presenter?.loadImage(url: recipe.imageURL, completion: { data in
+                cell.setImage(data)
+            })
+            cell.configureCell(recipe: recipe)
             return cell
         case .energy:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: EnergyValueTableViewCell.reuseID,
                 for: indexPath
-            ) as? EnergyValueTableViewCell else { return UITableViewCell() }
-            cell.setupCell(recipe: presenter?.getDetailsRecipe())
+            ) as? EnergyValueTableViewCell else { return .init() }
+            cell.setupCell(recipe: recipe)
             return cell
         case .description:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: FullRecipeTableViewCell.reuseID,
                 for: indexPath
             ) as? FullRecipeTableViewCell else { return UITableViewCell() }
-            cell.setupDescription(text: presenter?.getDetailsRecipe().details?.ingredientLines)
+            cell.setupDescription(text: recipe.details?.ingredientLines)
             return cell
         }
     }
@@ -154,15 +237,21 @@ extension DetailViewController: UITableViewDataSource {
 
 extension DetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cell = presenter?.cellTypes[indexPath.row]
-        guard let cell = cell else { return 0 }
-        switch cell {
-        case .image:
-            return 336
-        case .energy:
-            return 93
-        case .description:
+        switch presenter?.viewState {
+        case .loading, .noData, .error:
+            return tableView.bounds.height
+        case .data:
             return UITableView.automaticDimension
+        default:
+            return 0
         }
+    }
+}
+
+// MARK: - DetailViewController + MessageViewDelegate
+
+extension DetailViewController: MessageViewDelegate {
+    func reload() {
+        presenter?.reloadData()
     }
 }
