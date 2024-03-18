@@ -71,19 +71,18 @@ final class LoginPresenter {
     private func validatePersonData(password: String, email: String) {
         let personData = PersonData(email: email, password: password)
         Originator.shared.restoreFromUserDefaults()
-        if Originator.shared.memento?.isFirstLoading == false {
-            guard Originator.shared.memento?.personData.getPassword() == personData.getPassword(),
-                  Originator.shared.memento?.personData.getEmail() == personData.getEmail()
-            else {
-                processLoginError()
-                return
-            }
-            processLoginValide()
-        } else {
-            Originator.shared.setPersonData(data: personData)
+        if Originator.shared.memento?.isFirstLoading == true {
+            AuthService.shared.login(personData)
             Originator.shared.saveToUserDefaults()
             processLoginValide()
+            return
         }
+
+        guard let credentials = AuthService.shared.restoreCredentials(), credentials == personData else {
+            processLoginError()
+            return
+        }
+        processLoginValide()
     }
 }
 
