@@ -25,13 +25,11 @@ final class Originator {
 
     // MARK: - Public methods
 
-    func setPersonData(data: PersonData) {
-        memento = Memento(personData: data, isFirstLoading: false)
-    }
-
     func saveToUserDefaults() {
         if memento == nil {
-            memento = Memento(personData: PersonData(email: "", password: ""), isFirstLoading: true)
+            memento = Memento(isFirstLoading: true)
+        } else {
+            memento?.toggleIsFirstLoading()
         }
         let encoder = JSONEncoder()
         let data = try? encoder.encode(memento)

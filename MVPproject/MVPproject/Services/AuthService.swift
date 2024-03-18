@@ -5,6 +5,11 @@ import Keychain
 
 /// Сервис авторизации приложения
 final class AuthService {
+    private enum Constants {
+        static let emailKey = "email"
+        static let passwordKey = "password"
+    }
+
     /// Состояние приложения
     enum State {
         /// Не авторизован
@@ -24,8 +29,8 @@ final class AuthService {
     }
 
     func restoreCredentials() -> PersonData? {
-        let email = Keychain.load("email")
-        let password = Keychain.load("password")
+        let email = Keychain.load(Constants.emailKey)
+        let password = Keychain.load(Constants.passwordKey)
         if let email = email, let password = password {
             return PersonData(email: email, password: password)
         }
@@ -34,7 +39,7 @@ final class AuthService {
     }
 
     private func saveCredentials(_ credentials: PersonData) {
-        _ = Keychain.save(credentials.email, forKey: "email")
-        _ = Keychain.save(credentials.password, forKey: "password")
+        _ = Keychain.save(credentials.email, forKey: Constants.emailKey)
+        _ = Keychain.save(credentials.password, forKey: Constants.passwordKey)
     }
 }
