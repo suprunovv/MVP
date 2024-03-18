@@ -5,5 +5,5 @@ import CoreData
 import Foundation
 
 /// Модель деталей рецепта для хранения в coreData
-@objc(DetailResipeData)
-public class DetailResipeData: NSManagedObject {}
+@objc(DetailRecipeData)
+public class DetailRecipeData: NSManagedObject {}

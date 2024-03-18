@@ -80,8 +80,10 @@ final class DetailPresenter {
             guard var recipe = recipe else {
                 return
             }
-            recipe.details = details
-            viewState = .data(recipe)
+            DispatchQueue.main.async { [weak self] in
+                recipe.details = details
+                self?.viewState = .data(recipe)
+            }
         } else {
             networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
                 switch result {

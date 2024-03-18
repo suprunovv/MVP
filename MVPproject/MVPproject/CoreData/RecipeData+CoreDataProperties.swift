@@ -18,5 +18,3 @@ public extension RecipeData {
     @NSManaged var details: NSObject?
     @NSManaged var uri: String?
 }
-
-extension RecipeData: Identifiable {}

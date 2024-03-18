@@ -5,9 +5,9 @@ import CoreData
 import Foundation
 
 /// Расширение с описанием для модели деталей
-public extension DetailResipeData {
-    @nonobjc class func fetchRequest() -> NSFetchRequest<DetailResipeData> {
-        NSFetchRequest<DetailResipeData>(entityName: "DetailResipeData")
+public extension DetailRecipeData {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<DetailRecipeData> {
+        NSFetchRequest<DetailRecipeData>(entityName: "DetailRecipeData")
     }
 
     @NSManaged var uri: String
@@ -18,5 +18,3 @@ public extension DetailResipeData {
     @NSManaged var carbohydrates: Int16
     @NSManaged var calories: Int16
 }
-
-extension DetailResipeData: Identifiable {}

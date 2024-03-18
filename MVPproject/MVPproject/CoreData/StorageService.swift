@@ -7,15 +7,26 @@ import Foundation
 /// Сервис для управления данными coreData
 final class StorageService {
     // MARK: - Constants
+
+    enum Constants {
+        static let recipeData = "RecipeData"
+        static let detailRecipeData = "DetailRecipeData"
+        static let coreData = "CoreData"
+    }
+
     static let shared = StorageService()
+
+    // MARK: - initializators
+
     private init() {}
 
     // MARK: - Private properties
+
     private lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "CoreData")
+        let container = NSPersistentContainer(name: Constants.coreData)
         container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                print(error.localizedDescription)
             }
         })
         return container
@@ -26,22 +37,22 @@ final class StorageService {
     }
 
     // MARK: - Public methods
+
     func saveContext() {
         if context.hasChanges {
             do {
                 try context.save()
             } catch {
                 context.rollback()
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                print(error.localizedDescription)
             }
         }
     }
 
     func createRecipesDetailData(recipeDetails: RecipeDetails, uri: String) {
-        guard let entityDescription = NSEntityDescription.entity(forEntityName: "DetailResipeData", in: context)
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: Constants.detailRecipeData, in: context)
         else { return }
-        let detailRecipe = DetailResipeData(entity: entityDescription, insertInto: context)
+        let detailRecipe = DetailRecipeData(entity: entityDescription, insertInto: context)
         detailRecipe.calories = Int16(recipeDetails.calories)
         detailRecipe.carbohydrates = Int16(recipeDetails.carbohydrates)
         detailRecipe.fats = Int16(recipeDetails.fats)
@@ -53,7 +64,7 @@ final class StorageService {
     }
 
     func createRecipeData(recipes: [Recipe], category: RecipesCategory) {
-        guard let entityDescription = NSEntityDescription.entity(forEntityName: "RecipeData", in: context)
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: Constants.recipeData, in: context)
         else { return }
         for recipe in recipes {
             let recipeData = RecipeData(entity: entityDescription, insertInto: context)
@@ -70,7 +81,7 @@ final class StorageService {
 
     func fetchDetailRecipe(uri: String) -> RecipeDetails? {
         do {
-            guard let result = try? context.fetch(DetailResipeData.fetchRequest()) else { return nil }
+            guard let result = try? context.fetch(DetailRecipeData.fetchRequest()) else { return nil }
             guard let detailRecipe = result.first(where: { $0.uri == uri }) else { return nil }
             return RecipeDetails(detailRecipeData: detailRecipe)
         }

@@ -27,7 +27,7 @@ struct RecipeDetails: Codable {
         self.calories = calories
     }
 
-    init(detailRecipeData: DetailResipeData) {
+    init(detailRecipeData: DetailRecipeData) {
         weight = Int(detailRecipeData.weight)
         ingredientLines = detailRecipeData.ingredientLines ?? ""
         proteins = Int(detailRecipeData.proteins)
