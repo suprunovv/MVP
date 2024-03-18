@@ -25,6 +25,12 @@
 		52990DA22BA132DC004A2A87 /* ReecipeDetailsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DA12BA132DB004A2A87 /* ReecipeDetailsResponseDTO.swift */; };
 		52990DA62BA214E8004A2A87 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DA52BA214E8004A2A87 /* ViewState.swift */; };
 		52990DA82BA356A7004A2A87 /* LoadImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DA72BA356A7004A2A87 /* LoadImageService.swift */; };
+		52990DBD2BA717FD004A2A87 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52990DBB2BA717FD004A2A87 /* CoreData.xcdatamodeld */; };
+		52990DC02BA718F0004A2A87 /* RecipeData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DBE2BA718F0004A2A87 /* RecipeData+CoreDataClass.swift */; };
+		52990DC12BA718F0004A2A87 /* RecipeData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DBF2BA718F0004A2A87 /* RecipeData+CoreDataProperties.swift */; };
+		52990DC32BA71A7C004A2A87 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DC22BA71A7C004A2A87 /* StorageService.swift */; };
+		52990DC72BA74ECB004A2A87 /* DetailResipeData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DC52BA74ECB004A2A87 /* DetailResipeData+CoreDataClass.swift */; };
+		52990DC82BA74ECB004A2A87 /* DetailResipeData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990DC62BA74ECB004A2A87 /* DetailResipeData+CoreDataProperties.swift */; };
 		52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */; };
 		52A65F0A2B8CDEB7001EF2E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */; };
 		52A65F0F2B8CDEB7001EF2E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A65F0D2B8CDEB7001EF2E0 /* Main.storyboard */; };
@@ -116,6 +122,12 @@
 		52990DA12BA132DB004A2A87 /* ReecipeDetailsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReecipeDetailsResponseDTO.swift; sourceTree = "<group>"; };
 		52990DA52BA214E8004A2A87 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		52990DA72BA356A7004A2A87 /* LoadImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageService.swift; sourceTree = "<group>"; };
+		52990DBC2BA717FD004A2A87 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		52990DBE2BA718F0004A2A87 /* RecipeData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		52990DBF2BA718F0004A2A87 /* RecipeData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		52990DC22BA71A7C004A2A87 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		52990DC52BA74ECB004A2A87 /* DetailResipeData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailResipeData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		52990DC62BA74ECB004A2A87 /* DetailResipeData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailResipeData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		52A65F042B8CDEB7001EF2E0 /* MVPproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A65F072B8CDEB7001EF2E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A65F092B8CDEB7001EF2E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -212,6 +224,19 @@
 			path = DetailsCells;
 			sourceTree = "<group>";
 		};
+		52990DC42BA74D49004A2A87 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				52990DBB2BA717FD004A2A87 /* CoreData.xcdatamodeld */,
+				52990DBE2BA718F0004A2A87 /* RecipeData+CoreDataClass.swift */,
+				52990DBF2BA718F0004A2A87 /* RecipeData+CoreDataProperties.swift */,
+				52990DC52BA74ECB004A2A87 /* DetailResipeData+CoreDataClass.swift */,
+				52990DC62BA74ECB004A2A87 /* DetailResipeData+CoreDataProperties.swift */,
+				52990DC22BA71A7C004A2A87 /* StorageService.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		52A65EFB2B8CDEB7001EF2E0 = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +256,7 @@
 		52A65F062B8CDEB7001EF2E0 /* MVPproject */ = {
 			isa = PBXGroup;
 			children = (
+				52990DC42BA74D49004A2A87 /* CoreData */,
 				DA2D5EAF2B97ADDB00CF339F /* Shared */,
 				DA3785542B8E201E005A190A /* Application */,
 				DA3785382B8D39EE005A190A /* AppModule */,
@@ -707,6 +733,7 @@
 				DA3785622B8E2392005A190A /* ProfileCoordinator.swift in Sources */,
 				DA3785412B8E0D83005A190A /* AppCoordinator.swift in Sources */,
 				52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */,
+				52990DC72BA74ECB004A2A87 /* DetailResipeData+CoreDataClass.swift in Sources */,
 				DA2D5EAA2B94D3FA00CF339F /* FavoritesPresenter.swift in Sources */,
 				DA3785602B8E2345005A190A /* FavoritesCoordinator.swift in Sources */,
 				52990DA82BA356A7004A2A87 /* LoadImageService.swift in Sources */,
@@ -725,6 +752,7 @@
 				52990D382B93C86B004A2A87 /* ImageTableViewCell.swift in Sources */,
 				DA2D5EA62B94D35900CF339F /* FavoritesViewController.swift in Sources */,
 				52990DA22BA132DC004A2A87 /* ReecipeDetailsResponseDTO.swift in Sources */,
+				52990DBD2BA717FD004A2A87 /* CoreData.xcdatamodeld in Sources */,
 				52A65F082B8CDEB7001EF2E0 /* AppDelegate.swift in Sources */,
 				DA37858F2B90DB35005A190A /* RecipesCategoryCellConfig.swift in Sources */,
 				DA37858B2B907E03005A190A /* Typealias.swift in Sources */,
@@ -743,6 +771,8 @@
 				DA37853F2B8E0C60005A190A /* BaseCoordinator.swift in Sources */,
 				52990D3A2B93EFEE004A2A87 /* EnergyValueTableViewCell.swift in Sources */,
 				DA3891AE2BA3138F002FBC08 /* DetailsShimmerTableViewCell.swift in Sources */,
+				52990DC12BA718F0004A2A87 /* RecipeData+CoreDataProperties.swift in Sources */,
+				52990DC02BA718F0004A2A87 /* RecipeData+CoreDataClass.swift in Sources */,
 				52A65F2E2B8FDE2D001EF2E0 /* RecipesPresenter.swift in Sources */,
 				DA3785932B90DEEE005A190A /* RecipesCategoriesDataSource.swift in Sources */,
 				DAAED4DD2B9A268B00FD8DCB /* LoggerInvoker.swift in Sources */,
@@ -781,8 +811,10 @@
 				DA2D5EAC2B94DF7D00CF339F /* MessageView.swift in Sources */,
 				DA3785712B8E342B005A190A /* ProfileConfiguration.swift in Sources */,
 				DA3785662B8E30A9005A190A /* UIView+Extension.swift in Sources */,
+				52990DC32BA71A7C004A2A87 /* StorageService.swift in Sources */,
 				DA3785972B913B0E005A190A /* SortingButton.swift in Sources */,
 				DA37858D2B90DA33005A190A /* Recipe.swift in Sources */,
+				52990DC82BA74ECB004A2A87 /* DetailResipeData+CoreDataProperties.swift in Sources */,
 				DA37852A2B8D1DD8005A190A /* UIColor+Extension.swift in Sources */,
 				DA3891B02BA33F70002FBC08 /* ErrorDTO.swift in Sources */,
 				52A65F302B8FDEF5001EF2E0 /* RecipesViewController.swift in Sources */,
@@ -1009,6 +1041,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		52990DBB2BA717FD004A2A87 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				52990DBC2BA717FD004A2A87 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 52990DBC2BA717FD004A2A87 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 52A65EFC2B8CDEB7001EF2E0 /* Project object */;
 }

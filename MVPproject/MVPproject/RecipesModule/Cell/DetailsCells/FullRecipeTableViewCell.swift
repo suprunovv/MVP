@@ -34,12 +34,11 @@ final class FullRecipeTableViewCell: UITableViewCell {
 
     // MARK: - Public methods
 
-    func setupDescription(text: [String]?) {
+    func setupDescription(text: String?) {
         guard let text = text else {
             return
         }
-        let string = text.joined(separator: "\n")
-        descriptionLabel.text = string
+        descriptionLabel.text = text
     }
 
     // MARK: - Private methods
