@@ -13,15 +13,13 @@ final class Memento: Codable {
 
     // MARK: - Public properties
 
-    private(set) var personData: PersonData
     private(set) var isFirstLoading: Bool
     private(set) var userName: String = Constants.defaultUserName
     private(set) var userImageData: Data?
 
     // MARK: - Initializators
 
-    init(personData: PersonData, isFirstLoading: Bool) {
-        self.personData = personData
+    init(isFirstLoading: Bool) {
         self.isFirstLoading = isFirstLoading
     }
 
@@ -31,5 +29,11 @@ final class Memento: Codable {
 
     func setUserImageData(imageData: Data) {
         userImageData = imageData
+    }
+
+    func toggleIsFirstLoading() {
+        if isFirstLoading {
+            isFirstLoading.toggle()
+        }
     }
 }

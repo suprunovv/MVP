@@ -8,7 +8,7 @@ struct RecipeDetails: Codable {
     /// Вес готового блюда
     let weight: Int
     /// Ингридиенты
-    let ingredientLines: [String]
+    let ingredientLines: String
     /// Белки
     let proteins: Int
     /// Жиры
@@ -17,6 +17,24 @@ struct RecipeDetails: Codable {
     let carbohydrates: Int
     /// Калории
     let calories: Int
+
+    init(weight: Int, ingredientLines: String, proteins: Int, fats: Int, carbohydrates: Int, calories: Int) {
+        self.weight = weight
+        self.ingredientLines = ingredientLines
+        self.proteins = proteins
+        self.fats = fats
+        self.carbohydrates = carbohydrates
+        self.calories = calories
+    }
+
+    init(detailRecipeData: DetailRecipeData) {
+        weight = Int(detailRecipeData.weight)
+        ingredientLines = detailRecipeData.ingredientLines ?? ""
+        proteins = Int(detailRecipeData.proteins)
+        fats = Int(detailRecipeData.fats)
+        carbohydrates = Int(detailRecipeData.carbohydrates)
+        calories = Int(detailRecipeData.calories)
+    }
 }
 
 /// Модель рецепта
@@ -30,7 +48,7 @@ struct Recipe: Codable {
     /// Количество калорий
     let calories: Int
     /// Детали рецепта
-    let details: RecipeDetails?
+    var details: RecipeDetails?
     /// uri
     let uri: String?
 
@@ -50,6 +68,15 @@ struct Recipe: Codable {
         self.uri = uri
     }
 
+    init(recipeData: RecipeData) {
+        imageURL = URL(string: recipeData.imageURL ?? "")
+        name = recipeData.name ?? ""
+        cookingTime = Int(recipeData.cookingTime)
+        calories = Int(recipeData.calories)
+        uri = recipeData.uri
+        details = nil
+    }
+
     init?(dto: RecipeDTO) {
         name = dto.label
         calories = Int(dto.calories.rounded())
@@ -66,7 +93,7 @@ struct Recipe: Codable {
         imageURL = URL(string: dto.image)
         details = RecipeDetails(
             weight: Int(dto.totalWeight.rounded()),
-            ingredientLines: dto.ingredientLines,
+            ingredientLines: dto.ingredientLines.joined(separator: "\n"),
             proteins: Int(dto.totalNutrients.proteins.quantity.rounded()),
             fats: Int(dto.totalNutrients.fats.quantity.rounded()),
             carbohydrates: Int(dto.totalNutrients.carbohydrates.quantity.rounded()),

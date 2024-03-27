@@ -4,7 +4,7 @@
 /// Модель категории рецептов
 struct RecipesCategory: Codable {
     /// Виды категорий
-    enum CategoryType: Codable {
+    enum CategoryType: String, Codable {
         /// Салат
         case salad
         /// Суп

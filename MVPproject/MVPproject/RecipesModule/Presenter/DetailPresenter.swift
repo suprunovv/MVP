@@ -65,6 +65,7 @@ final class DetailPresenter {
         self.view = view
         self.coordinator = coordinator
         uri = recipe.uri
+        self.recipe = recipe
         self.networkService = networkService
         self.loadImageService = loadImageService
     }
@@ -74,16 +75,29 @@ final class DetailPresenter {
     private func getDetails() {
         guard let uri = uri, !uri.isEmpty else { return }
         viewState = .loading
-        networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
-            switch result {
-            case let .success(data):
-                self?.viewState = .data(data)
-            case .failure(.emptyData):
-                self?.viewState = .noData
-            case let .failure(error):
-                self?.viewState = .error(error)
+        let details = StorageService.shared.fetchDetailRecipe(uri: uri)
+        if let details = details {
+            guard var recipe = recipe else {
+                return
             }
-        })
+            DispatchQueue.main.async { [weak self] in
+                recipe.details = details
+                self?.viewState = .data(recipe)
+            }
+        } else {
+            networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
+                switch result {
+                case let .success(data):
+                    guard let details = data.details else { return }
+                    StorageService.shared.createRecipesDetailData(recipeDetails: details, uri: uri)
+                    self?.viewState = .data(data)
+                case .failure(.emptyData):
+                    self?.viewState = .noData
+                case let .failure(error):
+                    self?.viewState = .error(error)
+                }
+            })
+        }
     }
 
     private func updateDetailView() {

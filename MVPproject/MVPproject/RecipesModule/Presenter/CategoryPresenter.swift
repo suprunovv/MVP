@@ -86,15 +86,21 @@ final class CategoryPresenter {
 
     private func loadRecipes(byCategory category: RecipesCategory) {
         viewState = .loading
-        networkService.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
-            switch result {
-            case let .success(data):
-                self?.viewState = .data(data)
-            case .failure(.emptyData):
-                self?.viewState = .noData
-            case let .failure(error):
-                self?.viewState = .error(error)
+        let storage = StorageService.shared.fetchRecipeData(category: category.type.rawValue)
+        if storage.isEmpty {
+            networkService.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
+                switch result {
+                case let .success(data):
+                    StorageService.shared.createRecipeData(recipes: data, category: category)
+                    self?.viewState = .data(data)
+                case .failure(.emptyData):
+                    self?.viewState = .noData
+                case let .failure(error):
+                    self?.viewState = .error(error)
+                }
             }
+        } else {
+            viewState = .data(storage)
         }
     }
 
