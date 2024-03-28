@@ -10,6 +10,7 @@
 		1757475F8EAEC417EB45ABE98FB8ED77 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CDCAA0A6A19B4F8F0A58FD864633F9 /* Keychain.swift */; };
 		260887A1A72E80088D6FE0F4A796F392 /* Keychain-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DD147FBDED92E9011255674131CC9766 /* Keychain-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		45752EEB518F473C74B196424F43F060 /* KeychainItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D047C6002663F95FD2DC1938C85751EE /* KeychainItemFactory.swift */; };
+		5274DAC82BB485CD008CA82A /* KeychainProtocolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31F66FE3627D06BED26CADF864C57B /* KeychainProtocolType.swift */; };
 		738B869B2E94EA4FC45B06C47D84EB9D /* KeychainItemClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B17FC4C698130F83311DE28EBFEC95 /* KeychainItemClass.swift */; };
 		779CFDE6C417E1CB2EB847785B1EBAC1 /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B522166054756D5C53EB4FEB2CDF07 /* KeychainItem.swift */; };
 		9649F4027C2B81711BBE038C944F3E70 /* Keychain-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C803F709FDA91621A918C2B3CA6C5507 /* Keychain-dummy.m */; };
@@ -30,7 +31,7 @@
 
 /* Begin PBXFileReference section */
 		1D17BCD4490A69860733472EBCE2AB74 /* Keychain-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Keychain-prefix.pch"; sourceTree = "<group>"; };
-		436BD800038B6871C69921CBC0C274BA /* Pods-MVPproject */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-MVPproject"; path = "libPods-MVPproject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		436BD800038B6871C69921CBC0C274BA /* libPods-MVPproject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MVPproject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60716C90CF91E4035F743523FEE67834 /* libKeychain.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKeychain.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6615274D8CFA0BCFBF51781E6A08D0FE /* Keychain.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Keychain.debug.xcconfig; sourceTree = "<group>"; };
 		6FC854C964DA575A394D1263699A3EEF /* Pods-MVPproject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MVPproject.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				60716C90CF91E4035F743523FEE67834 /* libKeychain.a */,
-				436BD800038B6871C69921CBC0C274BA /* Pods-MVPproject */,
+				436BD800038B6871C69921CBC0C274BA /* libPods-MVPproject.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -210,7 +211,7 @@
 			);
 			name = "Pods-MVPproject";
 			productName = "Pods-MVPproject";
-			productReference = 436BD800038B6871C69921CBC0C274BA /* Pods-MVPproject */;
+			productReference = 436BD800038B6871C69921CBC0C274BA /* libPods-MVPproject.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -274,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98FD547C5F53557E8B43F534DD511E32 /* Pods-MVPproject-dummy.m in Sources */,
+				5274DAC82BB485CD008CA82A /* KeychainProtocolType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +323,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 15.2;
 			};
 			name = Debug;
 		};
@@ -380,7 +383,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -409,6 +412,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 15.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -434,6 +438,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 15.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -459,6 +464,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 15.2;
 			};
 			name = Debug;
 		};

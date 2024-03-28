@@ -1,6 +1,7 @@
 // LoginViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import TextFileds
 import UIKit
 
 /// Протокол представления логина
@@ -109,33 +110,16 @@ final class LoginViewController: UIViewController {
     }()
 
     private let emailTextFiled: UITextField = {
-        let textFiled = UITextField()
-        textFiled.placeholder = Constants.emailTextFiledPlaceholder
-        textFiled.borderStyle = .none
-        textFiled.layer.borderColor = UIColor.systemGray.cgColor
-        textFiled.layer.borderWidth = 1
-        textFiled.clearButtonMode = .whileEditing
-        textFiled.backgroundColor = .white
-        textFiled.clipsToBounds = true
-        textFiled.layer.cornerRadius = 12
-        textFiled.leftViewMode = .always
-        textFiled.translatesAutoresizingMaskIntoConstraints = false
+        let textFiled = TextFileds()
+        textFiled.setPlaceholder(model: .init(placeholder: Constants.emailTextFiledPlaceholder))
         return textFiled
     }()
 
     private let passwordTextFiled: UITextField = {
-        let textFiled = UITextField()
-        textFiled.placeholder = Constants.passwordTextFiledPlaceholder
-        textFiled.isSecureTextEntry = true
-        textFiled.borderStyle = .none
-        textFiled.layer.borderColor = UIColor.systemGray.cgColor
-        textFiled.layer.borderWidth = 1
-        textFiled.backgroundColor = .white
-        textFiled.clipsToBounds = true
-        textFiled.layer.cornerRadius = 12
-        textFiled.leftViewMode = .always
+        let textFiled = TextFileds()
+        textFiled.setPlaceholder(model: .init(placeholder: Constants.passwordTextFiledPlaceholder))
+        textFiled.clearButtonMode = .never
         textFiled.rightViewMode = .always
-        textFiled.translatesAutoresizingMaskIntoConstraints = false
         return textFiled
     }()
 

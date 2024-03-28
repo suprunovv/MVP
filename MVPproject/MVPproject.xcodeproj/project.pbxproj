@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5274DAD02BB55515008CA82A /* TextFileds in Frameworks */ = {isa = PBXBuildFile; productRef = 5274DACF2BB55515008CA82A /* TextFileds */; };
 		52990D2D2B90C758004A2A87 /* CategoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D2C2B90C758004A2A87 /* CategoryPresenter.swift */; };
 		52990D2F2B90C76A004A2A87 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D2E2B90C76A004A2A87 /* CategoryViewController.swift */; };
 		52990D312B90F3D9004A2A87 /* SortButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52990D302B90F3D9004A2A87 /* SortButtonsView.swift */; };
@@ -211,6 +212,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5274DAD02BB55515008CA82A /* TextFileds in Frameworks */,
 				BC1E9997EA72C86E685DE2AB /* libPods-MVPproject.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -654,6 +656,9 @@
 			dependencies = (
 			);
 			name = MVPproject;
+			packageProductDependencies = (
+				5274DACF2BB55515008CA82A /* TextFileds */,
+			);
 			productName = MVPproject;
 			productReference = 52A65F042B8CDEB7001EF2E0 /* MVPproject.app */;
 			productType = "com.apple.product-type.application";
@@ -682,6 +687,9 @@
 				Base,
 			);
 			mainGroup = 52A65EFB2B8CDEB7001EF2E0;
+			packageReferences = (
+				5274DACE2BB55515008CA82A /* XCRemoteSwiftPackageReference "TextFileds" */,
+			);
 			productRefGroup = 52A65F052B8CDEB7001EF2E0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1090,6 +1098,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5274DACE2BB55515008CA82A /* XCRemoteSwiftPackageReference "TextFileds" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/suprunovv/TextFileds.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5274DACF2BB55515008CA82A /* TextFileds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5274DACE2BB55515008CA82A /* XCRemoteSwiftPackageReference "TextFileds" */;
+			productName = TextFileds;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		52990DBB2BA717FD004A2A87 /* CoreData.xcdatamodeld */ = {

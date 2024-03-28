@@ -218,7 +218,7 @@ open class KeychainItem {
         }
         set {
             if let internetProtocol = newValue {
-                attributes[kSecAttrProtocol as String] = internetProtocol.rawValue as String as AnyObject?
+                attributes[kSecAttrProtocol as String] = internetProtocol.rawwValue as String as AnyObject?
             } else {
                 attributes.removeValue(forKey: kSecAttrProtocol as String)
             }
