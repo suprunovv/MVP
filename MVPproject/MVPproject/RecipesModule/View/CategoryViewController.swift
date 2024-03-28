@@ -18,32 +18,27 @@ final class CategoryViewController: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
-        static let searchBarPlaceholder = "Search recipes"
         static let searchBarToTableSpacing = 12.0
         static let sortingHeight = 36.0
         static let sortingToViewSpacing = 20.0
         static let searchBarInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         static let sortingHeaderHeight = 20.0
-        static let notFoundTitle = "Nothing found"
-        static let notFoundDescription = "Try entering your query differently"
-        static let errorMessageDescription = "Failed to load data"
-        static let emptyPageDescription = "Start typing text"
         static let emptyMessageToViewSpacing = 20.0
         static let mockRecipesCount = 7
         static let noDataMessageConfig = MessageViewConfig(
             icon: .searchSquare,
             title: nil,
-            description: emptyPageDescription
+            description: SwiftGenStrings.Category.emptyPageDescription
         )
         static let notFoundMessageConfig = MessageViewConfig(
             icon: .searchSquare,
-            title: notFoundTitle,
-            description: notFoundDescription
+            title: SwiftGenStrings.Category.notFoundTitle,
+            description: SwiftGenStrings.Category.notFoundDescription
         )
         static let errorMessageConfig = MessageViewConfig(
             icon: .boltSquare,
             title: nil,
-            description: errorMessageDescription,
+            description: SwiftGenStrings.Category.errorMessageDescription,
             withReload: true
         )
     }
@@ -73,7 +68,7 @@ final class CategoryViewController: UIViewController {
         let searchBar = UISearchBar()
         searchBar.delegate = self
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
-            string: Constants.searchBarPlaceholder,
+            string: SwiftGenStrings.Category.searchBarPlaceholder,
             attributes: [
                 .font: UIFont.verdana(ofSize: 16) ?? UIFont.systemFont(ofSize: 16),
                 .foregroundColor: UIColor.grayTextPlaceholder

@@ -36,24 +36,11 @@ protocol LoginViewProtocol: AnyObject {
 
 /// Вью экрана входа
 final class LoginViewController: UIViewController {
-    // MARK: - Constants
-
-    enum Constants {
-        static let loginTitle = "Login"
-        static let emailLabelText = "Email Address"
-        static let passwordLabelText = "Password"
-        static let emailTextFiledPlaceholder = "Enter Email Address"
-        static let passwordTextFiledPlaceholder = "Enter Password"
-        static let incorrectEmailText = "Incorrect format"
-        static let incorrectPasswordText = "You entered the wrong password"
-        static let errorLabelText = "Please check the accuracy of the \nentered credentials."
-    }
-
     // MARK: - Visual Compontnts
 
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(Constants.loginTitle, for: .normal)
+        button.setTitle(SwiftGenStrings.AuthScreen.loginTitle, for: .normal)
         button.backgroundColor = .greenDarkButton
         button.tintColor = .white
         button.layer.cornerRadius = 12
@@ -65,7 +52,7 @@ final class LoginViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 28)
-        label.text = Constants.loginTitle
+        label.text = SwiftGenStrings.AuthScreen.loginTitle
         label.textColor = .grayText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -74,7 +61,7 @@ final class LoginViewController: UIViewController {
     private let emailLabel: UILabel = {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 18)
-        label.text = Constants.emailLabelText
+        label.text = SwiftGenStrings.AuthScreen.emailLabelText
         label.textColor = .grayText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -83,7 +70,7 @@ final class LoginViewController: UIViewController {
     private let incorrectEmailLabel: UILabel = {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 12)
-        label.text = Constants.incorrectEmailText
+        label.text = SwiftGenStrings.AuthScreen.incorrectEmailText
         label.textColor = .redError
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +80,7 @@ final class LoginViewController: UIViewController {
     private let incorrectPasswordLabel: UILabel = {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 12)
-        label.text = Constants.incorrectPasswordText
+        label.text = SwiftGenStrings.AuthScreen.incorrectPasswordText
         label.textColor = .redError
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +90,7 @@ final class LoginViewController: UIViewController {
     private let passwordLabel: UILabel = {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 18)
-        label.text = Constants.passwordLabelText
+        label.text = SwiftGenStrings.AuthScreen.passwordLabelText
         label.textColor = .grayText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -111,13 +98,13 @@ final class LoginViewController: UIViewController {
 
     private let emailTextFiled: UITextField = {
         let textFiled = TextFileds()
-        textFiled.setPlaceholder(model: .init(placeholder: Constants.emailTextFiledPlaceholder))
+        textFiled.setPlaceholder(model: .init(placeholder: SwiftGenStrings.AuthScreen.emailTextFiledPlaceholder))
         return textFiled
     }()
 
     private let passwordTextFiled: UITextField = {
         let textFiled = TextFileds()
-        textFiled.setPlaceholder(model: .init(placeholder: Constants.passwordTextFiledPlaceholder))
+        textFiled.setPlaceholder(model: .init(placeholder: SwiftGenStrings.AuthScreen.passwordTextFiledPlaceholder))
         textFiled.clearButtonMode = .never
         textFiled.rightViewMode = .always
         return textFiled
@@ -169,7 +156,7 @@ final class LoginViewController: UIViewController {
         label.textColor = .white
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Constants.errorLabelText
+        label.text = SwiftGenStrings.AuthScreen.errorLabelText
         return label
     }()
 
@@ -423,7 +410,7 @@ extension LoginViewController: LoginViewProtocol {
     }
 
     func returnTextLoginButton() {
-        loginButton.setTitle(Constants.loginTitle, for: .normal)
+        loginButton.setTitle(SwiftGenStrings.AuthScreen.loginTitle, for: .normal)
     }
 
     func startActivityIndicator() {
