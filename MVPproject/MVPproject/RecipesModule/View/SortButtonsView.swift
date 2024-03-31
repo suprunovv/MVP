@@ -13,24 +13,17 @@ protocol SortButtonViewDelegate: AnyObject {
 
 /// Вью с 2мя кнопками сортировки
 final class SortButtonsView: UIView {
-    // MARK: - Constants
-
-    enum Constants {
-        static let calloriesTitle = "Calories"
-        static let timeTitle = "Time"
-    }
-
     // MARK: - Visual components
 
     private let caloriesButton: SortingButton = {
         let button = SortingButton()
-        button.setTitle(Constants.calloriesTitle, for: .normal)
+        button.setTitle(SwiftGenStrings.SortButtonView.calloriesTitle, for: .normal)
         return button
     }()
 
     private let timeButton: SortingButton = {
         let button = SortingButton()
-        button.setTitle(Constants.timeTitle, for: .normal)
+        button.setTitle(SwiftGenStrings.SortButtonView.timeTitle, for: .normal)
         return button
     }()
 

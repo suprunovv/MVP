@@ -16,19 +16,16 @@ final class DetailViewController: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
-        static let emptyDataTitle = "Nothing found"
-        static let emptyDataDescription = "Try reloading the page"
-        static let errorMessageDescription = "Failed to load data"
         static let noDataMessageConfig = MessageViewConfig(
             icon: .searchSquare,
-            title: emptyDataTitle,
-            description: emptyDataDescription,
+            title: SwiftGenStrings.DetailViewController.emptyDataTitle,
+            description: SwiftGenStrings.DetailViewController.emptyDataDescription,
             withReload: true
         )
         static let errorMessageConfig = MessageViewConfig(
             icon: .boltSquare,
             title: nil,
-            description: errorMessageDescription,
+            description: SwiftGenStrings.DetailViewController.errorMessageDescription,
             withReload: true
         )
     }
