@@ -8,7 +8,7 @@ final class AppCoordinator: BaseCoordinator {
     override func start() {
         switch AuthService.shared.state {
         case .unauthorized:
-            toAuth()
+            toMain()
         case .loggedIn:
             toMain()
         }

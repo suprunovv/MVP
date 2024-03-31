@@ -14,7 +14,6 @@ final class RecipesViewController: UIViewController {
     // MARK: - Constants
 
     enum Constants {
-        static let titleText = "Recipes"
         static let minimumLineSpacing: CGFloat = 15
         static let minimumInteritemSpacing: CGFloat = 10
     }
@@ -52,7 +51,7 @@ final class RecipesViewController: UIViewController {
         let label = UILabel()
         label.font = .verdanaBold(ofSize: 28)
         label.textColor = .black
-        label.text = Constants.titleText
+        label.text = SwiftGenStrings.RecipesScreen.titleText
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
     }

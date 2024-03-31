@@ -36,13 +36,13 @@ extension LogCommand where OutputLog == String {
     }
 }
 
-/// Расширение для лога типа дата
-extension LogCommand where OutputLog == Data {
-    var log: Data? {
-        switch self {
-        case let .shareRecipe(data as Codable), let .viewScreen(data as Codable),
-             let .openCategory(data as Codable), let .openDetails(data as Codable):
-            return try? JSONEncoder().encode(data)
-        }
-    }
-}
+///// Расширение для лога типа дата
+// extension LogCommand where OutputLog == Data {
+//    var log: Data? {
+//        switch self {
+//        case let .shareRecipe(data as Codable), let .viewScreen(data as Codable),
+//             let .openCategory(data as Codable), let .openDetails(data as Codable):
+//            return try? JSONEncoder().encode(data)
+//        }
+//    }
+// }

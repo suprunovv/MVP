@@ -113,7 +113,7 @@ public enum KeychainProtocolType: Int {
         }
     }
 
-    public var rawValue: String {
+    public var rawwValue: String {
         switch self {
         case .ftp:
             return kSecAttrProtocolFTP as String
