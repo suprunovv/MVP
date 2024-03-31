@@ -1,4 +1,4 @@
-module Pods_MVPproject {
+framework module Pods_MVPproject {
   umbrella header "Pods-MVPproject-umbrella.h"
 
   export *

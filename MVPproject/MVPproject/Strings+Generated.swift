@@ -1,17 +1,17 @@
 // Strings+Generated.swift
 // Copyright © RoadMap. All rights reserved.
 
-// swiftlint : disable all
+// swiftlint:disable all
 // Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
 
 import Foundation
 
-// swiftlint : disable superfluous_disable_command file_length implicit_return prefer_self_in_static_references
+// swiftlint:disable superfluous_disable_command file_length implicit_return prefer_self_in_static_references
 
 // MARK: - Strings
 
-// swiftlint : disable explicit_type_interface function_parameter_count identifier_name line_length
-// swiftlint : disable nesting type_body_length type_name vertical_whitespace_opening_braces
+// swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
+// swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 enum SwiftGenStrings {
     enum AuthScreen {
         /// Localazible.strings
@@ -172,8 +172,8 @@ enum SwiftGenStrings {
     }
 }
 
-// swiftlint : enable explicit_type_interface function_parameter_count identifier_name line_length
-// swiftlint : enable nesting type_body_length type_name vertical_whitespace_opening_braces
+// swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
+// swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
 
 // MARK: - Implementation Details
 
@@ -184,7 +184,7 @@ extension SwiftGenStrings {
     }
 }
 
-// swiftlint : disable convenience_type
+// swiftlint:disable convenience_type
 private final class BundleToken {
     static let bundle: Bundle = {
         #if SWIFT_PACKAGE
@@ -195,4 +195,4 @@ private final class BundleToken {
     }()
 }
 
-// swiftlint : enable convenience_type
+// swiftlint:enable convenience_type

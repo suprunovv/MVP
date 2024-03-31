@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "TextFileds",
+        "repositoryURL": "https://github.com/suprunovv/TextFileds",
+        "state": {
+          "branch": null,
+          "revision": "256c0a34014169b6c9336065500d54450d99ca34",
+          "version": "1.2.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
