@@ -10,6 +10,9 @@ packages:
   TextFileds:
     url: https://github.com/suprunovv/TextFileds
     majorVersion: 1.0.0
+  Swinject:
+    url: https://github.com/Swinject/Swinject.git
+    majorVersion: 2.8.0
 targets:
   MVPproject:
     type: application
@@ -31,6 +34,7 @@ targets:
         GENERATE_INFOPLIST_FILE: true
     dependencies:
       - package: TextFileds
+      - package: Swinject
     postCompileScripts:
       - script: |
                 if [[ -f "${PODS_ROOT}/SwiftGen/bin/swiftgen" ]]; then
