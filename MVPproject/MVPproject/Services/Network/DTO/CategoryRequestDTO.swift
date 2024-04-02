@@ -32,6 +32,8 @@ struct CategoryRequestDTO {
             return "drinks"
         case .dessert:
             return "desserts"
+        case .empty:
+            return "empty"
         }
     }
 
