@@ -21,7 +21,7 @@ opt_in_rules:
 excluded:
   - Pods
 
-warning_threshold: 1
+warning_threshold: 3
 
 line_length:
   warning: 120

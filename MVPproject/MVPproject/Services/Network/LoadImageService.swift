@@ -23,9 +23,9 @@ final class LoadImageService: LoadImageServiceProtocol {
 
 /// Прокси для получения изображений
 final class LoadImageProxy: LoadImageServiceProtocol {
-    private var service: LoadImageServiceProtocol
+    private var service: LoadImageServiceProtocol?
 
-    init(service: LoadImageServiceProtocol) {
+    init(service: LoadImageServiceProtocol?) {
         self.service = service
     }
 
@@ -48,7 +48,7 @@ final class LoadImageProxy: LoadImageServiceProtocol {
                 return
             }
         } else {
-            service.loadImage(url: url) { data, response, error in
+            service?.loadImage(url: url) { data, response, error in
                 if let data = data {
                     do {
                         try data.write(to: imageUrl)

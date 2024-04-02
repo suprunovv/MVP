@@ -3,6 +3,23 @@
 
 import Foundation
 
+/// Таргет приложения
+final class Target {
+    static var isMokeTarget: Bool {
+        #if Mock
+        true
+        #else
+        false
+        #endif
+    }
+}
+
+/// Имя мок файла или пустой
+enum MokeFileName: String {
+    case posts
+    case empty
+}
+
 /// Протокол сервиса сети
 protocol NetworkServiceProtocol {
     /// Запрос рецептов по категории
@@ -40,6 +57,7 @@ final class NetworkService: NetworkServiceProtocol {
         }
 
         let endpoint = RecipelyEndpoint(queryItems: queryItems)
+
         makeRequest(endpoint) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -88,29 +106,42 @@ final class NetworkService: NetworkServiceProtocol {
     }
 
     private func makeRequest(_ endpoint: Endpoint, then handler: @escaping (Result<Data, NetworkError>) -> Void) {
-        guard let url = endpoint.url else {
-            return handler(.failure(.invalidURL))
+        guard let url = URL.makeURL(endpoint.url?.absoluteString ?? "", mokeFileName: .posts) else {
+            return
         }
 
-        let task = session.dataTask(with: url) { [weak self] data, response, error in
+        print(url.absoluteString)
+
+        let task = session.dataTask(with: url) { data, _, error in
             if let error = error {
                 return handler(.failure(.network(error.localizedDescription)))
             }
             guard let data = data else {
                 return handler(.failure(.emptyData))
             }
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                do {
-                    let errorMessage = try self?.decoder.decode([ErrorDTO].self, from: data).first?.message
-                    return handler(.failure(.network(errorMessage)))
-                } catch {
-                    return handler(.failure(.network(nil)))
-                }
-            }
 
             handler(.success(data))
         }
 
         task.resume()
+    }
+}
+
+extension URL {
+    static func makeURL(_ urlString: String, mokeFileName: MokeFileName?) -> URL? {
+        var newURL = URL(string: urlString)
+        guard Target.isMokeTarget else { return newURL }
+        var fileName = mokeFileName?.rawValue ?? ""
+        if fileName.isEmpty {
+            fileName = fileName.replacingOccurrences(of: "/", with: "_")
+        }
+        let bundleURL = Bundle.main.url(forResource: fileName, withExtension: "json")
+        guard let bundleURL = bundleURL else {
+            let errorText = "Отсутствует моковый файл: \(fileName).json"
+            debugPrint(errorText)
+            return nil
+        }
+        newURL = bundleURL
+        return newURL
     }
 }

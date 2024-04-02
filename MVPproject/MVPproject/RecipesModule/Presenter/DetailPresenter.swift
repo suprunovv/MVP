@@ -41,7 +41,7 @@ final class DetailPresenter {
 
     var recipe: Recipe?
     private(set) var cellTypes: [DetailCellType] = [.image, .energy, .description]
-    private let networkService: NetworkServiceProtocol
+    private let networkService: NetworkServiceProtocol?
     private(set) var viewState: ViewState<Recipe> = .loading {
         didSet {
             updateDetailView()
@@ -51,16 +51,16 @@ final class DetailPresenter {
     private weak var view: DetailViewProtocol?
     private weak var coordinator: RecipeWithDetailsCoordinatorProtocol?
     private var uri: String?
-    private var loadImageService: LoadImageServiceProtocol
+    private var loadImageService: LoadImageServiceProtocol?
 
     // MARK: - Initializators
 
     init(
         view: DetailViewProtocol,
         coordinator: RecipeWithDetailsCoordinatorProtocol,
-        networkService: NetworkServiceProtocol,
+        networkService: NetworkServiceProtocol?,
         recipe: Recipe,
-        loadImageService: LoadImageServiceProtocol
+        loadImageService: LoadImageServiceProtocol?
     ) {
         self.view = view
         self.coordinator = coordinator
@@ -85,7 +85,7 @@ final class DetailPresenter {
                 self?.viewState = .data(recipe)
             }
         } else {
-            networkService.getRecipesDetailsByURI(uri, completion: { [weak self] result in
+            networkService?.getRecipesDetailsByURI(uri, completion: { [weak self] result in
                 switch result {
                 case let .success(data):
                     guard let details = data.details else { return }
@@ -118,7 +118,7 @@ final class DetailPresenter {
 
 extension DetailPresenter: DetailPresenterProtocol {
     func loadImage(url: URL?, completion: @escaping (Data) -> ()) {
-        loadImageService.loadImage(url: url) { data, _, _ in
+        loadImageService?.loadImage(url: url) { data, _, _ in
             guard let data = data else {
                 return
             }

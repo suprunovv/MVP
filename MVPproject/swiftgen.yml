@@ -2,10 +2,9 @@
 
 ## In case your config entries all use a common input/output parent directory, you can specify those here.
 ##   Every input/output paths in the rest of the config will then be expressed relative to these.
-##   Those two top-level keys are optional and default to "." (the directory of the config file).
-# input_dir: MyLib/Sources/
-# output_dir: MyLib/Generated/
-
+## Those two top-level keys are optional and default to "." (the directory of the config file).
+## input_dir: MVPproject/
+## output_dir: MVPproject/Generated/
 
 ## Generate constants for your localized strings.
 ##   Be sure that SwiftGen only parses ONE locale (typically Base.lproj, or en.lproj, or whichever your development region is); otherwise it will generate the same keys multiple times.
@@ -18,7 +17,6 @@
        output: MVPproject/Strings+Generated.swift
        params:
          enumName: SwiftGenStrings
-
 
 ## Generate constants for your Assets Catalogs, including constants for images, colors, ARKit resources, etc.
 ##   This example also shows how to provide additional parameters to your template to customize the output.
