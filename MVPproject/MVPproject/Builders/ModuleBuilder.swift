@@ -1,6 +1,7 @@
 // ModuleBuilder.swift
 // Copyright © RoadMap. All rights reserved.
 
+import Swinject
 import UIKit
 
 /// Сборщик модуля авторизации
@@ -56,15 +57,13 @@ final class ModuleBuilder {
 
     static func makeCategoryModule(coordinator: RecipesCoordinator, category: RecipesCategory) -> UIViewController {
         let viewController = CategoryViewController()
-        let networkService = NetworkService()
-        let loadImageService = LoadImageService()
-        let loadImageProxy = LoadImageProxy(service: loadImageService)
+        let container = SceneDelegate.setContainer()
         let presenter = CategoryPresenter(
             view: viewController,
             coordinator: coordinator,
-            networkService: networkService,
+            networkService: container.resolve(NetworkService.self),
             category: category,
-            loadImageService: loadImageProxy
+            loadImageService: container.resolve(LoadImageProxy.self)
         )
         viewController.presenter = presenter
         return viewController
@@ -82,16 +81,14 @@ final class ModuleBuilder {
         coordinator: RecipeWithDetailsCoordinatorProtocol,
         recipe: Recipe
     ) -> UIViewController {
+        let container = SceneDelegate.setContainer()
         let viewController = DetailViewController()
-        let networkService = NetworkService()
-        let loadImageService = LoadImageService()
-        let proxyImageService = LoadImageProxy(service: loadImageService)
         let presenter = DetailPresenter(
             view: viewController,
             coordinator: coordinator,
-            networkService: networkService,
+            networkService: container.resolve(NetworkService.self),
             recipe: recipe,
-            loadImageService: proxyImageService
+            loadImageService: container.resolve(LoadImageProxy.self)
         )
         viewController.presenter = presenter
         return viewController

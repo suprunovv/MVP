@@ -31,10 +31,10 @@ protocol CategoryPresenterProtocol: AnyObject {
 final class CategoryPresenter {
     // MARK: - Private Properties
 
-    private let networkService: NetworkServiceProtocol
+    private let networkService: NetworkServiceProtocol?
     private weak var view: CategoryViewProtocol?
     private weak var coordinator: RecipesCoordinator?
-    private var loadImageService: LoadImageServiceProtocol
+    private var loadImageService: LoadImageServiceProtocol?
     private var uri: String?
 
     private var timeSortingState = SortingButton.SortState.unsorted {
@@ -71,9 +71,9 @@ final class CategoryPresenter {
     init(
         view: CategoryViewProtocol,
         coordinator: RecipesCoordinator,
-        networkService: NetworkServiceProtocol,
+        networkService: NetworkServiceProtocol?,
         category: RecipesCategory,
-        loadImageService: LoadImageServiceProtocol
+        loadImageService: LoadImageServiceProtocol?
     ) {
         self.view = view
         self.coordinator = coordinator
@@ -88,7 +88,7 @@ final class CategoryPresenter {
         viewState = .loading
         let storage = StorageService.shared.fetchRecipeData(category: category.type.rawValue)
         if storage.isEmpty {
-            networkService.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
+            networkService?.getRecipesByCategory(CategoryRequestDTO(category: category)) { [weak self] result in
                 switch result {
                 case let .success(data):
                     StorageService.shared.createRecipeData(recipes: data, category: category)
@@ -106,7 +106,7 @@ final class CategoryPresenter {
 
     private func searchRecipes(_ search: String) {
         viewState = .loading
-        networkService.getRecipesByCategory(CategoryRequestDTO(
+        networkService?.getRecipesByCategory(CategoryRequestDTO(
             category: category,
             searchTerm: search
         )) { [weak self] result in
@@ -158,7 +158,7 @@ final class CategoryPresenter {
 
 extension CategoryPresenter: CategoryPresenterProtocol {
     func loadImage(url: URL?, completion: @escaping (Data) -> ()) {
-        loadImageService.loadImage(url: url) { data, _, _ in
+        loadImageService?.loadImage(url: url) { data, _, _ in
             guard let data = data else {
                 return
             }
