@@ -15,7 +15,6 @@
 			dependencies = (
 			);
 			name = SwiftGen;
-			productName = SwiftGen;
 		};
 /* End PBXAggregateTarget section */
 
@@ -85,7 +84,7 @@
 		54D0D239134DF156521E9C8733EBD99A /* Pods-MVPproject-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MVPproject-dummy.m"; sourceTree = "<group>"; };
 		551190973866013BA7B679C17F862A47 /* Pods-MVPproject-MVPproject-Moke-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MVPproject-MVPproject-Moke-acknowledgements.markdown"; sourceTree = "<group>"; };
 		55D978EBD268F32D0BF237E7B8095116 /* Pods-MVPproject-MVPproject-Moke.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MVPproject-MVPproject-Moke.modulemap"; sourceTree = "<group>"; };
-		60716C90CF91E4035F743523FEE67834 /* Keychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Keychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		60716C90CF91E4035F743523FEE67834 /* Keychain */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Keychain; path = Keychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69881D59E6BC88488B5F0A88B6DA5B43 /* Keychain-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Keychain-prefix.pch"; sourceTree = "<group>"; };
 		6D6B0CF028B783006EC9589CD5F94E0C /* Pods-MVPproject.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MVPproject.modulemap"; sourceTree = "<group>"; };
 		712AF758C34D9771258D8D1391688CD9 /* Keychain.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Keychain.modulemap; sourceTree = "<group>"; };
@@ -95,7 +94,7 @@
 		91872DE436557494E6563274633E03B0 /* Keychain.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Keychain.release.xcconfig; sourceTree = "<group>"; };
 		9284CC9BAF021287EBFA4A731DDD9D49 /* Pods-MVPproject-MVPproject-Moke-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MVPproject-MVPproject-Moke-frameworks.sh"; sourceTree = "<group>"; };
 		9B07ED154C20FC2FEAB6E3C812A0F1D8 /* Pods-MVPproject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MVPproject.release.xcconfig"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A2C0B0E1864F301FD7E5D9EEB9488BDE /* Pods-MVPproject-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MVPproject-frameworks.sh"; sourceTree = "<group>"; };
 		B41C81511233A0C204B80968CEC7E27C /* Pods-MVPproject-MVPproject-Moke */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-MVPproject-MVPproject-Moke"; path = Pods_MVPproject_MVPproject_Moke.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC9C59A882DC103471986CA3A615BBC7 /* Pods-MVPproject-MVPproject-Moke-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MVPproject-MVPproject-Moke-umbrella.h"; sourceTree = "<group>"; };
@@ -138,7 +137,7 @@
 		2FF43C74667E1116B4025ED54E07127A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				60716C90CF91E4035F743523FEE67834 /* Keychain.framework */,
+				60716C90CF91E4035F743523FEE67834 /* Keychain */,
 				436BD800038B6871C69921CBC0C274BA /* Pods-MVPproject */,
 				B41C81511233A0C204B80968CEC7E27C /* Pods-MVPproject-MVPproject-Moke */,
 			);
@@ -189,6 +188,7 @@
 				4130211D23D54D388FE0651C38FE2361 /* KeychainProtocolType.swift */,
 				C15BC1AFC910C567B7707FF38CE915A7 /* Support Files */,
 			);
+			name = Keychain;
 			path = Keychain;
 			sourceTree = "<group>";
 		};
@@ -257,6 +257,7 @@
 			children = (
 				FA028AB729D0C7FF3BB15BD454ACF6BF /* Support Files */,
 			);
+			name = SwiftGen;
 			path = SwiftGen;
 			sourceTree = "<group>";
 		};
@@ -335,7 +336,7 @@
 			);
 			name = Keychain;
 			productName = Keychain;
-			productReference = 60716C90CF91E4035F743523FEE67834 /* Keychain.framework */;
+			productReference = 60716C90CF91E4035F743523FEE67834 /* Keychain */;
 			productType = "com.apple.product-type.framework";
 		};
 		EDF345A83E76CC36C32CBCF2A8CA6C92 /* Pods-MVPproject */ = {
@@ -478,7 +479,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -503,7 +504,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Keychain/Keychain-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Keychain/Keychain-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -716,7 +717,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Keychain/Keychain-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Keychain/Keychain-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -804,7 +805,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
