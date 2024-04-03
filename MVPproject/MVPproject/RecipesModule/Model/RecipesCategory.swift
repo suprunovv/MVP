@@ -23,6 +23,8 @@ struct RecipesCategory: Codable {
         case pancake
         /// Десерты
         case dessert
+        /// Пустой
+        case empty
     }
 
     /// Идентификатор категории
