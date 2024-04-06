@@ -18,6 +18,7 @@ extension UIColor {
     static let blueRecipeBg = UIColor(red: 222 / 255.0, green: 238 / 255.0, blue: 239 / 255.0, alpha: 1)
     static let grayShimmer = UIColor(red: 225 / 255.0, green: 230 / 255.0, blue: 230 / 255.0, alpha: 1)
     static let grayHandle = UIColor(red: 242 / 255.0, green: 242 / 255.0, blue: 242 / 255.0, alpha: 1)
+    static let nameLabel = UIColor(red: 71 / 255, green: 92 / 255, blue: 102 / 255, alpha: 1)
 
     /// Кэш для rgb цветов
     static var colorCacheMap: [String: UIColor] = [:]

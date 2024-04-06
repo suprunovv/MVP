@@ -19,6 +19,13 @@ final class ModuleBuilder {
         return viewController
     }
 
+    static func makeMapModule(coordinator: ProfileCoordinator) -> UIViewController {
+        let viewController = MapViewController()
+        let presenter = MapViewPresenter(view: viewController, coordinator: coordinator)
+        viewController.presenter = presenter
+        return viewController
+    }
+
     static func makeRecipesModule(coordinator: RecipesCoordinator) -> UIViewController {
         let viewController = RecipesViewController()
         let recipesPresenter = RecipesPresenter(view: viewController, coordinator: coordinator)

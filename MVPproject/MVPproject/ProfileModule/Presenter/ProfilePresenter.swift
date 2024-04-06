@@ -103,6 +103,8 @@ extension ProfilePresenter: ProfilePresenterProtocol {
             showBonuses()
         case .terms:
             showTerms()
+        case .map:
+            showMap()
         default:
             break
         }
@@ -110,6 +112,10 @@ extension ProfilePresenter: ProfilePresenterProtocol {
 
     func showBonuses() {
         profileCoordinator?.showBonuses()
+    }
+
+    func showMap() {
+        profileCoordinator?.showMap()
     }
 
     func handleNameChanged(_ fullName: String) {
