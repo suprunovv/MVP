@@ -21,7 +21,9 @@ final class Originator {
 
     // MARK: - Initializators
 
-    private init() {}
+    private init() {
+        memento = Memento(isFirstLoading: true)
+    }
 
     // MARK: - Public methods
 

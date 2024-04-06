@@ -37,6 +37,12 @@ final class ProfileCoordinator: BaseCoordinator {
         profileViewController.presenter?.presentTerms(termsView)
     }
 
+    func showMap() {
+        let mapView = ModuleBuilder.makeMapModule(coordinator: self)
+        mapView.modalPresentationStyle = .fullScreen
+        navigationController?.present(mapView, animated: true)
+    }
+
     func hideTerms() {
         navigationController?.tabBarController?.tabBar.isHidden = false
         termsView?.removeFromSuperview()

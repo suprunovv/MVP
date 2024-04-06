@@ -20,6 +20,8 @@ final class ProfileConfiguration {
         case bonuses
         /// Условия использования
         case terms
+        /// Карта
+        case map
         /// Выход из системы
         case logout
     }
@@ -47,6 +49,12 @@ final class ProfileConfiguration {
         iconImageName: "logout"
     )
 
+    private static let mapSetting = ProfileSettingOption(
+        type: .map,
+        title: "Our Partners",
+        iconImageName: "gift"
+    )
+
     private(set) var profileInfo: ProfileInfo = profileInfoMock
 
     var profileTableCells: [ProfileCellType] {
@@ -54,6 +62,7 @@ final class ProfileConfiguration {
             .profile(profileInfo),
             .setting(ProfileConfiguration.bonusesSetting),
             .setting(ProfileConfiguration.termsSetting),
+            .setting(ProfileConfiguration.mapSetting),
             .setting(ProfileConfiguration.logoutSetting)
         ]
     }

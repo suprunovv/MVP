@@ -7,11 +7,18 @@ target 'MVPproject' do
 
   pod 'Keychain'
   pod 'SwiftGen'
+  pod 'GoogleMaps', '7.1.0'
 
   # Pods for MVPproject
 
-  target 'MVPproject-Moke' do
+  target 'MVPprojectMoke' do
     pod 'Keychain'
+    pod 'GoogleMaps', '7.1.0'
+  end
+  
+  target 'MVPprojectTests' do
+    pod 'Keychain'
+    pod 'GoogleMaps', '7.1.0'
   end
 end
 
