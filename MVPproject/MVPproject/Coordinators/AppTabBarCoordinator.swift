@@ -37,4 +37,16 @@ final class AppTabBarCoordinator: BaseCoordinator {
             setAsRoot(tabBarViewController)
         }
     }
+
+    func openTo(index: Int) {
+        recipelyAppTabBarController?.selectedIndex = index
+    }
+
+    func set(userName: String) {
+        recipelyAppTabBarController?.selectedIndex = 2
+        guard let navigationController = recipelyAppTabBarController?.children[2] as? UINavigationController,
+              let profileViewController = navigationController.topViewController as? ProfileViewController,
+              let profilePresenter = profileViewController.presenter else { return }
+        profilePresenter.handleNameChanged(userName)
+    }
 }

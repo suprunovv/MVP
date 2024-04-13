@@ -16,6 +16,25 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         setupWindow(withScene: scene)
     }
 
+    // swiftlint:disable all
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+//        recipesproject://openScreen?screen=profile
+//        recipesproject://openScreen?screen=favorites
+//        recipesproject://change?name=Ruslan
+        guard let firstUrl = URLContexts.first,
+              let firstUrlComponents = URLComponents(url: firstUrl.url, resolvingAgainstBaseURL: true)
+        else { return }
+
+        switch firstUrlComponents.host {
+        case "openScreen":
+            openScreen(items: firstUrlComponents.queryItems ?? [])
+        case "changeProfileName":
+            change(items: firstUrlComponents.queryItems ?? [])
+        default:
+            break
+        }
+    }
+
     private func setupWindow(withScene scene: UIScene) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
@@ -33,5 +52,24 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             LoadImageProxy(service: result.resolve(LoadImageService.self))
         }.inObjectScope(.container)
         return container
+    }
+
+    private func openScreen(items: [URLQueryItem]) {
+        let screenQuery = items.first { $0.name == "screen" }
+
+        switch screenQuery?.value {
+        case "profile":
+            appCoordinator?.toScreen(.profile)
+        case "favorites":
+            appCoordinator?.toScreen(.favorites)
+        default:
+            break
+        }
+    }
+
+    private func change(items: [URLQueryItem]) {
+        let changeQuery = items.first { $0.name == "name" }
+        let newName = changeQuery?.value ?? "default"
+        appCoordinator?.changeUserName(to: newName)
     }
 }
