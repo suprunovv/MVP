@@ -24,7 +24,7 @@ final class RecipesViewController: UIViewController {
 
     // MARK: - Private properties
 
-    private var typeDishCollectionView: UICollectionView!
+    private var typeDishCollectionView: UICollectionView?
 
     // MARK: - Moke Data
 
@@ -68,6 +68,7 @@ final class RecipesViewController: UIViewController {
             frame: .zero,
             collectionViewLayout: makeFlowLayout()
         )
+        guard let typeDishCollectionView else { return }
         typeDishCollectionView.register(
             RecipesCategoryCell.self,
             forCellWithReuseIdentifier: RecipesCategoryCell.reuseID
@@ -164,7 +165,7 @@ extension RecipesViewController: UICollectionViewDelegateFlowLayout {
 
 extension RecipesViewController: RecipesViewProtocol {
     func reloadCollection() {
-        typeDishCollectionView.reloadData()
+        typeDishCollectionView?.reloadData()
     }
 
     func updateRecipes(categories: [RecipesCategoryCellConfig]) {
