@@ -5,10 +5,20 @@ import UIKit
 
 /// Главный координатор приложения опредляющий флоу Auth или Main
 final class AppCoordinator: BaseCoordinator {
+    /// Перечисление экранов таббара
+    enum TabBarScreen: Int {
+        /// Экран рецептов
+        case recipes = 0
+        /// Экран избранных
+        case favorites = 1
+        /// Экран профиля
+        case profile = 2
+    }
+
     override func start() {
         switch AuthService.shared.state {
         case .unauthorized:
-            toMain()
+            toAuth()
         case .loggedIn:
             toMain()
         }
@@ -28,5 +38,19 @@ final class AppCoordinator: BaseCoordinator {
         }
         add(coordinator: authCoordinator)
         authCoordinator.start()
+    }
+
+    func toScreen(_ screen: TabBarScreen) {
+        let tabBarCoordinator = AppTabBarCoordinator()
+        add(coordinator: tabBarCoordinator)
+        tabBarCoordinator.start()
+        tabBarCoordinator.openTo(index: screen.rawValue)
+    }
+
+    func changeUserName(to: String) {
+        let tabBarCoordinator = AppTabBarCoordinator()
+        add(coordinator: tabBarCoordinator)
+        tabBarCoordinator.start()
+        tabBarCoordinator.set(userName: to)
     }
 }
